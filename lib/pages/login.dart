@@ -1,7 +1,6 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:jawara/shared/button.dart';
-import 'package:jawara/shared/input.dart';
+import '../shared/button.dart';
+import '../shared/input.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -61,42 +60,48 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    const CustomInputField(
+                    CustomInputField(
                       label: 'Email',
                       hintText: 'Masukkan email disini',
                     ),
                     const SizedBox(height: 20),
-                    const CustomInputField(
+                    CustomInputField(
                       label: 'Password',
                       hintText: 'Masukkan password disini',
                       isPassword: true,
                     ),
                     const SizedBox(height: 32),
-                    CustomButton(
-                      text: 'Login',
-                      onPressed: () {
-                        debugPrint('Tombol Login ditekan!');
-                      },
-                    ),
+                      CustomButton(
+                        text: 'Login',
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/dashboard');
+                        },
+                      ),
                     const SizedBox(height: 24),
-                    RichText(
-                      text: TextSpan(
-                        style: TextStyle(color: Colors.grey[600], fontSize: 14),
-                        children: [
-                          const TextSpan(text: 'Belum punya akun? '),
-                          TextSpan(
-                            text: 'Daftar',
-                            style: const TextStyle(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Belum punya akun? ',
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 14,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            debugPrint('Navigasi ke halaman daftar!');
+                          },
+                          child: const Text(
+                            'Daftar',
+                            style: TextStyle(
                               color: Color(0xFF6A5AE0),
                               fontWeight: FontWeight.bold,
+                              fontSize: 14,
                             ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                debugPrint('Navigasi ke halaman daftar!');
-                              },
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
