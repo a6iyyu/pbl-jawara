@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jawara/shared/button.dart';
 import 'package:jawara/shared/dashboard_card.dart';
 import 'package:jawara/shared/input.dart';
 
@@ -60,17 +61,13 @@ class _UserManagementPageState extends State<UserManagementPage> {
                   'Daftar Pengguna',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    // TODO: implement add user dialog
-                  },
-                  icon: const Icon(Icons.person_add_alt_1_outlined),
-                  label: const Text('Tambah Pengguna'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF6A5AE0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                SizedBox(
+                  width: 180,
+                  child: CustomButton(
+                    text: 'Tambah Pengguna',
+                    onPressed: () {
+                      // TODO: implement add user dialog
+                    },
                   ),
                 ),
               ],
@@ -102,18 +99,17 @@ class _UserManagementPageState extends State<UserManagementPage> {
                   ),
                 ),
                 const SizedBox(width: 8),
-                ElevatedButton(
-                  onPressed: () => setState(() => _query = ''),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey[200],
-                    foregroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                SizedBox(
+                  height: 48,
+                  child: OutlinedButton(
+                    onPressed: () => setState(() => _query = ''),
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: Colors.grey.shade300),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      backgroundColor: Colors.white,
                     ),
-                    elevation: 0,
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                    child: const Icon(Icons.search, color: Colors.black54),
                   ),
-                  child: const Icon(Icons.search),
                 ),
               ],
             ),
@@ -127,15 +123,17 @@ class _UserManagementPageState extends State<UserManagementPage> {
               child: Column(
                 children: [
                   Container(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
                     constraints: const BoxConstraints(maxHeight: 400),
                     child: ListView.separated(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: filtered.length,
-                      separatorBuilder: (_, __) => const Divider(),
+                      separatorBuilder: (_, __) => const Divider(height: 1),
                       itemBuilder: (context, index) {
                         final user = filtered[index];
                         return ListTile(
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                           leading: CircleAvatar(
                             backgroundColor: const Color(0xFF6A5AE0),
                             child: Text(user['name']!.substring(0, 1)),
