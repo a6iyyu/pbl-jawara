@@ -105,7 +105,11 @@ class DashboardPage extends StatelessWidget {
                   _buildMenuItem(
                     icon: Icons.manage_accounts_outlined,
                     title: 'Manajemen Pengguna',
-                    subItems: ['Sub Menu 1', 'Sub Menu 2'],
+                    isExpandable: false,
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, '/users');
+                    },
                   ),
                   _buildMenuItem(
                     icon: Icons.sync_alt_outlined,

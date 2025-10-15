@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jawara/pages/login.dart';
 import 'package:jawara/pages/dashboard_page.dart';
+import 'package:jawara/pages/login.dart';
+import 'package:jawara/pages/user_management.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => const LoginPage(),
         '/dashboard': (context) => const DashboardPage(),
+        '/users': (context) => const UserManagementPage(),
       },
       debugShowCheckedModeBanner: false,
     );

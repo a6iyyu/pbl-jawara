@@ -22,8 +22,8 @@ class DashboardCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
-          // --- PERBAIKAN DI SINI ---
-          color: color.withOpacity(0.1), 
+          // Create a semi-transparent color using withAlpha (20 ~= 8% opacity)
+          color: color.withAlpha(20),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
