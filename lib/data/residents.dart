@@ -1,4 +1,4 @@
-import '../models/resident.dart';
+import 'package:jawara/models/resident.dart';
 
 final List<Resident> dummyResidents = [
   Resident(

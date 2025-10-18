@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../shared/button.dart';
-import '../shared/input.dart';
+import 'package:jawara/shared/button.dart';
+import 'package:jawara/shared/input.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
