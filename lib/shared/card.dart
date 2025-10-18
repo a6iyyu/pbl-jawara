@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class DashboardCard extends StatelessWidget {
+class SharedCard extends StatelessWidget {
   final String title;
   final Widget child;
   final Color color;
   final IconData icon;
 
-  const DashboardCard({
+  const SharedCard({
     super.key,
     required this.title,
     required this.child,
@@ -22,22 +22,28 @@ class DashboardCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
-          // Create a semi-transparent color using withAlpha (20 ~= 8% opacity)
-          color: color.withAlpha(20),
+          color: color.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // --- BAGIAN YANG DIPERBAIKI ADA DI SINI ---
             Row(
               children: [
                 Icon(icon, color: color),
                 const SizedBox(width: 8),
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                // FIX: Bungkus widget Text dengan Flexible
+                // Ini mencegah title mendorong layout hingga overflow.
+                Flexible(
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                    // Optional: Menambahkan ellipsis (...) jika teks masih terlalu panjang
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],

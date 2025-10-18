@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:jawara/pages/dashboard_page.dart';
+import 'package:jawara/pages/dashboard.dart';
+import 'package:jawara/pages/income.dart';
 import 'package:jawara/pages/login.dart';
+import 'package:jawara/pages/resident_approvals.dart';
+import 'package:jawara/pages/spending.dart';
 import 'package:jawara/pages/user_management.dart';
 
 void main() {
@@ -18,8 +21,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Poppins'),
       initialRoute: '/login',
       routes: {
-        '/login': (context) => const LoginPage(),
         '/dashboard': (context) => const DashboardPage(),
+        '/income': (context) => const IncomePage(),
+        '/login': (context) => const LoginPage(),
+        '/resident-approvals': (context) => const ResidentApprovalsPage(),
+        '/spending': (context) => const SpendingPage(),
         '/users': (context) => const UserManagementPage(),
       },
       debugShowCheckedModeBanner: false,

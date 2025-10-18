@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jawara/shared/button.dart';
-import 'package:jawara/shared/dashboard_card.dart';
+import 'package:jawara/shared/card.dart';
 import 'package:jawara/shared/input.dart';
 
 class UserManagementPage extends StatefulWidget {
@@ -65,16 +65,12 @@ class _UserManagementPageState extends State<UserManagementPage> {
                   width: 180,
                   child: CustomButton(
                     text: 'Tambah Pengguna',
-                    onPressed: () {
-                      // TODO: implement add user dialog
-                    },
+                    onPressed: () {},
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 16),
-
-            // Search field using shared input to match style
             CustomInputField(
               label: 'Cari Pengguna',
               hintText: 'Nama, email, atau role',
@@ -105,7 +101,9 @@ class _UserManagementPageState extends State<UserManagementPage> {
                     onPressed: () => setState(() => _query = ''),
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(color: Colors.grey.shade300),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                       backgroundColor: Colors.white,
                     ),
                     child: const Icon(Icons.search, color: Colors.black54),
@@ -113,10 +111,8 @@ class _UserManagementPageState extends State<UserManagementPage> {
                 ),
               ],
             ),
-
             const SizedBox(height: 16),
-
-            DashboardCard(
+            SharedCard(
               title: 'Pengguna',
               icon: Icons.manage_accounts_outlined,
               color: const Color(0xFF6A5AE0),
@@ -133,7 +129,10 @@ class _UserManagementPageState extends State<UserManagementPage> {
                       itemBuilder: (context, index) {
                         final user = filtered[index];
                         return ListTile(
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 4,
+                          ),
                           leading: CircleAvatar(
                             backgroundColor: const Color(0xFF6A5AE0),
                             child: Text(user['name']!.substring(0, 1)),
@@ -157,14 +156,11 @@ class _UserManagementPageState extends State<UserManagementPage> {
                       },
                     ),
                   ),
-
                   const SizedBox(height: 12),
                   // Pagination placeholder
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: const [
-                      Text('Menampilkan 1–3 dari 3 pengguna'),
-                    ],
+                    children: const [Text('Menampilkan 1–3 dari 3 pengguna')],
                   ),
                 ],
               ),
