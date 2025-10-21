@@ -47,10 +47,13 @@ class _CustomButtonState extends State<CustomButton>
     return ScaleTransition(
       scale: _scaleAnimation,
       child: GestureDetector(
+        onTap: () {
+          widget.onPressed(); 
+        },
         onTapDown: (_) => _controller.forward(),
         onTapUp: (_) {
           _controller.reverse();
-          widget.onPressed();
+          // widget.onPressed();
         },
         onTapCancel: () => _controller.reverse(),
         child: Container(

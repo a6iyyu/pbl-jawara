@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jawara/pages/dashboard.dart';
 import 'package:jawara/pages/income.dart';
 import 'package:jawara/pages/login.dart';
+import 'package:jawara/pages/register.dart';
 import 'package:jawara/pages/resident_approvals.dart';
 import 'package:jawara/pages/spending.dart';
 import 'package:jawara/pages/user_management.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         '/dashboard': (context) => const DashboardPage(),
         '/income': (context) => const IncomePage(),
         '/login': (context) => const LoginPage(),
+        '/register': (context) => const RegisterPage(),
         '/resident-approvals': (context) => const ResidentApprovalsPage(),
         '/spending': (context) => const SpendingPage(),
         '/users': (context) => const UserManagementPage(),

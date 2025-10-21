@@ -6,6 +6,7 @@ class CustomInputField extends StatefulWidget {
   final bool isPassword;
   final IconData? prefixIcon;
   final TextEditingController? controller;
+  final TextInputType inputType;
 
   const CustomInputField({
     super.key,
@@ -14,6 +15,7 @@ class CustomInputField extends StatefulWidget {
     this.isPassword = false,
     this.prefixIcon,
     this.controller,
+    this.inputType = TextInputType.text
   });
 
   @override
@@ -67,6 +69,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
             child: TextField(
               controller: widget.controller,
               obscureText: _obscureText && widget.isPassword,
+              keyboardType: widget.inputType,
               decoration: InputDecoration(
                 hintText: widget.hintText,
                 hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14),
