@@ -84,7 +84,7 @@ class _ActivitiesListPageState extends State<ActivitiesListPage> {
 
     return BaseLayout(
       title: 'Daftar Kegiatan', // Judul AppBar
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0), // Padding utama konten
         child: Column(
           children: [

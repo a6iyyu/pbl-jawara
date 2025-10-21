@@ -115,7 +115,7 @@ class _ReportsIncomePageState extends State<ReportsIncomePage> {
 
     return BaseLayout(
       title: 'Semua Pemasukan', // AppBar title
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0), // Main content padding
         child: Column(
           children: [

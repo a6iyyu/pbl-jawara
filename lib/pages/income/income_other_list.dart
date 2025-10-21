@@ -116,7 +116,7 @@ class _IncomeOtherListPageState extends State<IncomeOtherListPage> {
 
     return BaseLayout(
       title: 'Pemasukan Lain - Daftar', // AppBar title
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0), // Main content padding
         child: Column(
           children: [

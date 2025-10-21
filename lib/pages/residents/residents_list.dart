@@ -35,19 +35,115 @@ class ResidentsListPage extends StatefulWidget {
 class _ResidentsListPageState extends State<ResidentsListPage> {
   // Dummy data sesuai screenshot
   final List<ResidentListItem> _residents = [
-    ResidentListItem(no: 1, nama: 'yyyyy', nik: '1234567891234567', keluarga: 'Keluarga Mara Nunez', jenisKelamin: 'Perempuan', statusDomisili: 'Aktif', statusHidup: 'Hidup'),
-    ResidentListItem(no: 2, nama: 'Varizky Naldiba Rimra', nik: '1371111011030005', keluarga: 'Keluarga Varizky Naldiba Rimra', jenisKelamin: 'Laki-laki', statusDomisili: 'Aktif', statusHidup: 'Hidup'),
-    ResidentListItem(no: 3, nama: 'Tes', nik: '2222222222222222', keluarga: 'Keluarga Tes', jenisKelamin: 'Laki-laki', statusDomisili: 'Aktif', statusHidup: 'Wafat'),
-    ResidentListItem(no: 4, nama: 'Farhan', nik: '456789086456456', keluarga: 'Keluarga Farhan', jenisKelamin: 'Laki-laki', statusDomisili: 'Aktif', statusHidup: 'Hidup'),
-    ResidentListItem(no: 5, nama: 'Rendha Putra Rahmadya', nik: '3505111512040002', keluarga: 'Keluarga Rendha Putra Rahmadya', jenisKelamin: 'Laki-laki', statusDomisili: 'Aktif', statusHidup: 'Hidup'),
-    ResidentListItem(no: 6, nama: 'Anti Micin', nik: '1234567890987654', keluarga: 'Keluarga Anti Micin', jenisKelamin: 'Laki-laki', statusDomisili: 'Aktif', statusHidup: 'Hidup'),
-    ResidentListItem(no: 7, nama: 'varizky naldiba rimra', nik: '1234123412341234', keluarga: 'Keluarga varizky naldiba rimra', jenisKelamin: 'Laki-laki', statusDomisili: 'Aktif', statusHidup: 'Hidup'),
-    ResidentListItem(no: 8, nama: 'lalalal', nik: '1234567890123456', keluarga: 'Keluarga Ijat', jenisKelamin: 'Perempuan', statusDomisili: 'Nonaktif', statusHidup: 'Hidup'),
-    ResidentListItem(no: 9, nama: 'Ijat', nik: '2025202520252025', keluarga: 'Keluarga Ijat', jenisKelamin: 'Laki-laki', statusDomisili: 'Nonaktif', statusHidup: 'Hidup'),
-    ResidentListItem(no: 10, nama: 'Raudhil Firdaus Naufal', nik: '3201122501050002', keluarga: 'Keluarga Raudhil Firdaus Naufal', jenisKelamin: 'Laki-laki', statusDomisili: 'Aktif', statusHidup: 'Hidup'),
+    ResidentListItem(
+      no: 1,
+      nama: 'yyyyy',
+      nik: '1234567891234567',
+      keluarga: 'Keluarga Mara Nunez',
+      jenisKelamin: 'Perempuan',
+      statusDomisili: 'Aktif',
+      statusHidup: 'Hidup',
+    ),
+    ResidentListItem(
+      no: 2,
+      nama: 'Varizky Naldiba Rimra',
+      nik: '1371111011030005',
+      keluarga: 'Keluarga Varizky Naldiba Rimra',
+      jenisKelamin: 'Laki-laki',
+      statusDomisili: 'Aktif',
+      statusHidup: 'Hidup',
+    ),
+    ResidentListItem(
+      no: 3,
+      nama: 'Tes',
+      nik: '2222222222222222',
+      keluarga: 'Keluarga Tes',
+      jenisKelamin: 'Laki-laki',
+      statusDomisili: 'Aktif',
+      statusHidup: 'Wafat',
+    ),
+    ResidentListItem(
+      no: 4,
+      nama: 'Farhan',
+      nik: '456789086456456',
+      keluarga: 'Keluarga Farhan',
+      jenisKelamin: 'Laki-laki',
+      statusDomisili: 'Aktif',
+      statusHidup: 'Hidup',
+    ),
+    ResidentListItem(
+      no: 5,
+      nama: 'Rendha Putra Rahmadya',
+      nik: '3505111512040002',
+      keluarga: 'Keluarga Rendha Putra Rahmadya',
+      jenisKelamin: 'Laki-laki',
+      statusDomisili: 'Aktif',
+      statusHidup: 'Hidup',
+    ),
+    ResidentListItem(
+      no: 6,
+      nama: 'Anti Micin',
+      nik: '1234567890987654',
+      keluarga: 'Keluarga Anti Micin',
+      jenisKelamin: 'Laki-laki',
+      statusDomisili: 'Aktif',
+      statusHidup: 'Hidup',
+    ),
+    ResidentListItem(
+      no: 7,
+      nama: 'varizky naldiba rimra',
+      nik: '1234123412341234',
+      keluarga: 'Keluarga varizky naldiba rimra',
+      jenisKelamin: 'Laki-laki',
+      statusDomisili: 'Aktif',
+      statusHidup: 'Hidup',
+    ),
+    ResidentListItem(
+      no: 8,
+      nama: 'lalalal',
+      nik: '1234567890123456',
+      keluarga: 'Keluarga Ijat',
+      jenisKelamin: 'Perempuan',
+      statusDomisili: 'Nonaktif',
+      statusHidup: 'Hidup',
+    ),
+    ResidentListItem(
+      no: 9,
+      nama: 'Ijat',
+      nik: '2025202520252025',
+      keluarga: 'Keluarga Ijat',
+      jenisKelamin: 'Laki-laki',
+      statusDomisili: 'Nonaktif',
+      statusHidup: 'Hidup',
+    ),
+    ResidentListItem(
+      no: 10,
+      nama: 'Raudhil Firdaus Naufal',
+      nik: '3201122501050002',
+      keluarga: 'Keluarga Raudhil Firdaus Naufal',
+      jenisKelamin: 'Laki-laki',
+      statusDomisili: 'Aktif',
+      statusHidup: 'Hidup',
+    ),
     // Tambahkan data lain untuk halaman 2 dst.
-     ResidentListItem(no: 11, nama: 'Warga 11', nik: '1111111111111111', keluarga: 'Keluarga 11', jenisKelamin: 'Laki-laki', statusDomisili: 'Aktif', statusHidup: 'Hidup'),
-     ResidentListItem(no: 12, nama: 'Warga 12', nik: '1212121212121212', keluarga: 'Keluarga 12', jenisKelamin: 'Perempuan', statusDomisili: 'Aktif', statusHidup: 'Hidup'),
+    ResidentListItem(
+      no: 11,
+      nama: 'Warga 11',
+      nik: '1111111111111111',
+      keluarga: 'Keluarga 11',
+      jenisKelamin: 'Laki-laki',
+      statusDomisili: 'Aktif',
+      statusHidup: 'Hidup',
+    ),
+    ResidentListItem(
+      no: 12,
+      nama: 'Warga 12',
+      nik: '1212121212121212',
+      keluarga: 'Keluarga 12',
+      jenisKelamin: 'Perempuan',
+      statusDomisili: 'Aktif',
+      statusHidup: 'Hidup',
+    ),
   ];
 
   int _currentPage = 1;
@@ -75,7 +171,14 @@ class _ResidentsListPageState extends State<ResidentsListPage> {
     }
 
     return Chip(
-      label: Text(status, style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 12)),
+      label: Text(
+        status,
+        style: TextStyle(
+          color: textColor,
+          fontWeight: FontWeight.bold,
+          fontSize: 12,
+        ),
+      ),
       backgroundColor: chipColor,
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
       side: BorderSide.none,
@@ -94,14 +197,22 @@ class _ResidentsListPageState extends State<ResidentsListPage> {
       'JENIS KELAMIN',
       'STATUS DOMISILI',
       'STATUS HIDUP',
-      'AKSI'
+      'AKSI',
     ];
     // Define sortable columns
-    final sortable = ['NAMA', 'NIK', 'KELUARGA', 'STATUS DOMISILI', 'STATUS HIDUP'];
+    final sortable = [
+      'NAMA',
+      'NIK',
+      'KELUARGA',
+      'STATUS DOMISILI',
+      'STATUS HIDUP',
+    ];
 
     // Pagination Calculation
     final startIndex = (_currentPage - 1) * _rowsPerPage;
-    final endIndex = startIndex + _rowsPerPage > _residents.length ? _residents.length : startIndex + _rowsPerPage;
+    final endIndex = startIndex + _rowsPerPage > _residents.length
+        ? _residents.length
+        : startIndex + _rowsPerPage;
     final paginatedResidents = _residents.sublist(startIndex, endIndex);
     final totalPages = (_residents.length / _rowsPerPage).ceil();
 
@@ -125,7 +236,7 @@ class _ResidentsListPageState extends State<ResidentsListPage> {
 
     return BaseLayout(
       title: 'Daftar Warga', // AppBar title
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0), // Main content padding
         child: Column(
           children: [
@@ -145,16 +256,28 @@ class _ResidentsListPageState extends State<ResidentsListPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      ElevatedButton.icon( // Filter Button
+                      ElevatedButton.icon(
+                        // Filter Button
                         onPressed: () {},
-                        icon: const Icon(Icons.filter_list, color: Colors.white, size: 18),
-                        label: const Text('Filter', style: TextStyle(color: Colors.white)),
+                        icon: const Icon(
+                          Icons.filter_list,
+                          color: Colors.white,
+                          size: 18,
+                        ),
+                        label: const Text(
+                          'Filter',
+                          style: TextStyle(color: Colors.white),
+                        ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppTheme.primary, // From theme
                           shape: RoundedRectangleBorder(
-                            borderRadius: AppTheme.borderRadiusSmall, // From theme
+                            borderRadius:
+                                AppTheme.borderRadiusSmall, // From theme
                           ),
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 12,
+                          ),
                         ),
                       ),
                       // Tambahkan tombol lain jika perlu (misal: Tambah Warga)
@@ -168,7 +291,9 @@ class _ResidentsListPageState extends State<ResidentsListPage> {
                       return SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: ConstrainedBox(
-                          constraints: BoxConstraints(minWidth: constraints.maxWidth), // Min width
+                          constraints: BoxConstraints(
+                            minWidth: constraints.maxWidth,
+                          ), // Min width
                           child: CustomDataTable(
                             headers: headers,
                             rows: rows,
@@ -186,29 +311,40 @@ class _ResidentsListPageState extends State<ResidentsListPage> {
                     children: [
                       IconButton(
                         icon: const Icon(Icons.chevron_left),
-                        onPressed: _currentPage > 1 ? () => setState(() => _currentPage--) : null,
+                        onPressed: _currentPage > 1
+                            ? () => setState(() => _currentPage--)
+                            : null,
                         tooltip: 'Halaman Sebelumnya',
-                        color: _currentPage > 1 ? AppTheme.primary : Colors.grey[300], // Warna disable
+                        color: _currentPage > 1
+                            ? AppTheme.primary
+                            : Colors.grey[300], // Warna disable
                       ),
                       // Tampilkan nomor halaman
                       _buildPageNumber(1, _currentPage == 1),
-                       if (totalPages >= 2)
-                         _buildPageNumber(2, _currentPage == 2),
+                      if (totalPages >= 2)
+                        _buildPageNumber(2, _currentPage == 2),
                       // Ellipsis jika lebih dari 2 halaman
                       if (totalPages > 2)
                         const Padding(
-                           padding: EdgeInsets.symmetric(horizontal: 8.0),
-                           child: Text('...'),
+                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text('...'),
                         ),
-                       // Jangan tampilkan nomor terakhir jika hanya ada 2 halaman
-                       if (totalPages > 2)
-                          _buildPageNumber(totalPages, _currentPage == totalPages),
+                      // Jangan tampilkan nomor terakhir jika hanya ada 2 halaman
+                      if (totalPages > 2)
+                        _buildPageNumber(
+                          totalPages,
+                          _currentPage == totalPages,
+                        ),
 
                       IconButton(
                         icon: const Icon(Icons.chevron_right),
-                         onPressed: _currentPage < totalPages ? () => setState(() => _currentPage++) : null,
+                        onPressed: _currentPage < totalPages
+                            ? () => setState(() => _currentPage++)
+                            : null,
                         tooltip: 'Halaman Berikutnya',
-                         color: _currentPage < totalPages ? AppTheme.primary : Colors.grey[300], // Warna disable
+                        color: _currentPage < totalPages
+                            ? AppTheme.primary
+                            : Colors.grey[300], // Warna disable
                       ),
                     ],
                   ),
@@ -223,7 +359,7 @@ class _ResidentsListPageState extends State<ResidentsListPage> {
 
   // Helper widget untuk nomor halaman pagination (sama seperti di income_bills.dart)
   Widget _buildPageNumber(int page, bool isActive) {
-     return InkWell(
+    return InkWell(
       onTap: () {
         if (!isActive) {
           setState(() {
@@ -237,7 +373,7 @@ class _ResidentsListPageState extends State<ResidentsListPage> {
         decoration: BoxDecoration(
           color: isActive ? AppTheme.primary : Colors.transparent,
           borderRadius: AppTheme.borderRadiusSmall,
-          border: isActive ? null : Border.all(color: Colors.grey.shade300)
+          border: isActive ? null : Border.all(color: Colors.grey.shade300),
         ),
         child: Text(
           '$page',

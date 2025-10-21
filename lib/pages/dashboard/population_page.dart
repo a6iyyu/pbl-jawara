@@ -80,15 +80,15 @@ class _DashboardPopulationPageState extends State<DashboardPopulationPage> {
                       children: [
                         _buildSummaryCard(
                           title: 'Total Keluarga',
-                          value: '10', // Data
+                          value: '10',
                           icon: Icons.family_restroom_rounded,
-                          color: AppTheme.primary, // Biru
+                          color: AppTheme.primary,
                         ),
                         _buildSummaryCard(
                           title: 'Total Penduduk',
-                          value: '13', // Data
+                          value: '12',
                           icon: Icons.people_alt_rounded,
-                          color: AppTheme.accentGreen, // Hijau
+                          color: AppTheme.accentGreen,
                         ),
                       ],
                     ),
@@ -105,44 +105,33 @@ class _DashboardPopulationPageState extends State<DashboardPopulationPage> {
                       children: [
                         _buildChartCard(
                           title: 'Status Penduduk',
-                          icon: Icons.toggle_on_rounded, // Example icon
-                          color: AppTheme.accentOrange, // Oranye
-                          chartPlaceholderText:
-                              '[Placeholder Pie Chart Status]',
+                          icon: Icons.toggle_on_rounded,
+                          color: AppTheme.accentOrange,
                         ),
                         _buildChartCard(
                           title: 'Jenis Kelamin',
-                          icon: Icons.wc_rounded, // Example icon
-                          color: AppTheme.primaryLight, // Biru muda
-                          chartPlaceholderText:
-                              '[Placeholder Pie Chart Jenis Kelamin]',
+                          icon: Icons.wc_rounded,
+                          color: AppTheme.primaryLight,
                         ),
                         _buildChartCard(
                           title: 'Pekerjaan Penduduk',
-                          icon: Icons.work_rounded, // Example icon
-                          color: AppTheme.accentPurple, // Ungu
-                          chartPlaceholderText:
-                              '[Placeholder Pie Chart Pekerjaan]',
+                          icon: Icons.work_rounded,
+                          color: AppTheme.accentPurple,
                         ),
                         _buildChartCard(
                           title: 'Peran dalam Keluarga',
-                          icon: Icons.group_work_rounded, // Example icon
-                          color: AppTheme.secondary, // Biru langit
-                          chartPlaceholderText: '[Placeholder Pie Chart Peran]',
+                          icon: Icons.group_work_rounded,
+                          color: AppTheme.secondary,
                         ),
                         _buildChartCard(
                           title: 'Agama',
-                          icon: Icons
-                              .mosque_rounded, // Example icon (adjust as needed)
-                          color: Colors.pink.shade400, // Merah muda
-                          chartPlaceholderText: '[Placeholder Pie Chart Agama]',
+                          icon: Icons.mosque_rounded,
+                          color: Colors.pink.shade400,
                         ),
                         _buildChartCard(
                           title: 'Pendidikan',
-                          icon: Icons.school_rounded, // Example icon
-                          color: Colors.teal.shade400, // Teal
-                          chartPlaceholderText:
-                              '[Placeholder Pie Chart Pendidikan]',
+                          icon: Icons.school_rounded,
+                          color: Colors.teal.shade400,
                         ),
                       ],
                     ),
@@ -193,14 +182,13 @@ class _DashboardPopulationPageState extends State<DashboardPopulationPage> {
     required String title,
     required IconData icon,
     required Color color,
-    required String chartPlaceholderText,
   }) {
     return SharedCard(
       title: title,
       icon: icon,
       color: color,
       child: Container(
-        height: 200,
+        height: 250,
         padding: const EdgeInsets.all(16),
         child: _buildPieChartByTitle(title, color),
       ),
@@ -211,197 +199,180 @@ class _DashboardPopulationPageState extends State<DashboardPopulationPage> {
   Widget _buildPieChartByTitle(String title, Color baseColor) {
     List<PieChartSectionData> sections;
 
-    // Tentukan data berdasarkan judul chart
+    // Data berdasarkan 12 penduduk aktual
     if (title.contains('Status')) {
+      // Status Hidup: 11 Hidup, 1 Wafat
       sections = [
         PieChartSectionData(
           color: Colors.green.shade400,
-          value: 80,
-          title: '80%',
-          radius: 55,
+          value: 11,
+          title: '91.7%',
+          radius: 70,
           titleStyle: const TextStyle(
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
         PieChartSectionData(
           color: Colors.grey.shade400,
-          value: 20,
-          title: '20%',
-          radius: 55,
+          value: 1,
+          title: '8.3%',
+          radius: 70,
           titleStyle: const TextStyle(
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
       ];
     } else if (title.contains('Jenis Kelamin')) {
+      // 10 Laki-laki, 2 Perempuan
       sections = [
         PieChartSectionData(
           color: Colors.blue.shade400,
-          value: 52,
-          title: '52%',
-          radius: 55,
+          value: 10,
+          title: '83.3%',
+          radius: 70,
           titleStyle: const TextStyle(
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
         PieChartSectionData(
           color: Colors.pink.shade400,
-          value: 48,
-          title: '48%',
-          radius: 55,
+          value: 2,
+          title: '16.7%',
+          radius: 70,
           titleStyle: const TextStyle(
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
       ];
     } else if (title.contains('Pekerjaan')) {
+      // Contoh distribusi (data dummy realistis)
       sections = [
         PieChartSectionData(
           color: const Color(0xFF8B5CF6),
-          value: 35,
-          title: '35%',
-          radius: 55,
+          value: 4,
+          title: '33.3%',
+          radius: 70,
           titleStyle: const TextStyle(
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
         PieChartSectionData(
           color: const Color(0xFFA78BFA),
-          value: 30,
-          title: '30%',
-          radius: 55,
+          value: 4,
+          title: '33.3%',
+          radius: 70,
           titleStyle: const TextStyle(
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
         PieChartSectionData(
           color: const Color(0xFFC4B5FD),
-          value: 35,
-          title: '35%',
-          radius: 55,
+          value: 4,
+          title: '33.3%',
+          radius: 70,
           titleStyle: const TextStyle(
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
       ];
     } else if (title.contains('Peran')) {
+      // Peran: 10 Kepala Keluarga, 2 lainnya
       sections = [
         PieChartSectionData(
           color: const Color(0xFF06B6D4),
-          value: 40,
-          title: '40%',
-          radius: 55,
+          value: 10,
+          title: '83.3%',
+          radius: 70,
           titleStyle: const TextStyle(
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
         PieChartSectionData(
           color: const Color(0xFF22D3EE),
-          value: 35,
-          title: '35%',
-          radius: 55,
+          value: 2,
+          title: '16.7%',
+          radius: 70,
           titleStyle: const TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        PieChartSectionData(
-          color: const Color(0xFF67E8F9),
-          value: 25,
-          title: '25%',
-          radius: 55,
-          titleStyle: const TextStyle(
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
       ];
     } else if (title.contains('Agama')) {
+      // Mayoritas Islam (contoh)
       sections = [
         PieChartSectionData(
           color: Colors.pink.shade300,
-          value: 70,
-          title: '70%',
-          radius: 55,
+          value: 10,
+          title: '83.3%',
+          radius: 70,
           titleStyle: const TextStyle(
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
         PieChartSectionData(
           color: Colors.pink.shade500,
-          value: 20,
-          title: '20%',
-          radius: 55,
+          value: 2,
+          title: '16.7%',
+          radius: 70,
           titleStyle: const TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        PieChartSectionData(
-          color: Colors.pink.shade700,
-          value: 10,
-          title: '10%',
-          radius: 55,
-          titleStyle: const TextStyle(
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
       ];
     } else {
-      // Pendidikan
+      // Pendidikan (contoh distribusi)
       sections = [
         PieChartSectionData(
           color: Colors.teal.shade300,
-          value: 30,
-          title: '30%',
-          radius: 55,
+          value: 4,
+          title: '33.3%',
+          radius: 70,
           titleStyle: const TextStyle(
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
         PieChartSectionData(
           color: Colors.teal.shade500,
-          value: 40,
-          title: '40%',
-          radius: 55,
+          value: 5,
+          title: '41.7%',
+          radius: 70,
           titleStyle: const TextStyle(
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
         PieChartSectionData(
           color: Colors.teal.shade700,
-          value: 30,
-          title: '30%',
-          radius: 55,
+          value: 3,
+          title: '25%',
+          radius: 70,
           titleStyle: const TextStyle(
-            fontSize: 12,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
@@ -412,8 +383,8 @@ class _DashboardPopulationPageState extends State<DashboardPopulationPage> {
     return PieChart(
       PieChartData(
         sections: sections,
-        centerSpaceRadius: 35,
-        sectionsSpace: 2,
+        centerSpaceRadius: 45,
+        sectionsSpace: 3,
         borderData: FlBorderData(show: false),
       ),
     );

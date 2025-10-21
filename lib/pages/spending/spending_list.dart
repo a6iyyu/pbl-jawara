@@ -123,7 +123,7 @@ class _SpendingListPageState extends State<SpendingListPage> {
 
     return BaseLayout(
       title: 'Daftar Pengeluaran', // AppBar title
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0), // Main content padding
         child: Column(
           children: [

@@ -33,7 +33,12 @@ class _IncomeCategoriesPageState extends State<IncomeCategoriesPage> {
     DuesCategory(no: 2, nama: 'yyy', jenis: 'Iuran Bulanan', nominal: 5000),
     DuesCategory(no: 3, nama: 'Harian', jenis: 'Iuran Khusus', nominal: 2),
     DuesCategory(no: 4, nama: 'Kerja Bakti', jenis: 'Iuran Khusus', nominal: 5),
-    DuesCategory(no: 5, nama: 'Bersih Desa', jenis: 'Iuran Khusus', nominal: 200000),
+    DuesCategory(
+      no: 5,
+      nama: 'Bersih Desa',
+      jenis: 'Iuran Khusus',
+      nominal: 200000,
+    ),
     DuesCategory(no: 6, nama: 'Mingguan', jenis: 'Iuran Khusus', nominal: 12),
     DuesCategory(no: 7, nama: 'Agustusan', jenis: 'Iuran Khusus', nominal: 15),
   ];
@@ -46,8 +51,11 @@ class _IncomeCategoriesPageState extends State<IncomeCategoriesPage> {
     final sortable = ['NAMA IURAN', 'JENIS IURAN', 'NOMINAL'];
 
     // Prepare table rows with formatting
-    final currencyFormatter =
-        NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 2);
+    final currencyFormatter = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+      decimalDigits: 2,
+    );
 
     final rows = _categories.map((category) {
       return <Widget>[
@@ -65,7 +73,7 @@ class _IncomeCategoriesPageState extends State<IncomeCategoriesPage> {
 
     return BaseLayout(
       title: 'Kategori Iuran', // AppBar title
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0), // Main content padding
         child: Column(
           children: [
@@ -86,50 +94,76 @@ class _IncomeCategoriesPageState extends State<IncomeCategoriesPage> {
                     padding: const EdgeInsets.all(16.0),
                     margin: const EdgeInsets.only(bottom: 16.0),
                     decoration: BoxDecoration(
-                      color: AppTheme.primaryLight.withOpacity(0.1), // Warna biru muda
+                      color: AppTheme.primaryLight.withOpacity(
+                        0.1,
+                      ), // Warna biru muda
                       borderRadius: AppTheme.borderRadiusMedium,
-                      border: Border.all(color: AppTheme.primaryLight.withOpacity(0.3)),
+                      border: Border.all(
+                        color: AppTheme.primaryLight.withOpacity(0.3),
+                      ),
                     ),
                     child: Text(
                       'Info: Iuran Bulanan: Dibayar setiap bulan sekali secara rutin. '
                       'Iuran Khusus: Dibayar sesuai jadwal atau kebutuhan tertentu, misalnya iuran untuk acara khusus, renovasi, atau kegiatan lain yang tidak rutin.',
-                      style: AppTheme.bodyMedium.copyWith(color: AppTheme.primaryDark),
+                      style: AppTheme.bodyMedium.copyWith(
+                        color: AppTheme.primaryDark,
+                      ),
                     ),
                   ),
 
                   // Header row with Action buttons
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween, // Tombol di kedua sisi
+                    mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween, // Tombol di kedua sisi
                     children: [
                       // Tombol kiri (Tambah/Refresh?) - Ganti ikon sesuai kebutuhan
                       ElevatedButton(
-                         onPressed: () {
-                           // Aksi tombol kiri (misal: Tambah Kategori)
-                           Navigator.pushNamed(context, '/income/categories/add'); // Contoh navigasi
-                         },
-                         style: ElevatedButton.styleFrom(
-                           backgroundColor: AppTheme.accentPurple, // Warna berbeda
-                           shape: RoundedRectangleBorder(
-                             borderRadius: AppTheme.borderRadiusSmall,
-                           ),
-                           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                         ),
-                         child: const Icon(Icons.add, color: Colors.white, size: 20),
-                       ),
-                       // Tombol Filter kanan
+                        onPressed: () {
+                          // Aksi tombol kiri (misal: Tambah Kategori)
+                          Navigator.pushNamed(
+                            context,
+                            '/income/categories/add',
+                          ); // Contoh navigasi
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              AppTheme.accentPurple, // Warna berbeda
+                          shape: RoundedRectangleBorder(
+                            borderRadius: AppTheme.borderRadiusSmall,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 12,
+                          ),
+                        ),
+                        child: const Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                      ),
+                      // Tombol Filter kanan
                       ElevatedButton.icon(
                         onPressed: () {},
-                        icon: const Icon(Icons.filter_list,
-                            color: Colors.white, size: 18),
-                        label: const Text('Filter',
-                            style: TextStyle(color: Colors.white)), // Tambahkan teks jika perlu
+                        icon: const Icon(
+                          Icons.filter_list,
+                          color: Colors.white,
+                          size: 18,
+                        ),
+                        label: const Text(
+                          'Filter',
+                          style: TextStyle(color: Colors.white),
+                        ), // Tambahkan teks jika perlu
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppTheme.primary, // From theme
                           shape: RoundedRectangleBorder(
-                            borderRadius: AppTheme.borderRadiusSmall, // From theme
+                            borderRadius:
+                                AppTheme.borderRadiusSmall, // From theme
                           ),
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 12),
+                            horizontal: 16,
+                            vertical: 12,
+                          ),
                         ),
                       ),
                     ],
@@ -143,7 +177,8 @@ class _IncomeCategoriesPageState extends State<IncomeCategoriesPage> {
                         scrollDirection: Axis.horizontal,
                         child: ConstrainedBox(
                           constraints: BoxConstraints(
-                              minWidth: constraints.maxWidth), // Min width
+                            minWidth: constraints.maxWidth,
+                          ), // Min width
                           child: CustomDataTable(
                             headers: headers,
                             rows: rows,

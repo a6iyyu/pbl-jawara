@@ -96,7 +96,7 @@ class _BroadcastListPageState extends State<BroadcastListPage> {
 
     return BaseLayout(
       title: 'Daftar Broadcast', // Judul AppBar
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0), // Padding utama konten
         child: Column(
           children: [

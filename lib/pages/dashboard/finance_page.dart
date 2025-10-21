@@ -127,22 +127,24 @@ class _DashboardFinancePageState extends State<DashboardFinancePage> {
                       children: [
                         _buildSummaryCard(
                           title: 'Total Pemasukan',
-                          value: '50 jt',
+                          value: 'Rp 5,01 M',
+                          subtitle: 'Tagihan: Rp 100 rb + Lainnya: Rp 5 M',
                           icon: Icons.arrow_downward_rounded,
-                          color: AppTheme.accentGreen, // Hijau untuk pemasukan
+                          color: AppTheme.accentGreen,
                         ),
                         _buildSummaryCard(
                           title: 'Total Pengeluaran',
-                          value: '152.1 rb',
+                          value: 'Rp 152,1 rb',
+                          subtitle: '4 transaksi pengeluaran',
                           icon: Icons.arrow_upward_rounded,
-                          color: AppTheme.accentRed, // Merah untuk pengeluaran
+                          color: AppTheme.accentRed,
                         ),
                         _buildSummaryCard(
-                          title: 'Jumlah Transaksi',
-                          value: '7',
-                          icon: Icons.receipt_long_rounded,
-                          color:
-                              AppTheme.accentOrange, // Oranye untuk transaksi
+                          title: 'Saldo',
+                          value: 'Rp 4,86 M',
+                          subtitle: 'Pemasukan - Pengeluaran',
+                          icon: Icons.account_balance_wallet_rounded,
+                          color: AppTheme.primary,
                         ),
                       ],
                     ),
@@ -161,29 +163,25 @@ class _DashboardFinancePageState extends State<DashboardFinancePage> {
                           title: 'Pemasukan per Bulan',
                           icon: Icons.bar_chart_rounded,
                           color: AppTheme.primary,
-                          chartPlaceholderText:
-                              '[Placeholder Bar Chart Pemasukan]',
+                          isBarChart: true,
                         ),
                         _buildChartCard(
                           title: 'Pengeluaran per Bulan',
                           icon: Icons.bar_chart_rounded,
                           color: AppTheme.accentRed,
-                          chartPlaceholderText:
-                              '[Placeholder Bar Chart Pengeluaran]',
+                          isBarChart: true,
                         ),
                         _buildChartCard(
                           title: 'Pemasukan Berdasarkan Kategori',
                           icon: Icons.pie_chart_rounded,
                           color: AppTheme.accentOrange,
-                          chartPlaceholderText:
-                              '[Placeholder Pie Chart Pemasukan]',
+                          isBarChart: false,
                         ),
                         _buildChartCard(
                           title: 'Pengeluaran Berdasarkan Kategori',
                           icon: Icons.pie_chart_rounded,
                           color: AppTheme.accentPurple,
-                          chartPlaceholderText:
-                              '[Placeholder Pie Chart Pengeluaran]',
+                          isBarChart: false,
                         ),
                       ],
                     ),
@@ -202,30 +200,38 @@ class _DashboardFinancePageState extends State<DashboardFinancePage> {
   Widget _buildSummaryCard({
     required String title,
     required String value,
+    String? subtitle,
     required IconData icon,
     required Color color,
   }) {
     return SharedCard(
-      // Menggunakan SharedCard yang sudah ada
       title: title,
       icon: icon,
       color: color,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center, // Pusatkan value
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           FittedBox(
-            // Agar teks tidak overflow
             fit: BoxFit.scaleDown,
             child: Text(
               value,
-              style: AppTheme.headingLarge.copyWith(
-                color: color,
-              ), // Ukuran lebih besar
+              style: AppTheme.headingLarge.copyWith(color: color, fontSize: 28),
               maxLines: 1,
             ),
           ),
-          // Tambahkan deskripsi jika perlu
+          if (subtitle != null) ...[
+            const SizedBox(height: 4),
+            Text(
+              subtitle,
+              style: AppTheme.bodySmall.copyWith(
+                color: AppTheme.textMedium,
+                fontSize: 11,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
         ],
       ),
     );
@@ -236,95 +242,83 @@ class _DashboardFinancePageState extends State<DashboardFinancePage> {
     required String title,
     required IconData icon,
     required Color color,
-    required String chartPlaceholderText,
+    required bool isBarChart,
   }) {
-    // Tentukan apakah chart ini adalah pie chart berdasarkan icon
-    bool isPieChart = icon == Icons.pie_chart_rounded;
-
     return SharedCard(
       title: title,
       icon: icon,
       color: color,
       child: Container(
-        height: 200,
+        height: 250,
         padding: const EdgeInsets.all(16),
-        child: isPieChart
-            ? _buildPieChart(title)
-            : Center(
-                child: Text(
-                  chartPlaceholderText,
-                  style: AppTheme.bodyMedium.copyWith(
-                    color: AppTheme.textLight,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
+        child: isBarChart ? _buildBarChart(title) : _buildPieChart(title),
       ),
     );
   }
 
   // Helper Widget untuk Pie Chart
   Widget _buildPieChart(String title) {
-    // Data dummy berdasarkan judul
+    // Data berdasarkan data aktual di aplikasi
     List<PieChartSectionData> sections;
 
     if (title.contains('Pemasukan')) {
+      // Data pemasukan: Tagihan (100rb) vs Lainnya (5M)
       sections = [
         PieChartSectionData(
-          color: const Color(0xFF06B6D4),
-          value: 30,
-          title: '60%',
-          radius: 60,
+          color: const Color(0xFF10B981),
+          value: 5010700,
+          title: '98%',
+          radius: 75,
           titleStyle: const TextStyle(
-            fontSize: 14,
+            fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
         PieChartSectionData(
-          color: const Color(0xFF10B981),
-          value: 20,
-          title: '40%',
-          radius: 60,
+          color: const Color(0xFF34D399),
+          value: 100000,
+          title: '2%',
+          radius: 75,
           titleStyle: const TextStyle(
-            fontSize: 14,
+            fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
       ];
     } else {
-      // Data untuk pengeluaran
+      // Data pengeluaran berdasarkan kategori aktual
       sections = [
         PieChartSectionData(
           color: const Color(0xFFEF4444),
-          value: 15,
-          title: '45%',
-          radius: 60,
+          value: 100100,
+          title: '65.8%',
+          radius: 75,
           titleStyle: const TextStyle(
-            fontSize: 14,
+            fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
         PieChartSectionData(
           color: const Color(0xFFF97316),
-          value: 10,
-          title: '30%',
-          radius: 60,
+          value: 51000,
+          title: '33.5%',
+          radius: 75,
           titleStyle: const TextStyle(
-            fontSize: 14,
+            fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
         PieChartSectionData(
           color: const Color(0xFFFBBF24),
-          value: 8,
-          title: '25%',
-          radius: 60,
+          value: 1000,
+          title: '0.7%',
+          radius: 75,
           titleStyle: const TextStyle(
-            fontSize: 14,
+            fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
@@ -335,8 +329,121 @@ class _DashboardFinancePageState extends State<DashboardFinancePage> {
     return PieChart(
       PieChartData(
         sections: sections,
-        centerSpaceRadius: 40,
-        sectionsSpace: 2,
+        centerSpaceRadius: 45,
+        sectionsSpace: 3,
+        borderData: FlBorderData(show: false),
+      ),
+    );
+  }
+
+  // Helper Widget untuk Bar Chart
+  Widget _buildBarChart(String title) {
+    bool isPemasukan = title.contains('Pemasukan');
+    Color barColor = isPemasukan ? AppTheme.accentGreen : AppTheme.accentRed;
+
+    // Data dummy untuk 12 bulan
+    List<BarChartGroupData> barGroups = List.generate(12, (index) {
+      double value;
+      if (isPemasukan) {
+        // Simulasi data pemasukan per bulan (dalam jutaan)
+        value = (index % 3 == 0)
+            ? 0.5
+            : (index % 2 == 0)
+            ? 0.3
+            : 0.4;
+      } else {
+        // Simulasi data pengeluaran per bulan (dalam ratusan ribu)
+        value = (index % 3 == 0)
+            ? 0.15
+            : (index % 2 == 0)
+            ? 0.1
+            : 0.12;
+      }
+
+      return BarChartGroupData(
+        x: index,
+        barRods: [
+          BarChartRodData(
+            toY: value,
+            color: barColor,
+            width: 16,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(6),
+              topRight: Radius.circular(6),
+            ),
+          ),
+        ],
+      );
+    });
+
+    return BarChart(
+      BarChartData(
+        alignment: BarChartAlignment.spaceAround,
+        maxY: isPemasukan ? 0.6 : 0.2,
+        barGroups: barGroups,
+        titlesData: FlTitlesData(
+          show: true,
+          bottomTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              getTitlesWidget: (value, meta) {
+                const months = [
+                  'Jan',
+                  'Feb',
+                  'Mar',
+                  'Apr',
+                  'Mei',
+                  'Jun',
+                  'Jul',
+                  'Agu',
+                  'Sep',
+                  'Okt',
+                  'Nov',
+                  'Des',
+                ];
+                if (value.toInt() >= 0 && value.toInt() < months.length) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      months[value.toInt()],
+                      style: const TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  );
+                }
+                return const Text('');
+              },
+            ),
+          ),
+          leftTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              reservedSize: 40,
+              getTitlesWidget: (value, meta) {
+                return Text(
+                  '${value.toStringAsFixed(1)}M',
+                  style: const TextStyle(fontSize: 10),
+                );
+              },
+            ),
+          ),
+          topTitles: const AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
+          rightTitles: const AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
+        ),
+        gridData: FlGridData(
+          show: true,
+          drawVerticalLine: false,
+          horizontalInterval: isPemasukan ? 0.1 : 0.05,
+          getDrawingHorizontalLine: (value) {
+            return FlLine(color: Colors.grey.shade300, strokeWidth: 1);
+          },
+        ),
         borderData: FlBorderData(show: false),
       ),
     );

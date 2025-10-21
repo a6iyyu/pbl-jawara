@@ -83,9 +83,7 @@ class _DashboardActivitiesPageState extends State<DashboardActivitiesPage> {
                         SharedCard(
                           title: 'Total Kegiatan',
                           icon: Icons.event_note_rounded,
-                          color: Colors
-                              .blue
-                              .shade600, // Sesuaikan warna jika perlu
+                          color: Colors.blue.shade600,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
@@ -93,15 +91,16 @@ class _DashboardActivitiesPageState extends State<DashboardActivitiesPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  '1', // Data dari screenshot
+                                  '1',
                                   style: AppTheme.headingLarge.copyWith(
                                     color: Colors.blue.shade700,
+                                    fontSize: 48,
                                   ),
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  'Jumlah seluruh event yang sudah ada', // Teks dari screenshot
-                                  style: AppTheme.bodyMedium.copyWith(
+                                  'Kegiatan "Musy" - Komunitas & Sosial',
+                                  style: AppTheme.bodySmall.copyWith(
                                     color: AppTheme.textMedium,
                                   ),
                                   maxLines: 2,
@@ -118,47 +117,25 @@ class _DashboardActivitiesPageState extends State<DashboardActivitiesPage> {
                           icon: Icons.category_rounded,
                           color: Colors.green.shade600,
                           child: Container(
-                            height: 200,
+                            height: 250,
                             padding: const EdgeInsets.all(16),
                             child: PieChart(
                               PieChartData(
                                 sections: [
                                   PieChartSectionData(
-                                    color: const Color(0xFF06B6D4),
-                                    value: 40,
-                                    title: '40%',
-                                    radius: 60,
-                                    titleStyle: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  PieChartSectionData(
                                     color: const Color(0xFF10B981),
-                                    value: 30,
-                                    title: '30%',
-                                    radius: 60,
+                                    value: 1,
+                                    title: '100%',
+                                    radius: 75,
                                     titleStyle: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  PieChartSectionData(
-                                    color: const Color(0xFFF97316),
-                                    value: 30,
-                                    title: '30%',
-                                    radius: 60,
-                                    titleStyle: const TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
                                     ),
                                   ),
                                 ],
-                                centerSpaceRadius: 40,
-                                sectionsSpace: 2,
+                                centerSpaceRadius: 45,
+                                sectionsSpace: 0,
                                 borderData: FlBorderData(show: false),
                               ),
                             ),
@@ -225,15 +202,9 @@ class _DashboardActivitiesPageState extends State<DashboardActivitiesPage> {
                           icon: Icons.bar_chart_rounded,
                           color: Colors.pink.shade600,
                           child: Container(
-                            height: 150,
-                            alignment: Alignment.center,
-                            child: Text(
-                              '[Placeholder Bar Chart]',
-                              style: AppTheme.bodyMedium.copyWith(
-                                color: AppTheme.textLight,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
+                            height: 250,
+                            padding: const EdgeInsets.all(16),
+                            child: _buildActivitiesBarChart(),
                           ),
                         ),
                       ],
@@ -245,6 +216,101 @@ class _DashboardActivitiesPageState extends State<DashboardActivitiesPage> {
           ),
           Sidebar(isExpanded: _isSidebarExpanded),
         ],
+      ),
+    );
+  }
+
+  // Helper Widget untuk Bar Chart Kegiatan
+  Widget _buildActivitiesBarChart() {
+    // Data dummy kegiatan per bulan (1 kegiatan di bulan tertentu)
+    List<BarChartGroupData> barGroups = List.generate(12, (index) {
+      double value = (index == 5) ? 1 : 0; // 1 kegiatan di bulan Juni (index 5)
+
+      return BarChartGroupData(
+        x: index,
+        barRods: [
+          BarChartRodData(
+            toY: value,
+            color: Colors.pink.shade400,
+            width: 16,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(6),
+              topRight: Radius.circular(6),
+            ),
+          ),
+        ],
+      );
+    });
+
+    return BarChart(
+      BarChartData(
+        alignment: BarChartAlignment.spaceAround,
+        maxY: 2,
+        barGroups: barGroups,
+        titlesData: FlTitlesData(
+          show: true,
+          bottomTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              getTitlesWidget: (value, meta) {
+                const months = [
+                  'Jan',
+                  'Feb',
+                  'Mar',
+                  'Apr',
+                  'Mei',
+                  'Jun',
+                  'Jul',
+                  'Agu',
+                  'Sep',
+                  'Okt',
+                  'Nov',
+                  'Des',
+                ];
+                if (value.toInt() >= 0 && value.toInt() < months.length) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      months[value.toInt()],
+                      style: const TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  );
+                }
+                return const Text('');
+              },
+            ),
+          ),
+          leftTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              reservedSize: 30,
+              getTitlesWidget: (value, meta) {
+                return Text(
+                  '${value.toInt()}',
+                  style: const TextStyle(fontSize: 10),
+                );
+              },
+            ),
+          ),
+          topTitles: const AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
+          rightTitles: const AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
+        ),
+        gridData: FlGridData(
+          show: true,
+          drawVerticalLine: false,
+          horizontalInterval: 1,
+          getDrawingHorizontalLine: (value) {
+            return FlLine(color: Colors.grey.shade300, strokeWidth: 1);
+          },
+        ),
+        borderData: FlBorderData(show: false),
       ),
     );
   }

@@ -281,7 +281,7 @@ class _IncomeBillsPageState extends State<IncomeBillsPage> {
 
     return BaseLayout(
       title: 'Tagihan', // AppBar title
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0), // Main content padding
         child: Column(
           children: [
