@@ -1,20 +1,38 @@
 import 'package:flutter/material.dart';
-
-// Import all pages using barrel files for better organization
-import 'package:jawara/pages/auth/auth_pages.dart';
-import 'package:jawara/pages/dashboard/dashboard_pages.dart';
-import 'package:jawara/pages/residents/residents_pages.dart';
-import 'package:jawara/pages/income/income_pages.dart';
-import 'package:jawara/pages/spending/spending_pages.dart';
-import 'package:jawara/pages/reports/reports_pages.dart';
-import 'package:jawara/pages/activities/activities_pages.dart';
-import 'package:jawara/pages/approvals/approvals_pages.dart';
-import 'package:jawara/pages/mutations/mutations_pages.dart';
-import 'package:jawara/pages/users/users_pages.dart';
-import 'package:jawara/pages/channels/channels_pages.dart';
+import 'package:jawara/pages/income.dart';
+import 'package:jawara/pages/resident_approvals.dart';
+import 'package:jawara/pages/spending.dart';
+import 'package:jawara/pages/user_management.dart';
 import 'package:jawara/pages/activity_logs_page.dart';
-
-// Shared
+import 'package:jawara/pages/resident_messages.dart';
+// Import dari subfolder
+import 'package:jawara/pages/auth/login_page.dart';
+import 'package:jawara/pages/auth/register_page.dart';
+import 'package:jawara/pages/dashboard/dashboard_page.dart';
+import 'package:jawara/pages/dashboard/finance_page.dart';
+import 'package:jawara/pages/dashboard/activities_page.dart';
+import 'package:jawara/pages/dashboard/population_page.dart';
+import 'package:jawara/pages/residents/residents_list.dart';
+import 'package:jawara/pages/residents/residents_add.dart';
+import 'package:jawara/pages/residents/families_page.dart';
+import 'package:jawara/pages/residents/houses_list.dart';
+import 'package:jawara/pages/residents/houses_add.dart';
+import 'package:jawara/pages/income/income_categories.dart';
+import 'package:jawara/pages/income/income_bill.dart';
+import 'package:jawara/pages/income/income_bills.dart';
+import 'package:jawara/pages/income/income_other_list.dart';
+import 'package:jawara/pages/income/income_other_add.dart';
+import 'package:jawara/pages/spending/spending_list.dart';
+import 'package:jawara/pages/spending/spending_add.dart';
+import 'package:jawara/pages/reports/reports_income.dart';
+import 'package:jawara/pages/reports/reports_spending.dart';
+import 'package:jawara/pages/reports/reports_print.dart';
+import 'package:jawara/pages/activities/activities_list.dart';
+import 'package:jawara/pages/activities/activities_add.dart';
+import 'package:jawara/pages/activities/broadcast_list.dart';
+import 'package:jawara/pages/activities/broadcast_add.dart';
+import 'package:jawara/pages/mutations/family_mutations_list.dart';
+import 'package:jawara/pages/mutations/family_mutations_add.dart';
 import 'package:jawara/shared/theme.dart';
 
 void main() {
@@ -89,11 +107,6 @@ class MyApp extends StatelessWidget {
 
         // Manajemen Pengguna (User Management)
         '/users': (context) => const UserManagementPage(),
-        '/users/add': (context) => const UsersAddPage(),
-
-        // Channel Transfer
-        '/channels/list': (context) => const ChannelsListPage(),
-        '/channels/add': (context) => const ChannelsAddPage(),
       },
       debugShowCheckedModeBanner: false,
     );

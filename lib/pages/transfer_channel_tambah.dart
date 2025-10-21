@@ -1,0 +1,310 @@
+import 'package:flutter/material.dart';
+import 'package:jawara/shared/sidebar.dart';
+
+class CustomDropdown extends StatelessWidget {
+  final String hintText;
+  final List<String> items;
+  final String? selectedValue;
+  final ValueChanged<String?> onChanged;
+
+  const CustomDropdown({
+    super.key,
+    required this.hintText,
+    required this.items,
+    required this.selectedValue,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        border: Border.all(color: Colors.grey.shade300),
+        color: Colors.white,
+      ),
+      child: DropdownButtonFormField<String>(
+        decoration: const InputDecoration(
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.zero,
+        ),
+        hint: Text(hintText),
+        value: selectedValue,
+        items: items.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        onChanged: onChanged,
+      ),
+    );
+  }
+}
+
+class TransferChannelPageTambah extends StatefulWidget {
+  const TransferChannelPageTambah({super.key});
+
+  @override
+  State<TransferChannelPageTambah> createState() => _TransferChannelPageTambahState();
+}
+
+class _TransferChannelPageTambahState extends State<TransferChannelPageTambah> {
+  bool _isSidebarExpanded = true;
+
+  final TextEditingController _namaChannelController = TextEditingController();
+  String? _selectedTipe;
+  final TextEditingController _nomorAkunController = TextEditingController();
+  final TextEditingController _namaPemilikController = TextEditingController();
+
+  String _qrFileName = 'Belum ada file dipilih';
+
+  final List<String> tipeOptions = ['Bank', 'E-Wallet', 'QRIS'];
+
+  @override
+  void dispose() {
+    _namaChannelController.dispose();
+    _nomorAkunController.dispose();
+    _namaPemilikController.dispose();
+    super.dispose();
+  }
+
+  void _uploadQrPhoto() {
+    setState(() {
+      _qrFileName = 'QR_RW_08.jpg';
+    });
+  }
+
+  void _handleSimpan() {
+    print('Menyimpan Transfer Channel:');
+    print('Nama Channel: ${_namaChannelController.text}');
+    print('Tipe: $_selectedTipe');
+    print('Nomor Akun: ${_nomorAkunController.text}');
+    print('Nama Pemilik: ${_namaPemilikController.text}');
+    print('File QR: $_qrFileName');
+  }
+
+  void _handleReset() {
+    setState(() {
+      _namaChannelController.clear();
+      _nomorAkunController.clear();
+      _namaPemilikController.clear();
+      _selectedTipe = null;
+      _qrFileName = 'Belum ada file dipilih';
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final double sidebarWidth = _isSidebarExpanded ? 280.0 : 70.0;
+
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            setState(() {
+              _isSidebarExpanded = !_isSidebarExpanded;
+            });
+          },
+        ),
+        title: const Flexible(
+          child: Text(
+            'Tambah Kanal Transfer',
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
+          ),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 1,
+        iconTheme: const IconThemeData(color: Colors.black87),
+      ),
+      body: Stack(
+        children: [
+          // KONTEN UTAMA - FULL WIDTH & HEIGHT
+          AnimatedPadding(
+            padding: EdgeInsets.only(left: sidebarWidth),
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: const Color(0xFFF4F7FC),
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  // CARD FORM - FULL WIDTH & EXPANDED
+                  Expanded(
+                    child: Card(
+                      elevation: 2,
+                      shadowColor: Colors.black26,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(32.0),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "Buat Transfer Channel",
+                                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 30),
+
+                              // Nama Channel
+                              const Text("Nama Channel", style: TextStyle(fontWeight: FontWeight.w600)),
+                              const SizedBox(height: 8),
+                              TextFormField(
+                                controller: _namaChannelController,
+                                decoration: InputDecoration(
+                                  hintText: "Contoh: BCA, Dana, QRIS RT",
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    borderSide: BorderSide(color: Colors.grey.shade300),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 24),
+
+                              // Tipe
+                              const Text("Tipe", style: TextStyle(fontWeight: FontWeight.w600)),
+                              const SizedBox(height: 8),
+                              CustomDropdown(
+                                hintText: "-- Pilih Tipe --",
+                                items: tipeOptions,
+                                selectedValue: _selectedTipe,
+                                onChanged: (value) => setState(() => _selectedTipe = value),
+                              ),
+                              const SizedBox(height: 24),
+
+                              // Nomor Rekening / Akun
+                              const Text("Nomor Rekening / Akun", style: TextStyle(fontWeight: FontWeight.w600)),
+                              const SizedBox(height: 8),
+                              TextFormField(
+                                controller: _nomorAkunController,
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  hintText: "Contoh: 1234567890",
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    borderSide: BorderSide(color: Colors.grey.shade300),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 24),
+
+                              // Nama Pemilik
+                              const Text("Nama Pemilik", style: TextStyle(fontWeight: FontWeight.w600)),
+                              const SizedBox(height: 8),
+                              TextFormField(
+                                controller: _namaPemilikController,
+                                decoration: InputDecoration(
+                                  hintText: "Contoh: John Doe",
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    borderSide: BorderSide(color: Colors.grey.shade300),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 24),
+
+                              // QR Upload
+                              const Text("QR", style: TextStyle(fontWeight: FontWeight.w600)),
+                              const SizedBox(height: 8),
+                              Container(
+                                padding: const EdgeInsets.all(16.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade50,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  border: Border.all(color: Colors.grey.shade300),
+                                ),
+                                child: Row(
+                                  children: [
+                                    ElevatedButton.icon(
+                                      onPressed: _uploadQrPhoto,
+                                      icon: const Icon(Icons.upload_file, color: Colors.white),
+                                      label: const Text(
+                                        "Upload foto QR (jika ada)",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Theme.of(context).primaryColor,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 16),
+                                    Expanded(
+                                      child: Text(
+                                        _qrFileName,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          color: _qrFileName.startsWith('Belum')
+                                              ? Colors.grey.shade600
+                                              : Colors.green.shade600,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 40),
+
+                              // Tombol Aksi
+                              Row(
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: _handleSimpan,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Theme.of(context).primaryColor,
+                                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'Simpan',
+                                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  TextButton(
+                                    onPressed: _handleReset,
+                                    style: TextButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                                    ),
+                                    child: Text(
+                                      'Reset',
+                                      style: TextStyle(color: Colors.grey.shade700, fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // SIDEBAR TETAP DI KIRI
+          Sidebar(isExpanded: _isSidebarExpanded),
+        ],
+      ),
+    );
+  }
+}
