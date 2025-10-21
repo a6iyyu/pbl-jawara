@@ -45,42 +45,42 @@ class AppTheme {
     end: Alignment.bottomRight,
   );
 
-  // Border Radius
-  static BorderRadius borderRadiusSmall = BorderRadius.circular(8);
-  static BorderRadius borderRadiusMedium = BorderRadius.circular(12);
-  static BorderRadius borderRadiusLarge = BorderRadius.circular(16);
-  static BorderRadius borderRadiusXLarge = BorderRadius.circular(20);
-  static BorderRadius borderRadiusXXLarge = BorderRadius.circular(24);
+  // Border Radius - More rounded for modern look
+  static BorderRadius borderRadiusSmall = BorderRadius.circular(12);
+  static BorderRadius borderRadiusMedium = BorderRadius.circular(16);
+  static BorderRadius borderRadiusLarge = BorderRadius.circular(20);
+  static BorderRadius borderRadiusXLarge = BorderRadius.circular(24);
+  static BorderRadius borderRadiusXXLarge = BorderRadius.circular(28);
 
-  // Box Shadows - More subtle
+  // Box Shadows - Minimalist & subtle
   static List<BoxShadow> shadowSmall = [
     BoxShadow(
-      color: Colors.black.withValues(alpha: 0.05),
-      blurRadius: 8,
+      color: Colors.black.withValues(alpha: 0.03),
+      blurRadius: 6,
       offset: const Offset(0, 2),
     ),
   ];
 
   static List<BoxShadow> shadowMedium = [
     BoxShadow(
-      color: Colors.black.withValues(alpha: 0.08),
-      blurRadius: 16,
+      color: Colors.black.withValues(alpha: 0.04),
+      blurRadius: 12,
       offset: const Offset(0, 4),
     ),
   ];
 
   static List<BoxShadow> shadowLarge = [
     BoxShadow(
-      color: Colors.black.withValues(alpha: 0.1),
-      blurRadius: 24,
-      offset: const Offset(0, 8),
+      color: Colors.black.withValues(alpha: 0.06),
+      blurRadius: 20,
+      offset: const Offset(0, 6),
     ),
   ];
 
   static List<BoxShadow> shadowCard = [
     BoxShadow(
-      color: primary.withValues(alpha: 0.06),
-      blurRadius: 12,
+      color: primary.withValues(alpha: 0.04),
+      blurRadius: 10,
       offset: const Offset(0, 2),
     ),
   ];

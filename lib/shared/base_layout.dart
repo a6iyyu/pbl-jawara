@@ -35,6 +35,7 @@ class _BaseLayoutState extends State<BaseLayout> {
                       ? Icons.menu_open_rounded
                       : Icons.menu_rounded,
                   color: const Color(0xFF0891B2),
+                  size: 24,
                 ),
                 onPressed: () {
                   setState(() {
@@ -46,26 +47,40 @@ class _BaseLayoutState extends State<BaseLayout> {
         title: Text(widget.title, overflow: TextOverflow.ellipsis),
         backgroundColor: Colors.white,
         elevation: 0,
+        surfaceTintColor: Colors.white,
+        shadowColor: Colors.black.withOpacity(0.05),
         titleTextStyle: const TextStyle(
           color: Color(0xFF1F2937),
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 0.3,
         ),
         actions:
             widget.actions ??
             [
-              IconButton(
-                icon: const Icon(
-                  Icons.notifications_rounded,
-                  color: Color(0xFF0891B2),
+              Container(
+                margin: const EdgeInsets.only(right: 8),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF0891B2).withOpacity(0.08),
+                  shape: BoxShape.circle,
                 ),
-                onPressed: () {},
-                tooltip: 'Notifikasi',
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.notifications_rounded,
+                    color: Color(0xFF0891B2),
+                    size: 22,
+                  ),
+                  onPressed: () {},
+                  tooltip: 'Notifikasi',
+                ),
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 16, left: 8),
+                padding: const EdgeInsets.only(right: 16, left: 4),
                 child: PopupMenuButton<String>(
                   offset: const Offset(0, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                   onSelected: (value) {
                     if (value == 'logout') {
                       Navigator.pushNamedAndRemoveUntil(
@@ -83,10 +98,10 @@ class _BaseLayoutState extends State<BaseLayout> {
                           Icon(
                             Icons.person_rounded,
                             color: Color(0xFF0891B2),
-                            size: 20,
+                            size: 18,
                           ),
                           SizedBox(width: 12),
-                          Text('Profil', style: TextStyle(fontSize: 14)),
+                          Text('Profil', style: TextStyle(fontSize: 13.5)),
                         ],
                       ),
                     ),
@@ -97,10 +112,10 @@ class _BaseLayoutState extends State<BaseLayout> {
                           Icon(
                             Icons.settings_rounded,
                             color: Color(0xFF0891B2),
-                            size: 20,
+                            size: 18,
                           ),
                           SizedBox(width: 12),
-                          Text('Pengaturan', style: TextStyle(fontSize: 14)),
+                          Text('Pengaturan', style: TextStyle(fontSize: 13.5)),
                         ],
                       ),
                     ),
@@ -112,27 +127,45 @@ class _BaseLayoutState extends State<BaseLayout> {
                           Icon(
                             Icons.logout_rounded,
                             color: Color(0xFFEF4444),
-                            size: 20,
+                            size: 18,
                           ),
                           SizedBox(width: 12),
                           Text(
                             'Keluar',
                             style: TextStyle(
                               color: Color(0xFFEF4444),
-                              fontSize: 14,
+                              fontSize: 13.5,
                             ),
                           ),
                         ],
                       ),
                     ),
                   ],
-                  child: const CircleAvatar(
-                    backgroundColor: Color(0xFF0891B2),
-                    child: Text(
-                      'A',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF0891B2), Color(0xFF0284C7)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF0891B2).withOpacity(0.3),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: const CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      child: Text(
+                        'A',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                        ),
                       ),
                     ),
                   ),

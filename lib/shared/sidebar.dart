@@ -48,15 +48,15 @@ class _SidebarState extends State<Sidebar> {
       child: AnimatedContainer(
         width: widget.isExpanded ? 280.0 : 70.0,
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Color(0xFF0891B2), Color(0xFF0284C7)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+          color: Colors.white,
+          borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(24),
+            bottomRight: Radius.circular(24),
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.08),
-              blurRadius: 16,
+              color: Colors.black.withOpacity(0.04),
+              blurRadius: 12,
               offset: const Offset(2, 0),
             ),
           ],
@@ -68,33 +68,41 @@ class _SidebarState extends State<Sidebar> {
             // Header
             AnimatedContainer(
               duration: const Duration(milliseconds: 300),
-              height: widget.isExpanded ? 100 : 90,
+              height: widget.isExpanded ? 90 : 80,
               padding: EdgeInsets.symmetric(
                 vertical: 16,
                 horizontal: widget.isExpanded ? 20 : 12,
               ),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.08),
-                border: Border(
-                  bottom: BorderSide(
-                    color: Colors.white.withOpacity(0.15),
-                    width: 1,
-                  ),
+                color: const Color(0xFF0891B2).withOpacity(0.05),
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(24),
                 ),
               ),
               child: widget.isExpanded
                   ? Row(
                       children: [
                         Container(
-                          padding: const EdgeInsets.all(12),
+                          padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.12),
-                            borderRadius: BorderRadius.circular(14),
+                            gradient: const LinearGradient(
+                              colors: [Color(0xFF0891B2), Color(0xFF0284C7)],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0xFF0891B2).withOpacity(0.3),
+                                blurRadius: 8,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
                           ),
                           child: const Icon(
                             Icons.book_rounded,
                             color: Colors.white,
-                            size: 32,
+                            size: 28,
                           ),
                         ),
                         const SizedBox(width: 14),
@@ -106,16 +114,19 @@ class _SidebarState extends State<Sidebar> {
                               const Text(
                                 'Jawara Pintar',
                                 style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
+                                  color: Color(0xFF0891B2),
+                                  fontSize: 17,
                                   fontWeight: FontWeight.bold,
+                                  letterSpacing: 0.3,
                                 ),
                               ),
+                              const SizedBox(height: 2),
                               Text(
-                                'Sistem Manajemen RT Modern',
+                                'Sistem RT Modern',
                                 style: TextStyle(
-                                  color: Colors.white.withOpacity(0.7),
+                                  color: const Color(0xFF6B7280),
                                   fontSize: 11,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ],
@@ -125,15 +136,26 @@ class _SidebarState extends State<Sidebar> {
                     )
                   : Center(
                       child: Container(
-                        padding: const EdgeInsets.all(14),
+                        padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.12),
+                          gradient: const LinearGradient(
+                            colors: [Color(0xFF0891B2), Color(0xFF0284C7)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
                           borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFF0891B2).withOpacity(0.3),
+                              blurRadius: 8,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
                         ),
                         child: const Icon(
                           Icons.book_rounded,
                           color: Colors.white,
-                          size: 36,
+                          size: 30,
                         ),
                       ),
                     ),
@@ -926,26 +948,37 @@ class _MenuItemState extends State<_MenuItem> {
   Widget build(BuildContext context) {
     if (widget.isProfile) {
       return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: _isHovered
-              ? Colors.white.withOpacity(0.12)
-              : Colors.transparent,
-          borderRadius: BorderRadius.circular(12),
+          gradient: _isHovered
+              ? LinearGradient(
+                  colors: [
+                    const Color(0xFF0891B2).withOpacity(0.1),
+                    const Color(0xFF0284C7).withOpacity(0.1),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                )
+              : null,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: const Color(0xFF0891B2).withOpacity(_isHovered ? 0.3 : 0.1),
+            width: 1,
+          ),
         ),
         child: PopupMenuButton<String>(
           offset: const Offset(0, -60),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(16),
           ),
           itemBuilder: (context) => [
             const PopupMenuItem(
               value: 'profile',
               child: Row(
                 children: [
-                  Icon(Icons.person, size: 20),
+                  Icon(Icons.person, size: 18, color: Color(0xFF0891B2)),
                   SizedBox(width: 12),
-                  Text('Profil'),
+                  Text('Profil', style: TextStyle(fontSize: 14)),
                 ],
               ),
             ),
@@ -953,9 +986,9 @@ class _MenuItemState extends State<_MenuItem> {
               value: 'settings',
               child: Row(
                 children: [
-                  Icon(Icons.settings, size: 20),
+                  Icon(Icons.settings, size: 18, color: Color(0xFF0891B2)),
                   SizedBox(width: 12),
-                  Text('Pengaturan'),
+                  Text('Pengaturan', style: TextStyle(fontSize: 14)),
                 ],
               ),
             ),
@@ -964,9 +997,12 @@ class _MenuItemState extends State<_MenuItem> {
               value: 'logout',
               child: Row(
                 children: [
-                  Icon(Icons.logout, size: 20, color: Colors.red),
+                  Icon(Icons.logout, size: 18, color: Colors.red),
                   SizedBox(width: 12),
-                  Text('Keluar', style: TextStyle(color: Colors.red)),
+                  Text(
+                    'Keluar',
+                    style: TextStyle(color: Colors.red, fontSize: 14),
+                  ),
                 ],
               ),
             ),
@@ -979,12 +1015,23 @@ class _MenuItemState extends State<_MenuItem> {
             onEnter: (_) => setState(() => _isHovered = true),
             onExit: (_) => setState(() => _isHovered = false),
             child: ListTile(
-              leading: Icon(widget.icon, color: Colors.white, size: 28),
+              leading: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFF0891B2), Color(0xFF0284C7)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(widget.icon, color: Colors.white, size: 20),
+              ),
               title: widget.isExpanded
                   ? Text(
                       widget.title,
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: Color(0xFF1F2937),
                         fontWeight: FontWeight.w600,
                         fontSize: 14,
                       ),
@@ -993,15 +1040,15 @@ class _MenuItemState extends State<_MenuItem> {
               subtitle: widget.isExpanded && widget.subtitle != null
                   ? Text(
                       widget.subtitle!,
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.7),
-                        fontSize: 12,
+                      style: const TextStyle(
+                        color: Color(0xFF6B7280),
+                        fontSize: 11,
                       ),
                     )
                   : null,
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 12,
-                vertical: 4,
+                vertical: 6,
               ),
             ),
           ),
@@ -1015,31 +1062,42 @@ class _MenuItemState extends State<_MenuItem> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         margin: EdgeInsets.only(
-          left: widget.isSubMenuItem ? 24 : 8,
-          right: 8,
-          top: 2,
-          bottom: 2,
+          left: widget.isSubMenuItem ? 20 : 12,
+          right: 12,
+          top: 3,
+          bottom: 3,
         ),
         decoration: BoxDecoration(
-          color: _isHovered
-              ? Colors.white.withOpacity(0.12)
-              : Colors.transparent,
-          borderRadius: BorderRadius.circular(12),
+          gradient: _isHovered
+              ? LinearGradient(
+                  colors: [
+                    const Color(0xFF0891B2).withOpacity(0.08),
+                    const Color(0xFF0284C7).withOpacity(0.08),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                )
+              : null,
+          borderRadius: BorderRadius.circular(14),
         ),
         child: ListTile(
           leading: Icon(
             widget.icon,
-            color: Colors.white,
-            size: widget.isSubMenuItem ? 20 : 24,
+            color: _isHovered
+                ? const Color(0xFF0891B2)
+                : const Color(0xFF6B7280),
+            size: widget.isSubMenuItem ? 18 : 22,
           ),
           title: widget.isExpanded
               ? Text(
                   widget.title,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: _isHovered
+                        ? const Color(0xFF0891B2)
+                        : const Color(0xFF1F2937),
                     fontWeight: widget.isSubMenuItem
-                        ? FontWeight.w400
-                        : FontWeight.w500,
+                        ? FontWeight.w500
+                        : FontWeight.w600,
                     fontSize: widget.isSubMenuItem ? 13 : 14,
                   ),
                 )
@@ -1048,15 +1106,17 @@ class _MenuItemState extends State<_MenuItem> {
               ? Icon(
                   widget.isSubMenuExpanded
                       ? Icons.keyboard_arrow_down_rounded
-                      : Icons.chevron_right,
-                  color: Colors.white,
+                      : Icons.chevron_right_rounded,
+                  color: _isHovered
+                      ? const Color(0xFF0891B2)
+                      : const Color(0xFF6B7280),
                   size: 20,
                 )
               : null,
           onTap: widget.onTap,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 12,
-            vertical: 4,
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: widget.isSubMenuItem ? 16 : 14,
+            vertical: 2,
           ),
         ),
       ),

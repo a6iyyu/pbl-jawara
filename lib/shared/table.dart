@@ -47,17 +47,17 @@ class _CustomDataTableState extends State<CustomDataTable> {
   Widget build(BuildContext context) {
     if (_sortedRows.isEmpty) {
       return Container(
-        padding: const EdgeInsets.all(48),
+        padding: const EdgeInsets.all(40),
         decoration: BoxDecoration(
           color: Colors.grey[50],
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.grey[200]!, width: 2),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.grey[200]!, width: 1),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: const Color(0xFFFEF3C7),
                 shape: BoxShape.circle,
@@ -65,22 +65,22 @@ class _CustomDataTableState extends State<CustomDataTable> {
               child: const Icon(
                 Icons.inbox_rounded,
                 color: Color(0xFFF59E0B),
-                size: 48,
+                size: 40,
               ),
             ),
             const SizedBox(height: 16),
             const Text(
               'Tidak ada data tersedia',
               style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
                 color: Color(0xFF1F2937),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 6),
             Text(
               'Data akan muncul di sini saat tersedia',
-              style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+              style: TextStyle(fontSize: 13, color: Colors.grey[600]),
             ),
           ],
         ),
@@ -90,40 +90,41 @@ class _CustomDataTableState extends State<CustomDataTable> {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.grey[200]!, width: 1.5),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.grey[200]!, width: 1),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF06B6D4).withValues(alpha: 0.05),
-            blurRadius: 20,
-            offset: const Offset(0, 4),
+            color: Colors.black.withValues(alpha: 0.03),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(16),
         child: Theme(
           data: Theme.of(context).copyWith(
             dividerColor: Colors.grey[100],
             dataTableTheme: DataTableThemeData(
               headingRowColor: WidgetStateProperty.all(
-                const Color(0xFF06B6D4).withValues(alpha: 0.08),
+                const Color(0xFF0891B2).withValues(alpha: 0.06),
               ),
               dataRowColor: WidgetStateProperty.resolveWith<Color>((
                 Set<WidgetState> states,
               ) {
                 if (states.contains(WidgetState.hovered)) {
-                  return const Color(0xFF06B6D4).withValues(alpha: 0.05);
+                  return const Color(0xFF0891B2).withValues(alpha: 0.04);
                 }
                 return Colors.white;
               }),
               headingTextStyle: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
-                color: Color(0xFF06B6D4),
+                fontWeight: FontWeight.w700,
+                fontSize: 13,
+                color: Color(0xFF0891B2),
+                letterSpacing: 0.5,
               ),
               dataTextStyle: const TextStyle(
-                fontSize: 14,
+                fontSize: 13.5,
                 color: Color(0xFF1F2937),
               ),
             ),
@@ -131,10 +132,10 @@ class _CustomDataTableState extends State<CustomDataTable> {
           child: DataTable(
             sortColumnIndex: _sortColumnIndex == -1 ? null : _sortColumnIndex,
             sortAscending: _isAscending,
-            columnSpacing: 24,
-            horizontalMargin: 24,
-            headingRowHeight: 56,
-            dataRowHeight: 64,
+            columnSpacing: 20,
+            horizontalMargin: 20,
+            headingRowHeight: 52,
+            dataRowHeight: 60,
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(color: Colors.grey[200]!, width: 1),

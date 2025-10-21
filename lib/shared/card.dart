@@ -70,26 +70,21 @@ class _SharedCardState extends State<SharedCard>
               scale: _scaleAnimation.value,
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(24),
-                  gradient: LinearGradient(
-                    colors: [
-                      widget.color.withValues(alpha: 0.1),
-                      widget.color.withValues(alpha: 0.05),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
                   boxShadow: [
                     BoxShadow(
-                      color: widget.color.withValues(alpha: 0.2),
-                      blurRadius: _elevationAnimation.value,
-                      offset: Offset(0, _elevationAnimation.value / 2),
+                      color: widget.color.withValues(
+                        alpha: _isHovered ? 0.15 : 0.08,
+                      ),
+                      blurRadius: _elevationAnimation.value + 8,
+                      offset: Offset(0, _elevationAnimation.value / 3),
                     ),
                   ],
                   border: Border.all(
                     color: _isHovered
-                        ? widget.color.withValues(alpha: 0.3)
-                        : widget.color.withValues(alpha: 0.1),
+                        ? widget.color.withValues(alpha: 0.2)
+                        : Colors.transparent,
                     width: 1.5,
                   ),
                 ),
@@ -97,25 +92,32 @@ class _SharedCardState extends State<SharedCard>
                   elevation: 0,
                   color: Colors.transparent,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24),
+                    borderRadius: BorderRadius.circular(20),
                   ),
                   child: Container(
-                    padding: const EdgeInsets.all(24.0),
+                    padding: const EdgeInsets.all(20.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
                             Container(
-                              padding: const EdgeInsets.all(12),
+                              padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
-                                color: widget.color.withValues(alpha: 0.15),
-                                borderRadius: BorderRadius.circular(12),
+                                gradient: LinearGradient(
+                                  colors: [
+                                    widget.color.withValues(alpha: 0.2),
+                                    widget.color.withValues(alpha: 0.1),
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                borderRadius: BorderRadius.circular(14),
                               ),
                               child: Icon(
                                 widget.icon,
                                 color: widget.color,
-                                size: 24,
+                                size: 22,
                               ),
                             ),
                             const SizedBox(width: 12),
@@ -124,15 +126,16 @@ class _SharedCardState extends State<SharedCard>
                                 widget.title,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   color: Color(0xFF1F2937),
+                                  letterSpacing: 0.2,
                                 ),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 16),
                         widget.child,
                       ],
                     ),

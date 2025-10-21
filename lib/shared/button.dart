@@ -48,7 +48,7 @@ class _CustomButtonState extends State<CustomButton>
       scale: _scaleAnimation,
       child: GestureDetector(
         onTap: () {
-          widget.onPressed(); 
+          widget.onPressed();
         },
         onTapDown: (_) => _controller.forward(),
         onTapUp: (_) {
@@ -58,26 +58,26 @@ class _CustomButtonState extends State<CustomButton>
         onTapCancel: () => _controller.reverse(),
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 14),
           decoration: BoxDecoration(
             gradient: widget.isOutlined
                 ? null
                 : const LinearGradient(
-                    colors: [Color(0xFF06B6D4), Color(0xFF0EA5E9)],
+                    colors: [Color(0xFF0891B2), Color(0xFF0284C7)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
             border: widget.isOutlined
-                ? Border.all(color: const Color(0xFF06B6D4), width: 2)
+                ? Border.all(color: const Color(0xFF0891B2), width: 1.5)
                 : null,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(14),
             boxShadow: widget.isOutlined
                 ? null
                 : [
                     BoxShadow(
-                      color: const Color(0xFF06B6D4).withValues(alpha: 0.4),
-                      blurRadius: 16,
-                      offset: const Offset(0, 8),
+                      color: const Color(0xFF0891B2).withValues(alpha: 0.25),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
                     ),
                   ],
           ),
@@ -88,20 +88,21 @@ class _CustomButtonState extends State<CustomButton>
                 Icon(
                   widget.icon,
                   color: widget.isOutlined
-                      ? const Color(0xFF06B6D4)
+                      ? const Color(0xFF0891B2)
                       : Colors.white,
-                  size: 20,
+                  size: 18,
                 ),
                 const SizedBox(width: 8),
               ],
               Text(
                 widget.text,
                 style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
                   color: widget.isOutlined
-                      ? const Color(0xFF06B6D4)
+                      ? const Color(0xFF0891B2)
                       : Colors.white,
+                  letterSpacing: 0.3,
                 ),
               ),
             ],

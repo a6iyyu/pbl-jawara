@@ -15,7 +15,7 @@ class CustomInputField extends StatefulWidget {
     this.isPassword = false,
     this.prefixIcon,
     this.controller,
-    this.inputType = TextInputType.text
+    this.inputType = TextInputType.text,
   });
 
   @override
@@ -49,13 +49,13 @@ class _CustomInputFieldState extends State<CustomInputField> {
         AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(14),
             boxShadow: _isFocused
                 ? [
                     BoxShadow(
-                      color: const Color(0xFF06B6D4).withValues(alpha: 0.2),
-                      blurRadius: 16,
-                      offset: const Offset(0, 4),
+                      color: const Color(0xFF0891B2).withValues(alpha: 0.12),
+                      blurRadius: 12,
+                      offset: const Offset(0, 3),
                     ),
                   ]
                 : [],
@@ -72,24 +72,26 @@ class _CustomInputFieldState extends State<CustomInputField> {
               keyboardType: widget.inputType,
               decoration: InputDecoration(
                 hintText: widget.hintText,
-                hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14),
+                hintStyle: TextStyle(color: Colors.grey[400], fontSize: 13.5),
                 prefixIcon: widget.prefixIcon != null
                     ? Icon(
                         widget.prefixIcon,
                         color: _isFocused
-                            ? const Color(0xFF06B6D4)
+                            ? const Color(0xFF0891B2)
                             : Colors.grey[400],
+                        size: 20,
                       )
                     : null,
                 suffixIcon: widget.isPassword
                     ? IconButton(
                         icon: Icon(
                           _obscureText
-                              ? Icons.visibility_off
-                              : Icons.visibility,
+                              ? Icons.visibility_off_rounded
+                              : Icons.visibility_rounded,
                           color: _isFocused
-                              ? const Color(0xFF06B6D4)
+                              ? const Color(0xFF0891B2)
                               : Colors.grey[400],
+                          size: 20,
                         ),
                         onPressed: () {
                           setState(() {
@@ -99,26 +101,26 @@ class _CustomInputFieldState extends State<CustomInputField> {
                       )
                     : null,
                 contentPadding: const EdgeInsets.symmetric(
-                  vertical: 16,
-                  horizontal: 20,
+                  vertical: 14,
+                  horizontal: 16,
                 ),
                 filled: true,
                 fillColor: _isFocused
                     ? const Color(0xFFECFEFF)
                     : Colors.grey[50],
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(14),
                   borderSide: BorderSide.none,
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: Colors.grey[200]!, width: 1.5),
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide(color: Colors.grey[200]!, width: 1),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(14),
                   borderSide: const BorderSide(
-                    color: Color(0xFF06B6D4),
-                    width: 2,
+                    color: Color(0xFF0891B2),
+                    width: 1.5,
                   ),
                 ),
               ),
