@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:jawara/data/messages.dart';
 import 'package:jawara/models/message.dart';
-import 'package:jawara/shared/base_layout.dart';
+import 'package:jawara/shared/sidebar.dart';
 import 'package:jawara/shared/table.dart';
 
 class CitizenMessagesPage extends StatefulWidget {
@@ -14,6 +14,7 @@ class CitizenMessagesPage extends StatefulWidget {
 }
 
 class _CitizenMessagesPageState extends State<CitizenMessagesPage> {
+  bool _isSidebarExpanded = true;
   bool _isLocaleInitialized = false;
 
   @override
@@ -52,11 +53,47 @@ class _CitizenMessagesPageState extends State<CitizenMessagesPage> {
 
   @override
   Widget build(BuildContext context) {
+    final double sidebarWidth = _isSidebarExpanded ? 280.0 : 70.0;
+
     if (!_isLocaleInitialized) {
-      return const BaseLayout(
-        title: 'Pesan Warga',
-        child: Center(
-          child: CircularProgressIndicator(color: Color(0xFF0891B2)),
+      return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () {
+              setState(() {
+                _isSidebarExpanded = !_isSidebarExpanded;
+              });
+            },
+          ),
+          title: const Text(
+            'Pesan Warga',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+          ),
+          backgroundColor: Colors.white,
+          elevation: 1,
+          iconTheme: const IconThemeData(color: Colors.black87),
+        ),
+        body: Stack(
+          children: [
+            AnimatedPadding(
+              padding: EdgeInsets.only(left: sidebarWidth),
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                color: const Color(0xFFF4F7FC),
+                child: const Center(
+                  child: CircularProgressIndicator(color: Color(0xFF0891B2)),
+                ),
+              ),
+            ),
+            Sidebar(isExpanded: _isSidebarExpanded),
+          ],
         ),
       );
     }
@@ -86,44 +123,80 @@ class _CitizenMessagesPageState extends State<CitizenMessagesPage> {
       ];
     }).toList();
 
-    return BaseLayout(
-      title: 'Pesan Warga',
-      actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 16.0),
-          child: ElevatedButton.icon(
-            onPressed: () {},
-            icon: const Icon(Icons.filter_list, color: Colors.white),
-            label: const Text('Filter', style: TextStyle(color: Colors.white)),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF0891B2),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            setState(() {
+              _isSidebarExpanded = !_isSidebarExpanded;
+            });
+          },
         ),
-      ],
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minWidth: constraints.maxWidth),
-                child: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: CustomDataTable(
-                    headers: headers,
-                    rows: rows,
-                    sortable: sortable,
-                  ),
+        title: const Text(
+          'Pesan Warga',
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 1,
+        iconTheme: const IconThemeData(color: Colors.black87),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: ElevatedButton.icon(
+              onPressed: () {},
+              icon: const Icon(Icons.filter_list, color: Colors.white),
+              label: const Text(
+                'Filter',
+                style: TextStyle(color: Colors.white),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF0891B2),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
                 ),
               ),
             ),
-          );
-        },
+          ),
+        ],
+      ),
+      body: Stack(
+        children: [
+          AnimatedPadding(
+            padding: EdgeInsets.only(left: sidebarWidth),
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: const Color(0xFFF4F7FC),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minWidth: constraints.maxWidth,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(24.0),
+                          child: CustomDataTable(
+                            headers: headers,
+                            rows: rows,
+                            sortable: sortable,
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          Sidebar(isExpanded: _isSidebarExpanded),
+        ],
       ),
     );
   }

@@ -203,7 +203,8 @@ class _SidebarState extends State<Sidebar> {
                       icon: Icons.dashboard_rounded,
                       title: 'Dashboard',
                       isExpanded: widget.isExpanded,
-                      onTap: () => Navigator.pushNamed(context, '/dashboard'),
+                      onTap: () =>
+                          Navigator.pushNamed(context, '/dashboard/finance'),
                     ),
 
                   // Data Warga

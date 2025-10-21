@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:jawara/shared/base_layout.dart';
+import 'package:jawara/shared/sidebar.dart';
 import 'package:jawara/data/residents.dart';
 import 'package:jawara/models/resident.dart';
 import 'package:jawara/shared/table.dart';
 
-class ResidentApprovalsPage extends StatelessWidget {
+class ResidentApprovalsPage extends StatefulWidget {
   const ResidentApprovalsPage({super.key});
+
+  @override
+  State<ResidentApprovalsPage> createState() => _ResidentApprovalsPageState();
+}
+
+class _ResidentApprovalsPageState extends State<ResidentApprovalsPage> {
+  bool _isSidebarExpanded = true;
 
   Widget _buildStatusChip(RegistrationStatus status) {
     Color color;
@@ -34,6 +41,8 @@ class ResidentApprovalsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double sidebarWidth = _isSidebarExpanded ? 280.0 : 70.0;
+
     final headers = [
       'NO',
       'NAMA',
@@ -73,28 +82,61 @@ class ResidentApprovalsPage extends StatelessWidget {
       ];
     }).toList();
 
-    return BaseLayout(
-      title: 'Penerimaan Warga',
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minWidth: constraints.maxWidth),
-                child: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: CustomDataTable(
-                    headers: headers,
-                    rows: rows,
-                    sortable: sortable,
-                  ),
-                ),
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            setState(() {
+              _isSidebarExpanded = !_isSidebarExpanded;
+            });
+          },
+        ),
+        title: const Text(
+          'Penerimaan Warga',
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 1,
+        iconTheme: const IconThemeData(color: Colors.black87),
+      ),
+      body: Stack(
+        children: [
+          AnimatedPadding(
+            padding: EdgeInsets.only(left: sidebarWidth),
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: const Color(0xFFF4F7FC),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minWidth: constraints.maxWidth,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(24.0),
+                          child: CustomDataTable(
+                            headers: headers,
+                            rows: rows,
+                            sortable: sortable,
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
-          );
-        },
+          ),
+          Sidebar(isExpanded: _isSidebarExpanded),
+        ],
       ),
     );
   }

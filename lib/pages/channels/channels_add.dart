@@ -1,91 +1,351 @@
 import 'package:flutter/material.dart';
-import 'package:jawara/shared/base_layout.dart';
+import 'package:jawara/shared/sidebar.dart';
 
-class ChannelsAddPage extends StatelessWidget {
-  const ChannelsAddPage({super.key});
+class CustomDropdown extends StatelessWidget {
+  final String hintText;
+  final List<String> items;
+  final String? selectedValue;
+  final ValueChanged<String?> onChanged;
+
+  const CustomDropdown({
+    super.key,
+    required this.hintText,
+    required this.items,
+    required this.selectedValue,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return BaseLayout(
-      title: 'Tambah Channel Transfer',
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header Section
-            Container(
-              margin: const EdgeInsets.only(bottom: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Tambah Channel Transfer',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey[900],
-                      letterSpacing: -0.5,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Form penambahan channel transfer baru',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            // Content Placeholder
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(32),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Center(
-                child: Column(
-                  children: [
-                    Icon(
-                      Icons.add_outlined,
-                      size: 64,
-                      color: Colors.grey[400],
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      'Form Tambah Channel',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey[600],
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Silakan tambahkan formulir channel transfer di sini',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[500],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        border: Border.all(color: Colors.grey.shade300),
+        color: Colors.white,
+      ),
+      child: DropdownButtonFormField<String>(
+        decoration: const InputDecoration(
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.zero,
         ),
+        hint: Text(hintText),
+        value: selectedValue,
+        items: items.map((String value) {
+          return DropdownMenuItem<String>(value: value, child: Text(value));
+        }).toList(),
+        onChanged: onChanged,
+      ),
+    );
+  }
+}
+
+class ChannelsAddPage extends StatefulWidget {
+  const ChannelsAddPage({super.key});
+
+  @override
+  State<ChannelsAddPage> createState() => _ChannelsAddPageState();
+}
+
+class _ChannelsAddPageState extends State<ChannelsAddPage> {
+  bool _isSidebarExpanded = true;
+
+  String? _selectedTipe;
+  final TextEditingController _namaChannelController = TextEditingController();
+  final TextEditingController _nomorAkunController = TextEditingController();
+  final TextEditingController _namaPemilikController = TextEditingController();
+  String? _qrFileName;
+
+  final List<String> tipeOptions = ['Bank', 'E-Wallet', 'QRIS'];
+
+  @override
+  void dispose() {
+    _namaChannelController.dispose();
+    _nomorAkunController.dispose();
+    _namaPemilikController.dispose();
+    super.dispose();
+  }
+
+  void _uploadQrPhoto() {
+    setState(() {
+      _qrFileName = 'qr_code_sample.png';
+    });
+  }
+
+  void _handleSimpan() {
+    print('Menyimpan Transfer Channel:');
+    print('Nama Channel: ${_namaChannelController.text}');
+    print('Tipe: $_selectedTipe');
+    print('Nomor Akun: ${_nomorAkunController.text}');
+    print('Nama Pemilik: ${_namaPemilikController.text}');
+    print('File QR: ${_qrFileName ?? "Belum ada file dipilih"}');
+  }
+
+  void _handleReset() {
+    setState(() {
+      _namaChannelController.clear();
+      _selectedTipe = null;
+      _nomorAkunController.clear();
+      _namaPemilikController.clear();
+      _qrFileName = null;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final double sidebarWidth = _isSidebarExpanded ? 280.0 : 70.0;
+
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            setState(() {
+              _isSidebarExpanded = !_isSidebarExpanded;
+            });
+          },
+        ),
+        title: const Flexible(
+          child: Text(
+            'Tambah Channel Transfer',
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+          ),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 1,
+        iconTheme: const IconThemeData(color: Colors.black87),
+      ),
+      body: Stack(
+        children: [
+          // KONTEN UTAMA - FULL WIDTH & HEIGHT
+          AnimatedPadding(
+            padding: EdgeInsets.only(left: sidebarWidth),
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: const Color(0xFFF4F7FC),
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  // CARD FORM - FULL WIDTH & EXPANDED
+                  Expanded(
+                    child: Card(
+                      elevation: 2,
+                      shadowColor: Colors.black26,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(32.0),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "Buat Channel Transfer",
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 30),
+
+                              // Nama Channel
+                              const Text(
+                                "Nama Channel",
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
+                              const SizedBox(height: 8),
+                              TextFormField(
+                                controller: _namaChannelController,
+                                decoration: InputDecoration(
+                                  hintText: "Contoh: BCA / Gopay / QRIS",
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    borderSide: BorderSide(
+                                      color: Colors.grey.shade300,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 24),
+
+                              // Tipe
+                              const Text(
+                                "Tipe",
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
+                              const SizedBox(height: 8),
+                              CustomDropdown(
+                                hintText: "-- Pilih Tipe --",
+                                items: tipeOptions,
+                                selectedValue: _selectedTipe,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectedTipe = value;
+                                  });
+                                },
+                              ),
+                              const SizedBox(height: 24),
+
+                              // Nomor Rekening/Akun
+                              const Text(
+                                "Nomor Rekening/Akun",
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
+                              const SizedBox(height: 8),
+                              TextFormField(
+                                controller: _nomorAkunController,
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  hintText: "Masukkan nomor rekening/akun",
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    borderSide: BorderSide(
+                                      color: Colors.grey.shade300,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 24),
+
+                              // Nama Pemilik
+                              const Text(
+                                "Nama Pemilik",
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
+                              const SizedBox(height: 8),
+                              TextFormField(
+                                controller: _namaPemilikController,
+                                decoration: InputDecoration(
+                                  hintText: "Masukkan nama pemilik rekening",
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    borderSide: BorderSide(
+                                      color: Colors.grey.shade300,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 24),
+
+                              // Upload QR
+                              const Text(
+                                "Upload QR",
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
+                              const SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  ElevatedButton.icon(
+                                    onPressed: _uploadQrPhoto,
+                                    icon: const Icon(Icons.upload_file, size: 18),
+                                    label: const Text('Pilih File'),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Theme.of(context).primaryColor,
+                                      foregroundColor: Colors.white,
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 12,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Text(
+                                      _qrFileName ?? 'Belum ada file dipilih',
+                                      style: TextStyle(
+                                        color: _qrFileName != null
+                                            ? Colors.black87
+                                            : Colors.grey.shade600,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 40),
+
+                              // Tombol Aksi
+                              Row(
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: _handleSimpan,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Theme.of(
+                                        context,
+                                      ).primaryColor,
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 24,
+                                        vertical: 16,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'Simpan',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  OutlinedButton(
+                                    onPressed: _handleReset,
+                                    style: OutlinedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 24,
+                                        vertical: 16,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      side: BorderSide(
+                                        color: Colors.grey.shade400,
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'Reset',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black87,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // SIDEBAR TETAP DI KIRI
+          Sidebar(isExpanded: _isSidebarExpanded),
+        ],
       ),
     );
   }

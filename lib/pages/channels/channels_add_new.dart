@@ -32,10 +32,7 @@ class CustomDropdown extends StatelessWidget {
         hint: Text(hintText),
         value: selectedValue,
         items: items.map((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
+          return DropdownMenuItem<String>(value: value, child: Text(value));
         }).toList(),
         onChanged: onChanged,
       ),
@@ -43,22 +40,21 @@ class CustomDropdown extends StatelessWidget {
   }
 }
 
-class TransferChannelPageTambah extends StatefulWidget {
-  const TransferChannelPageTambah({super.key});
+class ChannelsAddPage extends StatefulWidget {
+  const ChannelsAddPage({super.key});
 
   @override
-  State<TransferChannelPageTambah> createState() => _TransferChannelPageTambahState();
+  State<ChannelsAddPage> createState() => _ChannelsAddPageState();
 }
 
-class _TransferChannelPageTambahState extends State<TransferChannelPageTambah> {
+class _ChannelsAddPageState extends State<ChannelsAddPage> {
   bool _isSidebarExpanded = true;
 
-  final TextEditingController _namaChannelController = TextEditingController();
   String? _selectedTipe;
+  final TextEditingController _namaChannelController = TextEditingController();
   final TextEditingController _nomorAkunController = TextEditingController();
   final TextEditingController _namaPemilikController = TextEditingController();
-
-  String _qrFileName = 'Belum ada file dipilih';
+  String? _qrFileName;
 
   final List<String> tipeOptions = ['Bank', 'E-Wallet', 'QRIS'];
 
@@ -72,7 +68,7 @@ class _TransferChannelPageTambahState extends State<TransferChannelPageTambah> {
 
   void _uploadQrPhoto() {
     setState(() {
-      _qrFileName = 'QR_RW_08.jpg';
+      _qrFileName = 'qr_code_sample.png';
     });
   }
 
@@ -82,16 +78,16 @@ class _TransferChannelPageTambahState extends State<TransferChannelPageTambah> {
     print('Tipe: $_selectedTipe');
     print('Nomor Akun: ${_nomorAkunController.text}');
     print('Nama Pemilik: ${_namaPemilikController.text}');
-    print('File QR: $_qrFileName');
+    print('File QR: ${_qrFileName ?? "Belum ada file dipilih"}');
   }
 
   void _handleReset() {
     setState(() {
       _namaChannelController.clear();
+      _selectedTipe = null;
       _nomorAkunController.clear();
       _namaPemilikController.clear();
-      _selectedTipe = null;
-      _qrFileName = 'Belum ada file dipilih';
+      _qrFileName = null;
     });
   }
 
@@ -111,9 +107,12 @@ class _TransferChannelPageTambahState extends State<TransferChannelPageTambah> {
         ),
         title: const Flexible(
           child: Text(
-            'Tambah Kanal Transfer',
+            'Tambah Channel Transfer',
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
           ),
         ),
         backgroundColor: Colors.white,
@@ -149,114 +148,141 @@ class _TransferChannelPageTambahState extends State<TransferChannelPageTambah> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text(
-                                "Buat Transfer Channel",
-                                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                                "Buat Channel Transfer",
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               const SizedBox(height: 30),
 
                               // Nama Channel
-                              const Text("Nama Channel", style: TextStyle(fontWeight: FontWeight.w600)),
+                              const Text(
+                                "Nama Channel",
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
                               const SizedBox(height: 8),
                               TextFormField(
                                 controller: _namaChannelController,
                                 decoration: InputDecoration(
-                                  hintText: "Contoh: BCA, Dana, QRIS RT",
+                                  hintText: "Contoh: BCA / Gopay / QRIS",
                                   fillColor: Colors.white,
                                   filled: true,
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(8.0),
-                                    borderSide: BorderSide(color: Colors.grey.shade300),
+                                    borderSide: BorderSide(
+                                      color: Colors.grey.shade300,
+                                    ),
                                   ),
                                 ),
                               ),
                               const SizedBox(height: 24),
 
                               // Tipe
-                              const Text("Tipe", style: TextStyle(fontWeight: FontWeight.w600)),
+                              const Text(
+                                "Tipe",
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
                               const SizedBox(height: 8),
                               CustomDropdown(
                                 hintText: "-- Pilih Tipe --",
                                 items: tipeOptions,
                                 selectedValue: _selectedTipe,
-                                onChanged: (value) => setState(() => _selectedTipe = value),
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectedTipe = value;
+                                  });
+                                },
                               ),
                               const SizedBox(height: 24),
 
-                              // Nomor Rekening / Akun
-                              const Text("Nomor Rekening / Akun", style: TextStyle(fontWeight: FontWeight.w600)),
+                              // Nomor Rekening/Akun
+                              const Text(
+                                "Nomor Rekening/Akun",
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
                               const SizedBox(height: 8),
                               TextFormField(
                                 controller: _nomorAkunController,
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
-                                  hintText: "Contoh: 1234567890",
+                                  hintText: "Masukkan nomor rekening/akun",
                                   fillColor: Colors.white,
                                   filled: true,
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(8.0),
-                                    borderSide: BorderSide(color: Colors.grey.shade300),
+                                    borderSide: BorderSide(
+                                      color: Colors.grey.shade300,
+                                    ),
                                   ),
                                 ),
                               ),
                               const SizedBox(height: 24),
 
                               // Nama Pemilik
-                              const Text("Nama Pemilik", style: TextStyle(fontWeight: FontWeight.w600)),
+                              const Text(
+                                "Nama Pemilik",
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
                               const SizedBox(height: 8),
                               TextFormField(
                                 controller: _namaPemilikController,
                                 decoration: InputDecoration(
-                                  hintText: "Contoh: John Doe",
+                                  hintText: "Masukkan nama pemilik rekening",
                                   fillColor: Colors.white,
                                   filled: true,
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(8.0),
-                                    borderSide: BorderSide(color: Colors.grey.shade300),
+                                    borderSide: BorderSide(
+                                      color: Colors.grey.shade300,
+                                    ),
                                   ),
                                 ),
                               ),
                               const SizedBox(height: 24),
 
-                              // QR Upload
-                              const Text("QR", style: TextStyle(fontWeight: FontWeight.w600)),
+                              // Upload QR
+                              const Text(
+                                "Upload QR",
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
                               const SizedBox(height: 8),
-                              Container(
-                                padding: const EdgeInsets.all(16.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade50,
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  border: Border.all(color: Colors.grey.shade300),
-                                ),
-                                child: Row(
-                                  children: [
-                                    ElevatedButton.icon(
-                                      onPressed: _uploadQrPhoto,
-                                      icon: const Icon(Icons.upload_file, color: Colors.white),
-                                      label: const Text(
-                                        "Upload foto QR (jika ada)",
-                                        style: TextStyle(color: Colors.white),
+                              Row(
+                                children: [
+                                  ElevatedButton.icon(
+                                    onPressed: _uploadQrPhoto,
+                                    icon: const Icon(
+                                      Icons.upload_file,
+                                      size: 18,
+                                    ),
+                                    label: const Text('Pilih File'),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Theme.of(
+                                        context,
+                                      ).primaryColor,
+                                      foregroundColor: Colors.white,
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 12,
                                       ),
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Theme.of(context).primaryColor,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(8),
-                                        ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                     ),
-                                    const SizedBox(width: 16),
-                                    Expanded(
-                                      child: Text(
-                                        _qrFileName,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          color: _qrFileName.startsWith('Belum')
-                                              ? Colors.grey.shade600
-                                              : Colors.green.shade600,
-                                        ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Text(
+                                      _qrFileName ?? 'Belum ada file dipilih',
+                                      style: TextStyle(
+                                        color: _qrFileName != null
+                                            ? Colors.black87
+                                            : Colors.grey.shade600,
                                       ),
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                               const SizedBox(height: 40),
 
@@ -266,26 +292,47 @@ class _TransferChannelPageTambahState extends State<TransferChannelPageTambah> {
                                   ElevatedButton(
                                     onPressed: _handleSimpan,
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: Theme.of(context).primaryColor,
-                                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                                      backgroundColor: Theme.of(
+                                        context,
+                                      ).primaryColor,
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 24,
+                                        vertical: 16,
+                                      ),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                     ),
                                     child: const Text(
                                       'Simpan',
-                                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(width: 16),
-                                  TextButton(
+                                  OutlinedButton(
                                     onPressed: _handleReset,
-                                    style: TextButton.styleFrom(
-                                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                                    style: OutlinedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 24,
+                                        vertical: 16,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      side: BorderSide(
+                                        color: Colors.grey.shade400,
+                                      ),
                                     ),
-                                    child: Text(
+                                    child: const Text(
                                       'Reset',
-                                      style: TextStyle(color: Colors.grey.shade700, fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black87,
+                                      ),
                                     ),
                                   ),
                                 ],

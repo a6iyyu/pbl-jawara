@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jawara/shared/base_layout.dart';
-import 'package:jawara/shared/button.dart';
-import 'package:jawara/shared/card.dart';
-import 'package:jawara/shared/input.dart';
+import 'package:jawara/shared/sidebar.dart';
+import 'package:jawara/data/users.dart';
 
 class UserManagementPage extends StatefulWidget {
   const UserManagementPage({super.key});
@@ -12,15 +10,8 @@ class UserManagementPage extends StatefulWidget {
 }
 
 class _UserManagementPageState extends State<UserManagementPage> {
+  bool _isSidebarExpanded = true;
   final TextEditingController _searchController = TextEditingController();
-
-  // Dummy users for UI
-  final List<Map<String, String>> _users = [
-    {'name': 'Andi Saputra', 'role': 'Admin', 'email': 'andi@mail.com'},
-    {'name': 'Siti Aminah', 'role': 'Operator', 'email': 'siti@mail.com'},
-    {'name': 'Budi Santoso', 'role': 'Viewer', 'email': 'budi@mail.com'},
-  ];
-
   String _query = '';
 
   @override
@@ -29,184 +20,259 @@ class _UserManagementPageState extends State<UserManagementPage> {
     super.dispose();
   }
 
+  Color _getRoleBadgeColor(String role) {
+    switch (role.toLowerCase()) {
+      case 'admin':
+        return Colors.red.shade100;
+      case 'bendahara':
+        return Colors.purple.shade100;
+      case 'sekretaris':
+        return Colors.blue.shade100;
+      case 'operator':
+        return Colors.green.shade100;
+      case 'viewer':
+        return Colors.grey.shade200;
+      default:
+        return Colors.grey.shade200;
+    }
+  }
+
+  Color _getRoleTextColor(String role) {
+    switch (role.toLowerCase()) {
+      case 'admin':
+        return Colors.red.shade700;
+      case 'bendahara':
+        return Colors.purple.shade700;
+      case 'sekretaris':
+        return Colors.blue.shade700;
+      case 'operator':
+        return Colors.green.shade700;
+      case 'viewer':
+        return Colors.grey.shade700;
+      default:
+        return Colors.grey.shade700;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final filtered = _users.where((u) {
+    final double sidebarWidth = _isSidebarExpanded ? 280.0 : 70.0;
+
+    final filtered = userList.where((u) {
       final q = _query.toLowerCase();
-      return u['name']!.toLowerCase().contains(q) ||
-          u['email']!.toLowerCase().contains(q) ||
-          u['role']!.toLowerCase().contains(q);
+      return u.name.toLowerCase().contains(q) ||
+          u.email.toLowerCase().contains(q) ||
+          u.role.toLowerCase().contains(q);
     }).toList();
 
-    return BaseLayout(
-      title: 'Manajemen Pengguna',
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final isMobile = constraints.maxWidth < 600;
-
-          return SingleChildScrollView(
-            padding: EdgeInsets.all(isMobile ? 12.0 : 24.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Header Section
-                isMobile
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const Text(
-                            'Daftar Pengguna',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          CustomButton(
-                            text: 'Tambah Pengguna',
-                            onPressed: () {},
-                          ),
-                        ],
-                      )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Flexible(
-                            child: Text(
-                              'Daftar Pengguna',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 180,
-                            child: CustomButton(
-                              text: 'Tambah Pengguna',
-                              onPressed: () {},
-                            ),
-                          ),
-                        ],
-                      ),
-                const SizedBox(height: 16),
-                CustomInputField(
-                  label: 'Cari Pengguna',
-                  hintText: 'Nama, email, atau role',
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            setState(() {
+              _isSidebarExpanded = !_isSidebarExpanded;
+            });
+          },
+        ),
+        title: const Text(
+          'Manajemen Pengguna',
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 1,
+        iconTheme: const IconThemeData(color: Colors.black87),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: ElevatedButton.icon(
+              onPressed: () {
+                Navigator.pushNamed(context, '/users/add');
+              },
+              icon: const Icon(Icons.add, color: Colors.white, size: 18),
+              label: const Text(
+                'Tambah Pengguna',
+                style: TextStyle(color: Colors.white),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).primaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Expanded(
+              ),
+            ),
+          ),
+        ],
+      ),
+      body: Stack(
+        children: [
+          AnimatedPadding(
+            padding: EdgeInsets.only(left: sidebarWidth),
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: const Color(0xFFF4F7FC),
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  // Search Bar
+                  Card(
+                    elevation: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
                       child: TextField(
                         controller: _searchController,
                         decoration: InputDecoration(
-                          hintText: 'Ketik untuk mencari...',
-                          contentPadding: const EdgeInsets.symmetric(
-                            vertical: 12,
-                            horizontal: 12,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
+                          hintText:
+                              'Cari berdasarkan nama, email, atau role...',
+                          prefixIcon: const Icon(Icons.search),
+                          border: InputBorder.none,
+                          suffixIcon: _query.isNotEmpty
+                              ? IconButton(
+                                  icon: const Icon(Icons.clear),
+                                  onPressed: () {
+                                    setState(() {
+                                      _searchController.clear();
+                                      _query = '';
+                                    });
+                                  },
+                                )
+                              : null,
                         ),
-                        onChanged: (v) => setState(() => _query = v),
+                        onChanged: (value) {
+                          setState(() {
+                            _query = value;
+                          });
+                        },
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    SizedBox(
-                      height: 48,
-                      child: OutlinedButton(
-                        onPressed: () => setState(() => _query = ''),
-                        style: OutlinedButton.styleFrom(
-                          side: BorderSide(color: Colors.grey.shade300),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          backgroundColor: Colors.white,
-                        ),
-                        child: const Icon(Icons.search, color: Colors.black54),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                SharedCard(
-                  title: 'Pengguna',
-                  icon: Icons.manage_accounts_outlined,
-                  color: const Color(0xFF06B6D4),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        constraints: const BoxConstraints(maxHeight: 400),
-                        child: ListView.separated(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: filtered.length,
-                          separatorBuilder: (_, __) => const Divider(height: 1),
-                          itemBuilder: (context, index) {
-                            final user = filtered[index];
-                            return ListTile(
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 4,
-                              ),
-                              leading: CircleAvatar(
-                                backgroundColor: const Color(0xFF06B6D4),
-                                child: Text(
-                                  user['name']!.substring(0, 1),
-                                  style: const TextStyle(color: Colors.white),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Data Table
+                  Expanded(
+                    child: Card(
+                      elevation: 2,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: DataTable(
+                            headingRowColor: WidgetStateProperty.all(
+                              Colors.grey.shade100,
+                            ),
+                            columns: const [
+                              DataColumn(
+                                label: Text(
+                                  'NO',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ),
-                              title: Text(
-                                user['name']!,
-                                overflow: TextOverflow.ellipsis,
+                              DataColumn(
+                                label: Text(
+                                  'NAMA',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                               ),
-                              subtitle: Text(
-                                '${user['role']} • ${user['email']}',
-                                overflow: TextOverflow.ellipsis,
+                              DataColumn(
+                                label: Text(
+                                  'EMAIL',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                               ),
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(Icons.edit_outlined),
-                                    onPressed: () {},
-                                    tooltip: 'Edit',
+                              DataColumn(
+                                label: Text(
+                                  'ROLE',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'TELEPON',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'AKSI',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                            rows: filtered.asMap().entries.map((entry) {
+                              final index = entry.key;
+                              final user = entry.value;
+                              return DataRow(
+                                cells: [
+                                  DataCell(Text('${index + 1}')),
+                                  DataCell(Text(user.name)),
+                                  DataCell(Text(user.email)),
+                                  DataCell(
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 12,
+                                        vertical: 6,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: _getRoleBadgeColor(user.role),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: Text(
+                                        user.role,
+                                        style: TextStyle(
+                                          color: _getRoleTextColor(user.role),
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                  IconButton(
-                                    icon: const Icon(Icons.delete_outline),
-                                    onPressed: () {},
-                                    tooltip: 'Hapus',
+                                  DataCell(Text(user.phone ?? '-')),
+                                  DataCell(
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        IconButton(
+                                          icon: const Icon(
+                                            Icons.edit,
+                                            size: 18,
+                                          ),
+                                          color: Colors.blue,
+                                          onPressed: () {
+                                            // Edit user
+                                          },
+                                          tooltip: 'Edit',
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(
+                                            Icons.delete,
+                                            size: 18,
+                                          ),
+                                          color: Colors.red,
+                                          onPressed: () {
+                                            // Delete user
+                                          },
+                                          tooltip: 'Hapus',
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
-                              ),
-                            );
-                          },
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 12),
-                      // Pagination placeholder
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Flexible(
-                            child: Text(
-                              'Menampilkan 1–3 dari 3 pengguna',
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          );
-        },
+          ),
+          Sidebar(isExpanded: _isSidebarExpanded),
+        ],
       ),
     );
   }
