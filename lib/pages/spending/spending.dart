@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:jawara/shared/base_layout.dart';
 
-class IncomePage extends StatelessWidget {
-  const IncomePage({super.key});
+class SpendingPage extends StatelessWidget {
+  const SpendingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BaseLayout(
-      title: 'Pemasukan',
+      title: 'Pengeluaran',
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Halaman Pemasukan',
+              'Halaman Pengeluaran',
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
@@ -24,7 +24,7 @@ class IncomePage extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             const Text(
-              'Kelola semua pemasukan RT',
+              'Kelola semua pengeluaran RT',
               style: TextStyle(
                 fontSize: 16,
                 color: Color(0xFF6B7280),
@@ -47,8 +47,11 @@ class IncomePage extends StatelessWidget {
               ),
               child: const Center(
                 child: Text(
-                  'Konten halaman pemasukan akan ditampilkan di sini',
-                  style: TextStyle(fontSize: 16, color: Color(0xFF6B7280)),
+                  'Konten halaman pengeluaran akan ditampilkan di sini',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Color(0xFF6B7280),
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ),

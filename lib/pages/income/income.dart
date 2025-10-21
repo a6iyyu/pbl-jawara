@@ -48,7 +48,10 @@ class IncomePage extends StatelessWidget {
               child: const Center(
                 child: Text(
                   'Konten halaman pemasukan akan ditampilkan di sini',
-                  style: TextStyle(fontSize: 16, color: Color(0xFF6B7280)),
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Color(0xFF6B7280),
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ),

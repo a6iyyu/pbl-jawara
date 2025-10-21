@@ -82,7 +82,9 @@ class ResidentApprovalsPage extends StatelessWidget {
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: ConstrainedBox(
-                constraints: BoxConstraints(minWidth: constraints.maxWidth),
+                constraints: BoxConstraints(
+                  minWidth: constraints.maxWidth,
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: CustomDataTable(
