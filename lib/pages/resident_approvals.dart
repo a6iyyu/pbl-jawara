@@ -41,16 +41,25 @@ class _ResidentApprovalsPageState extends State<ResidentApprovalsPage> {
   @override
   Widget build(BuildContext context) {
     final double sidebarWidth = _isSidebarExpanded ? 280.0 : 70.0;
-    final headers = ['NO', 'NAMA', 'NIK', 'EMAIL', 'JENIS KELAMIN', 'FOTO IDENTITAS', 'STATUS REGISTRASI', 'AKSI'];
+    final headers = [
+      'NO',
+      'NAMA',
+      'NIK',
+      'EMAIL',
+      'JENIS KELAMIN',
+      'FOTO IDENTITAS',
+      'STATUS REGISTRASI',
+      'AKSI',
+    ];
     final sortable = ['NAMA', 'EMAIL', 'STATUS REGISTRASI'];
 
     final rows = dummyResidents.map((resident) {
       return <Widget>[
         Text(resident.id.toString()),
-        Text(resident.name),
-        Text(resident.nik),
-        Text(resident.email),
-        Text(resident.gender),
+        Text(resident.name, overflow: TextOverflow.ellipsis),
+        Text(resident.nik, overflow: TextOverflow.ellipsis),
+        Text(resident.email, overflow: TextOverflow.ellipsis),
+        Text(resident.gender, overflow: TextOverflow.ellipsis),
         TextButton(onPressed: () {}, child: const Text('Lihat')),
         _buildStatusChip(resident.status),
         Row(
@@ -59,10 +68,12 @@ class _ResidentApprovalsPageState extends State<ResidentApprovalsPage> {
             IconButton(
               icon: const Icon(Icons.check, color: Colors.green),
               onPressed: () {},
+              tooltip: 'Terima',
             ),
             IconButton(
               icon: const Icon(Icons.close, color: Colors.red),
               onPressed: () {},
+              tooltip: 'Tolak',
             ),
           ],
         ),
@@ -79,7 +90,9 @@ class _ResidentApprovalsPageState extends State<ResidentApprovalsPage> {
             });
           },
         ),
-        title: const Text('Penerimaan Warga'),
+        title: const Flexible(
+          child: Text('Penerimaan Warga', overflow: TextOverflow.ellipsis),
+        ),
         backgroundColor: Colors.white,
         elevation: 1,
       ),
@@ -89,19 +102,28 @@ class _ResidentApprovalsPageState extends State<ResidentApprovalsPage> {
             padding: EdgeInsets.only(left: sidebarWidth),
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: CustomDataTable(
-                    headers: headers,
-                    rows: rows,
-                    sortable: sortable,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minWidth: constraints.maxWidth,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: CustomDataTable(
+                          headers: headers,
+                          rows: rows,
+                          sortable: sortable,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
+                );
+              },
             ),
           ),
           // Memanggil widget sidebar yang sudah dipisah

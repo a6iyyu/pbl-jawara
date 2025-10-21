@@ -38,17 +38,28 @@ class _CitizenMessagesPageState extends State<CitizenMessagesPage> {
   @override
   Widget build(BuildContext context) {
     final double sidebarWidth = _isSidebarExpanded ? 280.0 : 70.0;
-    final headers = ['NO', 'PENGIRIM', 'JUDUL', 'STATUS', 'TANGGAL DIBUAT', 'AKSI'];
+    final headers = [
+      'NO',
+      'PENGIRIM',
+      'JUDUL',
+      'STATUS',
+      'TANGGAL DIBUAT',
+      'AKSI',
+    ];
     final sortable = ['PENGIRIM', 'JUDUL', 'STATUS', 'TANGGAL DIBUAT'];
 
     final rows = dummyCitizenMessages.map((message) {
       return <Widget>[
         Text(message.id.toString()),
-        Text(message.senderName),
-        Text(message.title),
+        Text(message.senderName, overflow: TextOverflow.ellipsis),
+        Text(message.title, overflow: TextOverflow.ellipsis),
         _buildStatusChip(message.status),
         Text(DateFormat('d MMMM yyyy', 'id_ID').format(message.createdAt)),
-        IconButton(icon: const Icon(Icons.more_horiz), onPressed: () {}),
+        IconButton(
+          icon: const Icon(Icons.more_horiz),
+          onPressed: () {},
+          tooltip: 'Detail',
+        ),
       ];
     }).toList();
 
@@ -62,7 +73,9 @@ class _CitizenMessagesPageState extends State<CitizenMessagesPage> {
             });
           },
         ),
-        title: const Text('Pesan Warga'),
+        title: const Flexible(
+          child: Text('Pesan Warga', overflow: TextOverflow.ellipsis),
+        ),
         backgroundColor: Colors.white,
         elevation: 1,
         actions: [
@@ -71,10 +84,15 @@ class _CitizenMessagesPageState extends State<CitizenMessagesPage> {
             child: ElevatedButton.icon(
               onPressed: () {},
               icon: const Icon(Icons.filter_list, color: Colors.white),
-              label: const Text('Filter', style: TextStyle(color: Colors.white)),
+              label: const Text(
+                'Filter',
+                style: TextStyle(color: Colors.white),
+              ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF6A5AE0),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                backgroundColor: const Color(0xFF06B6D4),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
               ),
             ),
           ),
@@ -86,19 +104,28 @@ class _CitizenMessagesPageState extends State<CitizenMessagesPage> {
             padding: EdgeInsets.only(left: sidebarWidth),
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: CustomDataTable(
-                    headers: headers,
-                    rows: rows,
-                    sortable: sortable,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minWidth: constraints.maxWidth,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(24.0),
+                        child: CustomDataTable(
+                          headers: headers,
+                          rows: rows,
+                          sortable: sortable,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
+                );
+              },
             ),
           ),
           // Sidebar
