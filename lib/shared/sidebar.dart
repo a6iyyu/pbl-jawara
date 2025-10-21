@@ -120,10 +120,41 @@ class Sidebar extends StatelessWidget {
                 title: 'Laporan Keuangan',
                 isExpanded: isExpanded,
               ),
-              _SidebarMenuItem(
+              // Menu Item yang baru dengan Sub-menu
+              _SidebarMenuWithSubitems(
                 icon: Icons.event_rounded,
                 title: 'Kegiatan & Broadcast',
                 isExpanded: isExpanded,
+                subItems: [
+                  _SidebarSubMenuItem(
+                    title: 'Kegiatan - Daftar',
+                    onTap: () {
+                      /* Navigasi ke Kegiatan Daftar */
+                    },
+                    isParentExpanded: isExpanded,
+                  ),
+                  _SidebarSubMenuItem(
+                    title: 'Kegiatan - Tambah',
+                    onTap: () {
+                      /* Navigasi ke Kegiatan Tambah */
+                    },
+                    isParentExpanded: isExpanded,
+                  ),
+                  _SidebarSubMenuItem(
+                    title: 'Broadcast - Daftar',
+                    onTap: () {
+                      /* Navigasi ke Broadcast Daftar */
+                    },
+                    isParentExpanded: isExpanded,
+                  ),
+                  _SidebarSubMenuItem(
+                    title: 'Broadcast - Tambah',
+                    onTap: () {
+                      /* Navigasi ke Broadcast Tambah */
+                    },
+                    isParentExpanded: isExpanded,
+                  ),
+                ],
               ),
               _SidebarMenuItem(
                 icon: Icons.chat_rounded,
@@ -139,10 +170,27 @@ class Sidebar extends StatelessWidget {
                   '/resident-approvals',
                 ),
               ),
-              _SidebarMenuItem(
+              // Menu Item Mutasi Keluarga (dengan Sub-menu BARU)
+              _SidebarMenuWithSubitems(
                 icon: Icons.swap_horiz_rounded,
                 title: 'Mutasi Keluarga',
                 isExpanded: isExpanded,
+                subItems: [
+                  _SidebarSubMenuItem(
+                    title: 'Daftar',
+                    onTap: () {
+                      Navigator.pushNamed(context, '/mutations/daftar');
+                    },
+                    isParentExpanded: isExpanded,
+                  ),
+                  _SidebarSubMenuItem(
+                    title: 'Tambah',
+                    onTap: () {
+                      Navigator.pushNamed(context, '/mutations/tambah');
+                    },
+                    isParentExpanded: isExpanded,
+                  ),
+                ],
               ),
               _SidebarMenuItem(
                 icon: Icons.history_rounded,
@@ -157,10 +205,27 @@ class Sidebar extends StatelessWidget {
                   Navigator.pushNamed(context, '/users');
                 },
               ),
-              _SidebarMenuItem(
+              // Menu Item Channel Transfer (dengan Sub-menu BARU)
+              _SidebarMenuWithSubitems(
                 icon: Icons.sync_rounded,
                 title: 'Channel Transfer',
                 isExpanded: isExpanded,
+                subItems: [
+                  _SidebarSubMenuItem(
+                    title: 'Daftar Channel',
+                    onTap: () {
+                  Navigator.pushNamed(context, '/transfer-channel/daftar');
+                    },
+                    isParentExpanded: isExpanded,
+                  ),
+                  _SidebarSubMenuItem(
+                    title: 'Tambah Channel',
+                    onTap: () {
+                      Navigator.pushNamed(context, '/transfer-channel/tambah');
+                    },
+                    isParentExpanded: isExpanded,
+                  ),
+                ],
               ),
             ],
           ),
@@ -193,6 +258,153 @@ class Sidebar extends StatelessWidget {
   }
 }
 
+// Widget untuk item menu yang dapat memiliki sub-item
+class _SidebarMenuWithSubitems extends StatefulWidget {
+  final IconData icon;
+  final String title;
+  final bool isExpanded;
+  final List<Widget> subItems;
+
+  const _SidebarMenuWithSubitems({
+    required this.icon,
+    required this.title,
+    required this.isExpanded,
+    required this.subItems,
+  });
+
+  @override
+  State<_SidebarMenuWithSubitems> createState() =>
+      _SidebarMenuWithSubitemsState();
+}
+
+class _SidebarMenuWithSubitemsState extends State<_SidebarMenuWithSubitems> {
+  bool _isMenuOpen = false;
+  bool _isHovered = false;
+
+  @override
+  void didUpdateWidget(_SidebarMenuWithSubitems oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Tutup submenus jika sidebar utama menyempit
+    if (widget.isExpanded == false && oldWidget.isExpanded == true) {
+      _isMenuOpen = false;
+    }
+  }
+
+  void _toggleMenu() {
+    if (widget.isExpanded) {
+      setState(() {
+        _isMenuOpen = !_isMenuOpen;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Item Menu Utama
+        MouseRegion(
+          onEnter: (_) => setState(() => _isHovered = true),
+          onExit: (_) => setState(() => _isHovered = false),
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+            decoration: BoxDecoration(
+              color: _isHovered
+                  ? Colors.white.withOpacity(0.2)
+                  : Colors.transparent,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: ListTile(
+              leading: Icon(widget.icon, color: Colors.white, size: 24),
+              title: widget.isExpanded
+                  ? Text(
+                widget.title,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                ),
+              )
+                  : const SizedBox.shrink(),
+              trailing: widget.isExpanded
+                  ? Icon(
+                _isMenuOpen
+                    ? Icons.keyboard_arrow_down_rounded
+                    : Icons.chevron_right,
+                color: Colors.white,
+                size: 20,
+              )
+                  : null,
+              onTap: _toggleMenu,
+            ),
+          ),
+        ),
+        // Sub-menu Items (hanya ditampilkan jika sidebar dan menu terbuka)
+        if (widget.isExpanded && _isMenuOpen)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: widget.subItems,
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+// Widget untuk menampilkan Sub-item (list item di bawah menu utama)
+class _SidebarSubMenuItem extends StatefulWidget {
+  final String title;
+  final VoidCallback? onTap;
+  final bool isParentExpanded;
+
+  const _SidebarSubMenuItem({
+    required this.title,
+    this.onTap,
+    required this.isParentExpanded,
+  });
+
+  @override
+  State<_SidebarSubMenuItem> createState() => _SidebarSubMenuItemState();
+}
+
+class _SidebarSubMenuItemState extends State<_SidebarSubMenuItem> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!widget.isParentExpanded) return const SizedBox.shrink();
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: Container(
+          // Indentasi untuk submenu
+          margin: const EdgeInsets.only(left: 36, right: 8, top: 2, bottom: 2),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: _isHovered
+                ? Colors.white.withOpacity(0.15)
+                : Colors.transparent,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Text(
+            widget.title,
+            style: TextStyle(
+              color: Colors.white.withOpacity(0.8),
+              fontSize: 13,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
 // Widget untuk item menu, sekarang menjadi private class di file sidebar ini
 class _SidebarMenuItem extends StatefulWidget {
   final IconData icon;
