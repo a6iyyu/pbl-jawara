@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:jawara/shared/sidebar.dart';
+import 'package:flutter/material.dart';
 import 'package:jawara/shared/card.dart';
+import 'package:jawara/shared/sidebar.dart';
 import 'package:jawara/shared/theme.dart';
 
 class DashboardFinancePage extends StatefulWidget {
@@ -23,11 +23,12 @@ class _DashboardFinancePageState extends State<DashboardFinancePage> {
     final bool isMobile = screenWidth < 600;
     final bool isTablet = screenWidth >= 600 && screenWidth < 1000;
 
-    int summaryCrossAxisCount = isMobile ? 1 : 3;
-    int chartCrossAxisCount = isMobile ? 1 : (isTablet ? 1 : 2);
+  int summaryCrossAxisCount = isMobile ? 1 : 3;
+  int chartCrossAxisCount = isMobile ? 1 : (isTablet ? 1 : 2);
 
-    double summaryAspectRatio = isMobile ? 2.5 : (isTablet ? 2.0 : 2.2);
-    double chartAspectRatio = isMobile ? 1.5 : (isTablet ? 1.8 : 1.6);
+
+  double summaryAspectRatio = isMobile ? 2.2 : (isTablet ? 1.7 : 1.6);
+  double chartAspectRatio = isMobile ? 1.35 : (isTablet ? 1.6 : 1.35);
 
     return Scaffold(
       appBar: AppBar(
@@ -216,7 +217,7 @@ class _DashboardFinancePageState extends State<DashboardFinancePage> {
             fit: BoxFit.scaleDown,
             child: Text(
               value,
-              style: AppTheme.headingLarge.copyWith(color: color, fontSize: 28),
+              style: AppTheme.headingLarge.copyWith(color: color, fontSize: 26),
               maxLines: 1,
             ),
           ),
@@ -249,7 +250,8 @@ class _DashboardFinancePageState extends State<DashboardFinancePage> {
       icon: icon,
       color: color,
       child: Container(
-        height: 250,
+
+        height: 220,
         padding: const EdgeInsets.all(16),
         child: isBarChart ? _buildBarChart(title) : _buildPieChart(title),
       ),
