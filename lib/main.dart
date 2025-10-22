@@ -101,7 +101,7 @@ class MyApp extends StatelessWidget {
 
         // Mutasi Keluarga (Family Mutations)
         '/family-mutations/list': (context) => const FamilyMutationsListPage(),
-        '/family-mutations/add': (context) => const FamilyMutationsAddPage(),
+        '/family-mutations/add': (context) => const FamilyMutationsAddPage(), 
 
         // Log Aktifitas (Activity Logs)
         '/activity-logs': (context) => const ActivityLogsPage(),

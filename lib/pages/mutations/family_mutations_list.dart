@@ -1,17 +1,82 @@
 import 'package:flutter/material.dart';
-import 'package:jawara/data/mutations.dart';
-import 'package:jawara/shared/sidebar.dart';
+import '../../data/mutations.dart';
+import '../../models/mutations.dart';
+import '../../shared/sidebar.dart';
+import 'family_mutations_detail.dart'; 
 
 class FamilyMutationsListPage extends StatefulWidget {
   const FamilyMutationsListPage({super.key});
 
   @override
-  State<FamilyMutationsListPage> createState() =>
-      _FamilyMutationsListPageState();
+  State<FamilyMutationsListPage> createState() => _FamilyMutationsListPageState();
 }
 
 class _FamilyMutationsListPageState extends State<FamilyMutationsListPage> {
   bool _isSidebarExpanded = true;
+  final List<Mutation> _data = mutationList;
+
+  Widget _buildStatusChip(String jenisMutasi) {
+    Color color;
+    Color textColor;
+    
+    if (jenisMutasi.contains('Keluar')) {
+      color = const Color(0xFFFEE2E2); 
+      textColor = const Color(0xFFEF4444); 
+    } else if (jenisMutasi.contains('Pindah')) {
+      color = const Color(0xFFD1FAE5); 
+      textColor = const Color(0xFF047857); 
+    } else {
+      color = const Color(0xFFE5E7EB);
+      textColor = const Color(0xFF4B5563);
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Text(
+        jenisMutasi,
+        style: TextStyle(
+          color: textColor,
+          fontWeight: FontWeight.w600,
+          fontSize: 13,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActionMenu(BuildContext context, Mutation mutation) {
+    return PopupMenuButton<String>(
+      icon: const Icon(Icons.more_vert, color: Colors.black54), // Ikon titik 3
+      offset: const Offset(0, 40),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      onSelected: (String result) {
+        if (result == 'detail') {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => FamilyMutationsDetailPage(mutation: mutation),
+            ),
+          );
+        }
+      },
+      itemBuilder: (BuildContext context) => [
+        const PopupMenuItem<String>(
+          value: 'detail',
+          child: Row(
+            children: [
+              Icon(Icons.info_outline, size: 18, color: Color(0xFF0891B2)),
+              SizedBox(width: 8),
+              Text('Detail', style: TextStyle(fontSize: 14)),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +108,6 @@ class _FamilyMutationsListPageState extends State<FamilyMutationsListPage> {
       ),
       body: Stack(
         children: [
-          // KONTEN UTAMA - FULL WIDTH & HEIGHT
           AnimatedPadding(
             padding: EdgeInsets.only(left: sidebarWidth),
             duration: const Duration(milliseconds: 300),
@@ -55,7 +119,6 @@ class _FamilyMutationsListPageState extends State<FamilyMutationsListPage> {
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
-                  // JUDUL
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -67,8 +130,6 @@ class _FamilyMutationsListPageState extends State<FamilyMutationsListPage> {
                     ),
                   ),
                   const SizedBox(height: 20),
-
-                  // CARD TABEL - FULL WIDTH & EXPANDED
                   Expanded(
                     child: Card(
                       elevation: 3,
@@ -90,98 +151,32 @@ class _FamilyMutationsListPageState extends State<FamilyMutationsListPage> {
                                   dataRowHeight: 64,
                                   columnSpacing: 32,
                                   headingRowColor: WidgetStateProperty.all(
-                                    Colors.deepPurple.shade50,
+                                    const Color(0xFF0891B2).withOpacity(0.06),
                                   ),
                                   border: TableBorder.all(
                                     color: Colors.grey.shade300,
                                     width: 1,
                                   ),
                                   columns: const [
-                                    DataColumn(
-                                      label: Text(
-                                        "NO",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    DataColumn(
-                                      label: Text(
-                                        "TANGGAL",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    DataColumn(
-                                      label: Text(
-                                        "KELUARGA",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    DataColumn(
-                                      label: Text(
-                                        "JENIS MUTASI",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    DataColumn(
-                                      label: Text(
-                                        "AKSI",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
+                                    DataColumn(label: Text("NO", style: TextStyle(fontWeight: FontWeight.bold))),
+                                    DataColumn(label: Text("TANGGAL", style: TextStyle(fontWeight: FontWeight.bold))),
+                                    DataColumn(label: Text("KELUARGA", style: TextStyle(fontWeight: FontWeight.bold))),
+                                    DataColumn(label: Text("JENIS MUTASI", style: TextStyle(fontWeight: FontWeight.bold))),
+                                    DataColumn(label: Text("AKSI", style: TextStyle(fontWeight: FontWeight.bold))), 
                                   ],
-                                  rows: mutationList.map((mutation) {
-                                    final isKeluar =
-                                        mutation.jenisMutasi ==
-                                        'Keluar Wilayah';
+                                  rows: _data.asMap().entries.map((entry) {
+                                    final index = entry.key;
+                                    final mutation = entry.value;
                                     return DataRow(
+                                      color: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
+                                        return index.isEven ? Colors.grey[50]! : Colors.white;
+                                      }),
                                       cells: [
-                                        DataCell(Text(mutation.id.toString())),
+                                        DataCell(Text((index + 1).toString())),
                                         DataCell(Text(mutation.tanggal)),
                                         DataCell(Text(mutation.keluarga)),
-                                        DataCell(
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 12,
-                                              vertical: 6,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color: isKeluar
-                                                  ? Colors.red.shade100
-                                                  : Colors.green.shade100,
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
-                                            child: Text(
-                                              mutation.jenisMutasi,
-                                              style: TextStyle(
-                                                color: isKeluar
-                                                    ? Colors.red.shade700
-                                                    : Colors.green.shade700,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 13,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        DataCell(
-                                          IconButton(
-                                            icon: const Icon(
-                                              Icons.more_vert,
-                                              color: Colors.black54,
-                                            ),
-                                            onPressed: () {},
-                                            tooltip: 'Lihat detail',
-                                          ),
-                                        ),
+                                        DataCell(_buildStatusChip(mutation.jenisMutasi)),
+                                        DataCell(_buildActionMenu(context, mutation)), 
                                       ],
                                     );
                                   }).toList(),
@@ -193,10 +188,7 @@ class _FamilyMutationsListPageState extends State<FamilyMutationsListPage> {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 16),
-
-                  // PAGINATION
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -210,7 +202,7 @@ class _FamilyMutationsListPageState extends State<FamilyMutationsListPage> {
                           vertical: 8,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 193, 200, 202),
+                          color: Theme.of(context).primaryColor, 
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: const Text(
@@ -227,14 +219,12 @@ class _FamilyMutationsListPageState extends State<FamilyMutationsListPage> {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 16),
                 ],
               ),
             ),
           ),
-
-          // SIDEBAR TETAP DI KIRI
+          // SIDEBAR
           Sidebar(isExpanded: _isSidebarExpanded),
         ],
       ),
