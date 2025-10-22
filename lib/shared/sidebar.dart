@@ -971,45 +971,50 @@ class _MenuItemState extends State<_MenuItem> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
+          elevation: 10,
+          color: Colors.white,
+          surfaceTintColor: Colors.white,
+          shadowColor: const Color(0xFF000000).withValues(alpha: 0.06),
+          constraints: const BoxConstraints(minWidth: 260, maxWidth: 300),
           itemBuilder: (context) => [
-            const PopupMenuItem(
+            const PopupMenuItem<String>(
               value: 'profile',
-              child: Row(
-                children: [
-                  Icon(Icons.person, size: 18, color: Color(0xFF0891B2)),
-                  SizedBox(width: 12),
-                  Text('Profil', style: TextStyle(fontSize: 14)),
-                ],
+              padding: EdgeInsets.zero,
+              child: _ProfilePopupTile(
+                icon: Icons.person_rounded,
+                title: 'Profil',
+                color: Color(0xFF0891B2),
               ),
             ),
-            const PopupMenuItem(
+            const PopupMenuItem<String>(
               value: 'settings',
-              child: Row(
-                children: [
-                  Icon(Icons.settings, size: 18, color: Color(0xFF0891B2)),
-                  SizedBox(width: 12),
-                  Text('Pengaturan', style: TextStyle(fontSize: 14)),
-                ],
+              padding: EdgeInsets.zero,
+              child: _ProfilePopupTile(
+                icon: Icons.settings_rounded,
+                title: 'Pengaturan',
+                color: Color(0xFF0891B2),
               ),
             ),
-            const PopupMenuDivider(),
-            const PopupMenuItem(
+            const PopupMenuItem<String>(
               value: 'logout',
-              child: Row(
-                children: [
-                  Icon(Icons.logout, size: 18, color: Colors.red),
-                  SizedBox(width: 12),
-                  Text(
-                    'Keluar',
-                    style: TextStyle(color: Colors.red, fontSize: 14),
-                  ),
-                ],
+              padding: EdgeInsets.zero,
+              child: _ProfilePopupTile(
+                icon: Icons.logout_rounded,
+                title: 'Keluar',
+                color: Color(0xFFEF4444),
+                isDestructive: true,
+                hasTopDivider: true,
               ),
             ),
           ],
           onSelected: (value) {
-            if (value == 'logout')
+            if (value == 'logout') {
               Navigator.pushReplacementNamed(context, '/login');
+            } else if (value == 'profile') {
+              Navigator.pushNamed(context, '/profile');
+            } else if (value == 'settings') {
+              Navigator.pushNamed(context, '/settings');
+            }
           },
           child: MouseRegion(
             onEnter: (_) => setState(() => _isHovered = true),
@@ -1120,6 +1125,82 @@ class _MenuItemState extends State<_MenuItem> {
           ),
         ),
       ),
+    );
+  }
+}
+
+// Popup item styled to match sidebar tiles
+class _ProfilePopupTile extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final Color color;
+  final bool isDestructive;
+  final bool hasTopDivider;
+
+  const _ProfilePopupTile({
+    required this.icon,
+    required this.title,
+    required this.color,
+    this.isDestructive = false,
+    this.hasTopDivider = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final textColor = isDestructive
+        ? const Color(0xFFEF4444)
+        : const Color(0xFF1F2937);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (hasTopDivider)
+          Container(
+            height: 1,
+            color: const Color(0xFFE5E7EB),
+          ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      color.withValues(alpha: 0.18),
+                      color.withValues(alpha: 0.10),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(
+                  icon,
+                  size: 18,
+                  color: isDestructive ? const Color(0xFFEF4444) : color,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: textColor,
+                  ),
+                ),
+              ),
+              const Icon(
+                Icons.chevron_right_rounded,
+                size: 18,
+                color: Color(0xFF9CA3AF),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
