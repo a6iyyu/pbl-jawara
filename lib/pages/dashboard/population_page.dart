@@ -57,7 +57,7 @@ class _DashboardPopulationPageState extends State<DashboardPopulationPage> {
           crossAxisCount: isMobile ? 1 : 2,
           mainAxisSpacing: 16,
           crossAxisSpacing: 16,
-          childAspectRatio: isMobile ? 3.0 : 2.5,
+          childAspectRatio: isMobile ? 2.2 : 2.5,
           children: [
             _buildSummaryCard(
               title: 'Total Keluarga',
@@ -138,22 +138,15 @@ class _DashboardPopulationPageState extends State<DashboardPopulationPage> {
       title: title,
       icon: icon,
       color: color,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              value,
-              style: AppTheme.headingLarge.copyWith(
-                color: color,
-                fontSize: 48,
-              ), // Font lebih besar
-              maxLines: 1,
-            ),
+      child: Center(
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            value,
+            style: AppTheme.headingLarge.copyWith(color: color, fontSize: 36),
+            maxLines: 1,
           ),
-        ],
+        ),
       ),
     );
   }
