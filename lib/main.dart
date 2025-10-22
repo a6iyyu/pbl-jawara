@@ -1,40 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:jawara/pages/income.dart';
-import 'package:jawara/pages/resident_approvals.dart';
-import 'package:jawara/pages/spending.dart';
-import 'package:jawara/pages/user_management.dart';
+import 'package:jawara/pages/activities/activities_add.dart';
+import 'package:jawara/pages/activities/activities_list.dart';
+import 'package:jawara/pages/activities/broadcast_add.dart';
+import 'package:jawara/pages/activities/broadcast_list.dart';
 import 'package:jawara/pages/activity_logs_page.dart';
-import 'package:jawara/pages/resident_messages.dart';
 // Import dari subfolder
 import 'package:jawara/pages/auth/login_page.dart';
 import 'package:jawara/pages/auth/register_page.dart';
-import 'package:jawara/pages/dashboard/finance_page.dart';
+import 'package:jawara/pages/channels/channels_add.dart';
+import 'package:jawara/pages/channels/channels_list.dart';
 import 'package:jawara/pages/dashboard/activities_page.dart';
+import 'package:jawara/pages/dashboard/finance_page.dart';
 import 'package:jawara/pages/dashboard/population_page.dart';
-import 'package:jawara/pages/residents/residents_list.dart';
-import 'package:jawara/pages/residents/residents_add.dart';
-import 'package:jawara/pages/residents/families_page.dart';
-import 'package:jawara/pages/residents/houses_list.dart';
-import 'package:jawara/pages/residents/houses_add.dart';
-import 'package:jawara/pages/income/income_categories.dart';
+import 'package:jawara/pages/income.dart';
 import 'package:jawara/pages/income/income_bill.dart';
 import 'package:jawara/pages/income/income_bills.dart';
-import 'package:jawara/pages/income/income_other_list.dart';
+import 'package:jawara/pages/income/income_categories.dart';
 import 'package:jawara/pages/income/income_other_add.dart';
-import 'package:jawara/pages/spending/spending_list.dart';
-import 'package:jawara/pages/spending/spending_add.dart';
-import 'package:jawara/pages/reports/reports_income.dart';
-import 'package:jawara/pages/reports/reports_spending.dart';
-import 'package:jawara/pages/reports/reports_print.dart';
-import 'package:jawara/pages/activities/activities_list.dart';
-import 'package:jawara/pages/activities/activities_add.dart';
-import 'package:jawara/pages/activities/broadcast_list.dart';
-import 'package:jawara/pages/activities/broadcast_add.dart';
-import 'package:jawara/pages/mutations/family_mutations_list.dart';
+import 'package:jawara/pages/income/income_other_list.dart';
 import 'package:jawara/pages/mutations/family_mutations_add.dart';
-import 'package:jawara/pages/channels/channels_list.dart';
-import 'package:jawara/pages/channels/channels_add.dart';
+import 'package:jawara/pages/mutations/family_mutations_list.dart';
+import 'package:jawara/pages/profile/profile_page.dart';
+import 'package:jawara/pages/reports/reports_income.dart';
+import 'package:jawara/pages/reports/reports_print.dart';
+import 'package:jawara/pages/reports/reports_spending.dart';
+import 'package:jawara/pages/resident_approvals.dart';
+import 'package:jawara/pages/resident_messages.dart';
+import 'package:jawara/pages/residents/families_page.dart';
+import 'package:jawara/pages/residents/houses_add.dart';
+import 'package:jawara/pages/residents/houses_list.dart';
+import 'package:jawara/pages/residents/residents_add.dart';
+import 'package:jawara/pages/residents/residents_list.dart';
+import 'package:jawara/pages/settings/settings_page.dart';
+import 'package:jawara/pages/spending.dart';
+import 'package:jawara/pages/spending/spending_add.dart';
+import 'package:jawara/pages/spending/spending_list.dart';
+import 'package:jawara/pages/user_management.dart';
 import 'package:jawara/pages/users/users_add.dart';
 import 'package:jawara/shared/theme.dart';
 
@@ -123,6 +125,10 @@ class MyApp extends StatelessWidget {
         // Channel Transfer
         '/channels/list': (context) => const ChannelsListPage(),
         '/channels/add': (context) => const ChannelsAddPage(),
+
+        // Profil & Pengaturan
+        '/profile': (context) => const ProfilePage(),
+        '/settings': (context) => const SettingsPage(),
       },
       debugShowCheckedModeBanner: false,
     );

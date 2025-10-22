@@ -514,10 +514,136 @@ class _SidebarState extends State<Sidebar> {
           color: isExpanded ? const Color(0xFF0891B2) : const Color(0xFF6B7280),
           size: 22,
         ),
+<<<<<<< HEAD
         title: Text(
           title,
           style: TextStyle(
             color: isExpanded
+=======
+        child: PopupMenuButton<String>(
+          offset: const Offset(0, -60),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          elevation: 10,
+          color: Colors.white,
+          surfaceTintColor: Colors.white,
+          shadowColor: const Color(0xFF000000).withValues(alpha: 0.06),
+          constraints: const BoxConstraints(minWidth: 260, maxWidth: 300),
+          itemBuilder: (context) => [
+            const PopupMenuItem<String>(
+              value: 'profile',
+              padding: EdgeInsets.zero,
+              child: _ProfilePopupTile(
+                icon: Icons.person_rounded,
+                title: 'Profil',
+                color: Color(0xFF0891B2),
+              ),
+            ),
+            const PopupMenuItem<String>(
+              value: 'settings',
+              padding: EdgeInsets.zero,
+              child: _ProfilePopupTile(
+                icon: Icons.settings_rounded,
+                title: 'Pengaturan',
+                color: Color(0xFF0891B2),
+              ),
+            ),
+            const PopupMenuItem<String>(
+              value: 'logout',
+              padding: EdgeInsets.zero,
+              child: _ProfilePopupTile(
+                icon: Icons.logout_rounded,
+                title: 'Keluar',
+                color: Color(0xFFEF4444),
+                isDestructive: true,
+                hasTopDivider: true,
+              ),
+            ),
+          ],
+          onSelected: (value) {
+            if (value == 'logout') {
+              Navigator.pushReplacementNamed(context, '/login');
+            } else if (value == 'profile') {
+              Navigator.pushNamed(context, '/profile');
+            } else if (value == 'settings') {
+              Navigator.pushNamed(context, '/settings');
+            }
+          },
+          child: MouseRegion(
+            onEnter: (_) => setState(() => _isHovered = true),
+            onExit: (_) => setState(() => _isHovered = false),
+            child: ListTile(
+              leading: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFF0891B2), Color(0xFF0284C7)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(widget.icon, color: Colors.white, size: 20),
+              ),
+              title: widget.isExpanded
+                  ? Text(
+                      widget.title,
+                      style: const TextStyle(
+                        color: Color(0xFF1F2937),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
+                    )
+                  : null,
+              subtitle: widget.isExpanded && widget.subtitle != null
+                  ? Text(
+                      widget.subtitle!,
+                      style: const TextStyle(
+                        color: Color(0xFF6B7280),
+                        fontSize: 11,
+                      ),
+                    )
+                  : null,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 6,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        margin: EdgeInsets.only(
+          left: widget.isSubMenuItem ? 20 : 12,
+          right: 12,
+          top: 3,
+          bottom: 3,
+        ),
+        decoration: BoxDecoration(
+          gradient: _isHovered
+              ? LinearGradient(
+                  colors: [
+                    const Color(0xFF0891B2).withOpacity(0.08),
+                    const Color(0xFF0284C7).withOpacity(0.08),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                )
+              : null,
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: ListTile(
+          leading: Icon(
+            widget.icon,
+            color: _isHovered
+>>>>>>> 0cc652e069531f7c1680dbe02c031d5b5f54d981
                 ? const Color(0xFF0891B2)
                 : const Color(0xFF1F2937),
             fontWeight: FontWeight.w600,
@@ -560,6 +686,82 @@ class _SidebarState extends State<Sidebar> {
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
+    );
+  }
+}
+
+// Popup item styled to match sidebar tiles
+class _ProfilePopupTile extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final Color color;
+  final bool isDestructive;
+  final bool hasTopDivider;
+
+  const _ProfilePopupTile({
+    required this.icon,
+    required this.title,
+    required this.color,
+    this.isDestructive = false,
+    this.hasTopDivider = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final textColor = isDestructive
+        ? const Color(0xFFEF4444)
+        : const Color(0xFF1F2937);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (hasTopDivider)
+          Container(
+            height: 1,
+            color: const Color(0xFFE5E7EB),
+          ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      color.withValues(alpha: 0.18),
+                      color.withValues(alpha: 0.10),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(
+                  icon,
+                  size: 18,
+                  color: isDestructive ? const Color(0xFFEF4444) : color,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: textColor,
+                  ),
+                ),
+              ),
+              const Icon(
+                Icons.chevron_right_rounded,
+                size: 18,
+                color: Color(0xFF9CA3AF),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

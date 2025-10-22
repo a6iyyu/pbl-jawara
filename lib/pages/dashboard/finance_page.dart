@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
 import 'package:jawara/shared/base_layout.dart';
 import 'package:jawara/shared/card.dart';
 import 'package:jawara/shared/theme.dart';
@@ -31,7 +31,7 @@ class _DashboardFinancePageState extends State<DashboardFinancePage> {
             int summaryCrossAxisCount = isMobile ? 1 : 3;
             int chartCrossAxisCount = isMobile ? 1 : 2;
 
-            double summaryAspectRatio = isMobile ? 1.8 : 2.5;
+            double summaryAspectRatio = isMobile ? 2.0 : 2.5;
             double chartAspectRatio = isMobile ? 0.95 : 1.0;
 
             return SingleChildScrollView(
@@ -187,38 +187,31 @@ class _DashboardFinancePageState extends State<DashboardFinancePage> {
       title: title,
       icon: icon,
       color: color,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                value,
-                style: AppTheme.headingLarge.copyWith(
-                  color: color,
-                  fontSize: 24,
-                ),
-                maxLines: 1,
-              ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              value,
+              style: AppTheme.headingLarge.copyWith(color: color, fontSize: 26),
+              maxLines: 1,
             ),
-            if (subtitle != null) ...[
-              const SizedBox(height: 4),
-              Text(
-                subtitle,
-                style: AppTheme.bodySmall.copyWith(
-                  color: AppTheme.textMedium,
-                  fontSize: 10,
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+          ),
+          if (subtitle != null) ...[
+            const SizedBox(height: 4),
+            Text(
+              subtitle,
+              style: AppTheme.bodySmall.copyWith(
+                color: AppTheme.textMedium,
+                fontSize: 11,
               ),
-            ],
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
           ],
-        ),
+        ],
       ),
     );
   }
