@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../models/message.dart';
-import '../../shared/sidebar.dart'; 
 
 class CitizenMessageDetailPage extends StatelessWidget {
   final CitizenMessage message;
@@ -46,7 +45,7 @@ class CitizenMessageDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // Asumsi sidebar tetap (70.0) saat di halaman detail
     const double sidebarWidth = 70.0;
-    
+
     // Format tanggal
     final dateFormatter = DateFormat('d MMMM yyyy', 'id_ID');
 
@@ -54,7 +53,7 @@ class CitizenMessageDetailPage extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false, // Menghilangkan default back button
         title: const Text(
-          'Detail Informasi / Aspirasi Warga', 
+          'Detail Informasi / Aspirasi Warga',
           style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.white,
@@ -64,7 +63,12 @@ class CitizenMessageDetailPage extends StatelessWidget {
         children: [
           // KONTEN UTAMA
           Padding(
-            padding: const EdgeInsets.only(left: sidebarWidth, right: 16.0, top: 16.0, bottom: 16.0),
+            padding: const EdgeInsets.only(
+              left: sidebarWidth,
+              right: 16.0,
+              top: 16.0,
+              bottom: 16.0,
+            ),
             child: Container(
               width: double.infinity,
               height: double.infinity,
@@ -81,7 +85,7 @@ class CitizenMessageDetailPage extends StatelessWidget {
                     ),
                     child: Container(
                       padding: const EdgeInsets.all(32.0),
-                      width: 700, 
+                      width: 700,
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,14 +96,24 @@ class CitizenMessageDetailPage extends StatelessWidget {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(Icons.arrow_back, size: 18, color: Theme.of(context).primaryColor),
+                                Icon(
+                                  Icons.arrow_back,
+                                  size: 18,
+                                  color: Theme.of(context).primaryColor,
+                                ),
                                 const SizedBox(width: 8),
-                                Text('Kembali', style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16)),
+                                Text(
+                                  'Kembali',
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 16,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
                           const SizedBox(height: 20),
-                          
+
                           const Text(
                             "Detail Informasi / Aspirasi Warga",
                             style: TextStyle(
@@ -115,7 +129,10 @@ class CitizenMessageDetailPage extends StatelessWidget {
                           _buildDetailRow("Deskripsi", message.description),
                           _buildDetailRow("Status", message.statusInIndonesian),
                           _buildDetailRow("Dibuat oleh", message.creatorName),
-                          _buildDetailRow("Tanggal Dibuat", dateFormatter.format(message.createdAt)),
+                          _buildDetailRow(
+                            "Tanggal Dibuat",
+                            dateFormatter.format(message.createdAt),
+                          ),
                         ],
                       ),
                     ),
@@ -124,8 +141,6 @@ class CitizenMessageDetailPage extends StatelessWidget {
               ),
             ),
           ),
-          // SIDEBAR (Dibiarkan tertutup)
-          const Sidebar(isExpanded: false),
         ],
       ),
     );

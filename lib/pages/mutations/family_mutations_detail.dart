@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../models/mutations.dart';
-import '../../shared/sidebar.dart'; // Menggunakan Sidebar dari shared
 
 class FamilyMutationsDetailPage extends StatelessWidget {
   final Mutation mutation;
@@ -40,17 +39,14 @@ class FamilyMutationsDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // Asumsi sidebar selalu ditampilkan di sebelah kiri (70.0 jika kecil, dll.)
     // Kita buat layout untuk konten utama di sebelah kanan sidebar
-    const double sidebarWidth = 70.0; 
+    const double sidebarWidth = 70.0;
 
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false, // Matikan default back button
         title: const Text(
           'Detail Mutasi Keluarga',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
         ),
         backgroundColor: Colors.white,
         elevation: 1,
@@ -60,11 +56,18 @@ class FamilyMutationsDetailPage extends StatelessWidget {
         children: [
           // KONTEN UTAMA
           Padding(
-            padding: const EdgeInsets.only(left: sidebarWidth, right: 16.0, top: 16.0, bottom: 16.0),
+            padding: const EdgeInsets.only(
+              left: sidebarWidth,
+              right: 16.0,
+              top: 16.0,
+              bottom: 16.0,
+            ),
             child: Container(
               width: double.infinity,
               height: double.infinity,
-              color: const Color(0xFFF4F7FC), // Warna background mirip container di list
+              color: const Color(
+                0xFFF4F7FC,
+              ), // Warna background mirip container di list
               child: Align(
                 alignment: Alignment.topLeft,
                 child: SingleChildScrollView(
@@ -88,14 +91,24 @@ class FamilyMutationsDetailPage extends StatelessWidget {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(Icons.arrow_back, size: 18, color: Theme.of(context).primaryColor),
+                                Icon(
+                                  Icons.arrow_back,
+                                  size: 18,
+                                  color: Theme.of(context).primaryColor,
+                                ),
                                 const SizedBox(width: 8),
-                                Text('Kembali', style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16)),
+                                Text(
+                                  'Kembali',
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 16,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
                           const SizedBox(height: 20),
-                          
+
                           // Judul Detail
                           const Text(
                             "Detail Mutasi Warga",
@@ -122,8 +135,6 @@ class FamilyMutationsDetailPage extends StatelessWidget {
               ),
             ),
           ),
-          // Sidebar (Asumsi selalu ada dan di kiri, bisa diatur expand/collapse)
-          const Sidebar(isExpanded: false), // Atur sesuai state default sidebar
         ],
       ),
     );
