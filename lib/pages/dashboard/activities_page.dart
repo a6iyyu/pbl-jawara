@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:jawara/shared/sidebar.dart';
+import 'package:flutter/material.dart';
 import 'package:jawara/shared/card.dart';
+import 'package:jawara/shared/sidebar.dart';
 import 'package:jawara/shared/theme.dart';
 
 class DashboardActivitiesPage extends StatefulWidget {
@@ -22,8 +22,8 @@ class _DashboardActivitiesPageState extends State<DashboardActivitiesPage> {
     final bool isMobile = screenWidth < 600;
     final bool isTablet = screenWidth >= 600 && screenWidth < 1000;
 
-    int chartCrossAxisCount = isMobile ? 1 : (isTablet ? 1 : 2);
-    double chartAspectRatio = isMobile ? 1.5 : (isTablet ? 1.8 : 1.6);
+  int chartCrossAxisCount = isMobile ? 1 : (isTablet ? 1 : 2);
+  double chartAspectRatio = isMobile ? 1.35 : (isTablet ? 1.6 : 1.35);
 
     return Scaffold(
       appBar: AppBar(
@@ -117,7 +117,7 @@ class _DashboardActivitiesPageState extends State<DashboardActivitiesPage> {
                           icon: Icons.category_rounded,
                           color: Colors.green.shade600,
                           child: Container(
-                            height: 250,
+                            height: 220,
                             padding: const EdgeInsets.all(16),
                             child: PieChart(
                               PieChartData(
@@ -202,7 +202,7 @@ class _DashboardActivitiesPageState extends State<DashboardActivitiesPage> {
                           icon: Icons.bar_chart_rounded,
                           color: Colors.pink.shade600,
                           child: Container(
-                            height: 250,
+                            height: 220,
                             padding: const EdgeInsets.all(16),
                             child: _buildActivitiesBarChart(),
                           ),

@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:jawara/shared/sidebar.dart';
+import 'package:flutter/material.dart';
 import 'package:jawara/shared/card.dart';
+import 'package:jawara/shared/sidebar.dart';
 import 'package:jawara/shared/theme.dart';
 
 class DashboardPopulationPage extends StatefulWidget {
@@ -22,11 +22,11 @@ class _DashboardPopulationPageState extends State<DashboardPopulationPage> {
     final bool isMobile = screenWidth < 600;
     final bool isTablet = screenWidth >= 600 && screenWidth < 1000;
 
-    int summaryCrossAxisCount = isMobile ? 1 : 2;
-    int chartCrossAxisCount = isMobile ? 1 : (isTablet ? 1 : 2);
+  int summaryCrossAxisCount = isMobile ? 1 : 2;
+  int chartCrossAxisCount = isMobile ? 1 : (isTablet ? 1 : 2);
 
-    double summaryAspectRatio = isMobile ? 3.0 : (isTablet ? 2.5 : 3.0);
-    double chartAspectRatio = isMobile ? 1.3 : (isTablet ? 1.5 : 1.4);
+  double summaryAspectRatio = isMobile ? 2.2 : (isTablet ? 2.0 : 2.0);
+  double chartAspectRatio = isMobile ? 1.25 : (isTablet ? 1.4 : 1.25);
 
     return Scaffold(
       appBar: AppBar(
@@ -188,7 +188,7 @@ class _DashboardPopulationPageState extends State<DashboardPopulationPage> {
       icon: icon,
       color: color,
       child: Container(
-        height: 250,
+        height: 220,
         padding: const EdgeInsets.all(16),
         child: _buildPieChartByTitle(title, color),
       ),
