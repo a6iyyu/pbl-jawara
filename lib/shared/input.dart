@@ -7,6 +7,8 @@ class CustomInputField extends StatefulWidget {
   final IconData? prefixIcon;
   final TextEditingController? controller;
   final TextInputType inputType;
+  final String? Function(String?)? validator;
+  final String? errorText;
 
   const CustomInputField({
     super.key,
@@ -16,6 +18,8 @@ class CustomInputField extends StatefulWidget {
     this.prefixIcon,
     this.controller,
     this.inputType = TextInputType.text,
+    this.validator,
+    this.errorText,
   });
 
   @override
@@ -73,6 +77,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
               decoration: InputDecoration(
                 hintText: widget.hintText,
                 hintStyle: TextStyle(color: Colors.grey[400], fontSize: 13.5),
+                errorText: widget.errorText,
                 prefixIcon: widget.prefixIcon != null
                     ? Icon(
                         widget.prefixIcon,
@@ -120,6 +125,20 @@ class _CustomInputFieldState extends State<CustomInputField> {
                   borderRadius: BorderRadius.circular(14),
                   borderSide: const BorderSide(
                     color: Color(0xFF0891B2),
+                    width: 1.5,
+                  ),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: const BorderSide(
+                    color: Color(0xFFEF4444),
+                    width: 1.5,
+                  ),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: const BorderSide(
+                    color: Color(0xFFEF4444),
                     width: 1.5,
                   ),
                 ),

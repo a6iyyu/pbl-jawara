@@ -11,6 +11,7 @@ dependencies:
     sdk: flutter
   intl: ^0.20.2
   fl_chart: ^0.69.0
+  responsive_framework: ^1.5.1
 
 dev_dependencies:
   flutter_test:

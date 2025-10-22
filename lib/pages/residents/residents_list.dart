@@ -188,6 +188,9 @@ class _ResidentsListPageState extends State<ResidentsListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final bool isMobile = screenWidth < 600;
+
     // Define table headers
     final headers = [
       'NO',
@@ -237,13 +240,13 @@ class _ResidentsListPageState extends State<ResidentsListPage> {
     return BaseLayout(
       title: 'Daftar Warga', // AppBar title
       child: SingleChildScrollView(
-        padding: const EdgeInsets.all(24.0), // Main content padding
+        padding: EdgeInsets.all(isMobile ? 16.0 : 24.0), // Responsive padding
         child: Column(
           children: [
             // White container as the main Card
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(24.0),
+              padding: EdgeInsets.all(isMobile ? 16.0 : 24.0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: AppTheme.borderRadiusXLarge, // From theme

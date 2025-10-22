@@ -20,31 +20,24 @@ class BaseLayout extends StatefulWidget {
 }
 
 class _BaseLayoutState extends State<BaseLayout> {
-  bool _isSidebarExpanded = true;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    final double sidebarWidth = _isSidebarExpanded ? 280.0 : 70.0;
-
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
-        leading: widget.showBackButton
-            ? IconButton(
-                icon: Icon(
-                  _isSidebarExpanded
-                      ? Icons.menu_open_rounded
-                      : Icons.menu_rounded,
-                  color: const Color(0xFF0891B2),
-                  size: 24,
-                ),
-                onPressed: () {
-                  setState(() {
-                    _isSidebarExpanded = !_isSidebarExpanded;
-                  });
-                },
-              )
-            : null,
-        title: Text(widget.title, overflow: TextOverflow.ellipsis),
+        leading: IconButton(
+          icon: Icon(
+            Icons.menu_rounded,
+            color: const Color(0xFF0891B2),
+            size: 24,
+          ),
+          onPressed: () {
+            _scaffoldKey.currentState?.openDrawer();
+          },
+        ),
+        title: Text(widget.title, overflow: TextOverflow.ellipsis, maxLines: 1),
         backgroundColor: Colors.white,
         elevation: 0,
         surfaceTintColor: Colors.white,
@@ -173,17 +166,8 @@ class _BaseLayoutState extends State<BaseLayout> {
               ),
             ],
       ),
-      body: Stack(
-        children: [
-          AnimatedPadding(
-            padding: EdgeInsets.only(left: sidebarWidth),
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-            child: widget.child,
-          ),
-          Sidebar(isExpanded: _isSidebarExpanded),
-        ],
-      ),
+      drawer: const Sidebar(),
+      body: SafeArea(child: widget.child),
     );
   }
 }

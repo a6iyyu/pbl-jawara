@@ -102,95 +102,98 @@ class _CustomDataTableState extends State<CustomDataTable> {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
-        child: Theme(
-          data: Theme.of(context).copyWith(
-            dividerColor: Colors.grey[100],
-            dataTableTheme: DataTableThemeData(
-              headingRowColor: WidgetStateProperty.all(
-                const Color(0xFF0891B2).withValues(alpha: 0.06),
-              ),
-              dataRowColor: WidgetStateProperty.resolveWith<Color>((
-                Set<WidgetState> states,
-              ) {
-                if (states.contains(WidgetState.hovered)) {
-                  return const Color(0xFF0891B2).withValues(alpha: 0.04);
-                }
-                return Colors.white;
-              }),
-              headingTextStyle: const TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 13,
-                color: Color(0xFF0891B2),
-                letterSpacing: 0.5,
-              ),
-              dataTextStyle: const TextStyle(
-                fontSize: 13.5,
-                color: Color(0xFF1F2937),
-              ),
-            ),
-          ),
-          child: DataTable(
-            sortColumnIndex: _sortColumnIndex == -1 ? null : _sortColumnIndex,
-            sortAscending: _isAscending,
-            columnSpacing: 20,
-            horizontalMargin: 20,
-            headingRowHeight: 52,
-            dataRowHeight: 60,
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(color: Colors.grey[200]!, width: 1),
-              ),
-            ),
-            columns: List.generate(widget.headers.length, (index) {
-              final header = widget.headers[index];
-              final isSortable = widget.sortable
-                  .map((s) => s.toLowerCase())
-                  .contains(header.toLowerCase());
-              return DataColumn(
-                label: Row(
-                  children: [
-                    Text(
-                      header,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                        color: Color(0xFF06B6D4),
-                      ),
-                    ),
-                    if (isSortable) ...[
-                      const SizedBox(width: 4),
-                      const Icon(
-                        Icons.unfold_more,
-                        size: 16,
-                        color: Color(0xFF06B6D4),
-                      ),
-                    ],
-                  ],
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Theme(
+            data: Theme.of(context).copyWith(
+              dividerColor: Colors.grey[100],
+              dataTableTheme: DataTableThemeData(
+                headingRowColor: WidgetStateProperty.all(
+                  const Color(0xFF0891B2).withValues(alpha: 0.06),
                 ),
-                onSort: isSortable
-                    ? (columnIndex, ascending) =>
-                          _onSort(columnIndex, ascending)
-                    : null,
-              );
-            }),
-            rows: _sortedRows.asMap().entries.map((entry) {
-              final index = entry.key;
-              final row = entry.value;
-              return DataRow(
-                color: WidgetStateProperty.resolveWith<Color>((
+                dataRowColor: WidgetStateProperty.resolveWith<Color>((
                   Set<WidgetState> states,
                 ) {
                   if (states.contains(WidgetState.hovered)) {
-                    return const Color(0xFF8B5CF6).withValues(alpha: 0.05);
-                  }
-                  if (index.isEven) {
-                    return Colors.grey[50]!;
+                    return const Color(0xFF0891B2).withValues(alpha: 0.04);
                   }
                   return Colors.white;
                 }),
-                cells: row.map((cell) => DataCell(cell)).toList(),
-              );
-            }).toList(),
+                headingTextStyle: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 13,
+                  color: Color(0xFF0891B2),
+                  letterSpacing: 0.5,
+                ),
+                dataTextStyle: const TextStyle(
+                  fontSize: 13.5,
+                  color: Color(0xFF1F2937),
+                ),
+              ),
+            ),
+            child: DataTable(
+              sortColumnIndex: _sortColumnIndex == -1 ? null : _sortColumnIndex,
+              sortAscending: _isAscending,
+              columnSpacing: 20,
+              horizontalMargin: 20,
+              headingRowHeight: 52,
+              dataRowHeight: 60,
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(color: Colors.grey[200]!, width: 1),
+                ),
+              ),
+              columns: List.generate(widget.headers.length, (index) {
+                final header = widget.headers[index];
+                final isSortable = widget.sortable
+                    .map((s) => s.toLowerCase())
+                    .contains(header.toLowerCase());
+                return DataColumn(
+                  label: Row(
+                    children: [
+                      Text(
+                        header,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          color: Color(0xFF06B6D4),
+                        ),
+                      ),
+                      if (isSortable) ...[
+                        const SizedBox(width: 4),
+                        const Icon(
+                          Icons.unfold_more,
+                          size: 16,
+                          color: Color(0xFF06B6D4),
+                        ),
+                      ],
+                    ],
+                  ),
+                  onSort: isSortable
+                      ? (columnIndex, ascending) =>
+                            _onSort(columnIndex, ascending)
+                      : null,
+                );
+              }),
+              rows: _sortedRows.asMap().entries.map((entry) {
+                final index = entry.key;
+                final row = entry.value;
+                return DataRow(
+                  color: WidgetStateProperty.resolveWith<Color>((
+                    Set<WidgetState> states,
+                  ) {
+                    if (states.contains(WidgetState.hovered)) {
+                      return const Color(0xFF8B5CF6).withValues(alpha: 0.05);
+                    }
+                    if (index.isEven) {
+                      return Colors.grey[50]!;
+                    }
+                    return Colors.white;
+                  }),
+                  cells: row.map((cell) => DataCell(cell)).toList(),
+                );
+              }).toList(),
+            ),
           ),
         ),
       ),

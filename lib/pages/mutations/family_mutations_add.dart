@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jawara/shared/sidebar.dart';
+import 'package:jawara/shared/base_layout.dart';
 
 class CustomDropdown extends StatelessWidget {
   final String hintText;
@@ -48,8 +48,6 @@ class FamilyMutationsAddPage extends StatefulWidget {
 }
 
 class _FamilyMutationsAddPageState extends State<FamilyMutationsAddPage> {
-  bool _isSidebarExpanded = true;
-
   String? _selectedJenisMutasi;
   String? _selectedKeluarga;
   final TextEditingController _alasanController = TextEditingController();
@@ -103,235 +101,193 @@ class _FamilyMutationsAddPageState extends State<FamilyMutationsAddPage> {
 
   @override
   Widget build(BuildContext context) {
-    final double sidebarWidth = _isSidebarExpanded ? 280.0 : 70.0;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final bool isMobile = screenWidth < 600;
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            setState(() {
-              _isSidebarExpanded = !_isSidebarExpanded;
-            });
-          },
-        ),
-        title: const Flexible(
-          child: Text(
-            'Tambah Mutasi Keluarga',
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
-            ),
-          ),
-        ),
-        backgroundColor: Colors.white,
-        elevation: 1,
-        iconTheme: const IconThemeData(color: Colors.black87),
-      ),
-      body: Stack(
-        children: [
-          // KONTEN UTAMA - FULL WIDTH & HEIGHT
-          AnimatedPadding(
-            padding: EdgeInsets.only(left: sidebarWidth),
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              color: const Color(0xFFF4F7FC),
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  // CARD FORM - FULL WIDTH & EXPANDED
-                  Expanded(
-                    child: Card(
-                      elevation: 2,
-                      shadowColor: Colors.black26,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(32.0),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "Buat Mutasi Keluarga",
+    return BaseLayout(
+      title: 'Tambah Mutasi Keluarga',
+      child: Container(
+        width: double.infinity,
+        color: const Color(0xFFF4F7FC),
+        padding: EdgeInsets.all(isMobile ? 12.0 : 16.0),
+        child: Column(
+          children: [
+            // CARD FORM - FULL WIDTH & EXPANDED
+            Expanded(
+              child: Card(
+                elevation: 2,
+                shadowColor: Colors.black26,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(32.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Buat Mutasi Keluarga",
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 30),
+
+                        // Jenis Mutasi
+                        const Text(
+                          "Jenis Mutasi",
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(height: 8),
+                        CustomDropdown(
+                          hintText: "-- Pilih Jenis Mutasi --",
+                          items: jenisMutasiOptions,
+                          selectedValue: _selectedJenisMutasi,
+                          onChanged: (value) =>
+                              setState(() => _selectedJenisMutasi = value),
+                        ),
+                        const SizedBox(height: 24),
+
+                        // Keluarga
+                        const Text(
+                          "Keluarga",
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(height: 8),
+                        CustomDropdown(
+                          hintText: "-- Pilih Keluarga --",
+                          items: keluargaOptions,
+                          selectedValue: _selectedKeluarga,
+                          onChanged: (value) =>
+                              setState(() => _selectedKeluarga = value),
+                        ),
+                        const SizedBox(height: 24),
+
+                        // Alasan Mutasi
+                        const Text(
+                          "Alasan Mutasi",
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(height: 8),
+                        TextFormField(
+                          controller: _alasanController,
+                          maxLines: 4,
+                          decoration: InputDecoration(
+                            hintText: "Masukkan alasan disini...",
+                            fillColor: Colors.white,
+                            filled: true,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: BorderSide(
+                                color: Colors.grey.shade300,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+
+                        // Tanggal Mutasi
+                        const Text(
+                          "Tanggal Mutasi",
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 12.0,
+                                horizontal: 16.0,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                border: Border.all(color: Colors.grey.shade300),
+                                color: Colors.white,
+                              ),
+                              child: Text(
+                                _formattedDate,
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            IconButton(
+                              icon: const Icon(
+                                Icons.calendar_month,
+                                color: Colors.black54,
+                              ),
+                              padding: EdgeInsets.zero,
+                              constraints: const BoxConstraints(),
+                              onPressed: () => _selectDate(context),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 40),
+
+                        // Tombol Aksi
+                        Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                print('Simpan Mutasi:');
+                                print('Jenis: $_selectedJenisMutasi');
+                                print('Keluarga: $_selectedKeluarga');
+                                print('Alasan: ${_alasanController.text}');
+                                print('Tanggal: $_formattedDate');
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Theme.of(context).primaryColor,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 24,
+                                  vertical: 16,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              child: const Text(
+                                'Simpan',
                                 style: TextStyle(
-                                  fontSize: 24,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(height: 30),
-
-                              // Jenis Mutasi
-                              const Text(
-                                "Jenis Mutasi",
-                                style: TextStyle(fontWeight: FontWeight.w600),
-                              ),
-                              const SizedBox(height: 8),
-                              CustomDropdown(
-                                hintText: "-- Pilih Jenis Mutasi --",
-                                items: jenisMutasiOptions,
-                                selectedValue: _selectedJenisMutasi,
-                                onChanged: (value) => setState(
-                                  () => _selectedJenisMutasi = value,
+                            ),
+                            const SizedBox(width: 16),
+                            TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  _selectedJenisMutasi = null;
+                                  _selectedKeluarga = null;
+                                  _alasanController.clear();
+                                  _selectedDate = null;
+                                });
+                              },
+                              style: TextButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 24,
+                                  vertical: 16,
                                 ),
                               ),
-                              const SizedBox(height: 24),
-
-                              // Keluarga
-                              const Text(
-                                "Keluarga",
-                                style: TextStyle(fontWeight: FontWeight.w600),
-                              ),
-                              const SizedBox(height: 8),
-                              CustomDropdown(
-                                hintText: "-- Pilih Keluarga --",
-                                items: keluargaOptions,
-                                selectedValue: _selectedKeluarga,
-                                onChanged: (value) =>
-                                    setState(() => _selectedKeluarga = value),
-                              ),
-                              const SizedBox(height: 24),
-
-                              // Alasan Mutasi
-                              const Text(
-                                "Alasan Mutasi",
-                                style: TextStyle(fontWeight: FontWeight.w600),
-                              ),
-                              const SizedBox(height: 8),
-                              TextFormField(
-                                controller: _alasanController,
-                                maxLines: 4,
-                                decoration: InputDecoration(
-                                  hintText: "Masukkan alasan disini...",
-                                  fillColor: Colors.white,
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    borderSide: BorderSide(
-                                      color: Colors.grey.shade300,
-                                    ),
-                                  ),
+                              child: Text(
+                                'Reset',
+                                style: TextStyle(
+                                  color: Colors.grey.shade700,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(height: 24),
-
-                              // Tanggal Mutasi
-                              const Text(
-                                "Tanggal Mutasi",
-                                style: TextStyle(fontWeight: FontWeight.w600),
-                              ),
-                              const SizedBox(height: 8),
-                              Row(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 12.0,
-                                      horizontal: 16.0,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      border: Border.all(
-                                        color: Colors.grey.shade300,
-                                      ),
-                                      color: Colors.white,
-                                    ),
-                                    child: Text(
-                                      _formattedDate,
-                                      style: const TextStyle(fontSize: 16),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.calendar_month,
-                                      color: Colors.black54,
-                                    ),
-                                    padding: EdgeInsets.zero,
-                                    constraints: const BoxConstraints(),
-                                    onPressed: () => _selectDate(context),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 40),
-
-                              // Tombol Aksi
-                              Row(
-                                children: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      print('Simpan Mutasi:');
-                                      print('Jenis: $_selectedJenisMutasi');
-                                      print('Keluarga: $_selectedKeluarga');
-                                      print(
-                                        'Alasan: ${_alasanController.text}',
-                                      );
-                                      print('Tanggal: $_formattedDate');
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Theme.of(
-                                        context,
-                                      ).primaryColor,
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 24,
-                                        vertical: 16,
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                    child: const Text(
-                                      'Simpan',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  TextButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        _selectedJenisMutasi = null;
-                                        _selectedKeluarga = null;
-                                        _alasanController.clear();
-                                        _selectedDate = null;
-                                      });
-                                    },
-                                    style: TextButton.styleFrom(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 24,
-                                        vertical: 16,
-                                      ),
-                                    ),
-                                    child: Text(
-                                      'Reset',
-                                      style: TextStyle(
-                                        color: Colors.grey.shade700,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ),
+                      ],
                     ),
                   ),
-                ],
+                ),
               ),
             ),
-          ),
-
-          // SIDEBAR TETAP DI KIRI
-          Sidebar(isExpanded: _isSidebarExpanded),
-        ],
+          ],
+        ),
       ),
     );
   }

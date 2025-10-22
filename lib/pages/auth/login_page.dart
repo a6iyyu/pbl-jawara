@@ -2,8 +2,52 @@ import 'package:flutter/material.dart';
 import 'package:jawara/shared/button.dart';
 import 'package:jawara/shared/input.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  String? _emailError;
+  String? _passwordError;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void _validateAndLogin() {
+    setState(() {
+      // Reset errors
+      _emailError = null;
+      _passwordError = null;
+
+      // Validate email
+      if (_emailController.text.trim().isEmpty) {
+        _emailError = 'Email tidak boleh kosong';
+      } else if (!_emailController.text.contains('@')) {
+        _emailError = 'Format email tidak valid';
+      }
+
+      // Validate password
+      if (_passwordController.text.trim().isEmpty) {
+        _passwordError = 'Password tidak boleh kosong';
+      } else if (_passwordController.text.length < 6) {
+        _passwordError = 'Password minimal 6 karakter';
+      }
+    });
+
+    // If no errors, proceed to login
+    if (_emailError == null && _passwordError == null) {
+      Navigator.pushReplacementNamed(context, '/dashboard/finance');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,17 +155,22 @@ class LoginPage extends StatelessWidget {
                               textAlign: TextAlign.center,
                             ),
                             const SizedBox(height: 32),
-                            const CustomInputField(
+                            CustomInputField(
                               label: 'Email',
                               hintText: 'nama@email.com',
                               prefixIcon: Icons.email_outlined,
+                              controller: _emailController,
+                              errorText: _emailError,
+                              inputType: TextInputType.emailAddress,
                             ),
                             const SizedBox(height: 20),
-                            const CustomInputField(
+                            CustomInputField(
                               label: 'Password',
                               hintText: 'Masukkan password Anda',
                               isPassword: true,
                               prefixIcon: Icons.lock_outline,
+                              controller: _passwordController,
+                              errorText: _passwordError,
                             ),
                             const SizedBox(height: 12),
                             Align(
@@ -144,12 +193,7 @@ class LoginPage extends StatelessWidget {
                             CustomButton(
                               text: 'Masuk',
                               icon: Icons.arrow_forward,
-                              onPressed: () {
-                                Navigator.pushReplacementNamed(
-                                  context,
-                                  '/dashboard/finance',
-                                );
-                              },
+                              onPressed: _validateAndLogin,
                             ),
                             const SizedBox(height: 32),
                             Row(

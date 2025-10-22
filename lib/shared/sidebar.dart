@@ -1,8 +1,7 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 class Sidebar extends StatefulWidget {
-  final bool isExpanded;
-  const Sidebar({super.key, required this.isExpanded});
+  const Sidebar({super.key});
 
   @override
   State<Sidebar> createState() => _SidebarState();
@@ -23,7 +22,6 @@ class _SidebarState extends State<Sidebar> {
   bool _isUserManagementExpanded = false;
   bool _isChannelTransferExpanded = false;
 
-  // Fungsi untuk menutup semua menu kecuali yang dipilih
   void _closeAllMenusExcept(String menuName) {
     setState(() {
       if (menuName != 'dashboard') _isDashboardExpanded = false;
@@ -43,867 +41,451 @@ class _SidebarState extends State<Sidebar> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      elevation: 0,
-      child: AnimatedContainer(
-        width: widget.isExpanded ? 280.0 : 70.0,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(24),
-            bottomRight: Radius.circular(24),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.04),
-              blurRadius: 12,
-              offset: const Offset(2, 0),
-            ),
-          ],
-        ),
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
+    return Drawer(
+      child: Container(
+        color: Colors.white,
         child: Column(
           children: [
-            // Header
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              height: widget.isExpanded ? 90 : 80,
-              padding: EdgeInsets.symmetric(
-                vertical: 16,
-                horizontal: widget.isExpanded ? 20 : 12,
-              ),
+            // Header dengan SafeArea
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.fromLTRB(20, 60, 20, 20),
               decoration: BoxDecoration(
-                color: const Color(0xFF0891B2).withOpacity(0.05),
-                borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(24),
+                gradient: LinearGradient(
+                  colors: [
+                    const Color(0xFF0891B2).withOpacity(0.1),
+                    const Color(0xFF0284C7).withOpacity(0.05),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
               ),
-              child: widget.isExpanded
-                  ? Row(
+              child: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF0891B2), Color(0xFF0284C7)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF0891B2).withOpacity(0.3),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.book_rounded,
+                      color: Colors.white,
+                      size: 28,
+                    ),
+                  ),
+                  const SizedBox(width: 14),
+                  const Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [Color(0xFF0891B2), Color(0xFF0284C7)],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: [
-                              BoxShadow(
-                                color: const Color(0xFF0891B2).withOpacity(0.3),
-                                blurRadius: 8,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: const Icon(
-                            Icons.book_rounded,
-                            color: Colors.white,
-                            size: 28,
+                        Text(
+                          'Jawara Pintar',
+                          style: TextStyle(
+                            color: Color(0xFF0891B2),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.3,
                           ),
                         ),
-                        const SizedBox(width: 14),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Jawara Pintar',
-                                style: TextStyle(
-                                  color: Color(0xFF0891B2),
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 0.3,
-                                ),
-                              ),
-                              const SizedBox(height: 2),
-                              Text(
-                                'Sistem RT Modern',
-                                style: TextStyle(
-                                  color: const Color(0xFF6B7280),
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
+                        SizedBox(height: 2),
+                        Text(
+                          'Sistem RT Modern',
+                          style: TextStyle(
+                            color: Color(0xFF6B7280),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ],
-                    )
-                  : Center(
-                      child: Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [Color(0xFF0891B2), Color(0xFF0284C7)],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          borderRadius: BorderRadius.circular(16),
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color(0xFF0891B2).withOpacity(0.3),
-                              blurRadius: 8,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: const Icon(
-                          Icons.book_rounded,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ),
                     ),
+                  ),
+                ],
+              ),
             ),
+
+            // Menu List
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 children: [
                   // Dashboard
-                  if (widget.isExpanded) ...[
-                    _MenuItem(
-                      icon: Icons.dashboard_rounded,
-                      title: 'Dashboard',
-                      isExpanded: widget.isExpanded,
-                      onTap: () {
-                        _closeAllMenusExcept('dashboard');
-                        setState(
-                          () => _isDashboardExpanded = !_isDashboardExpanded,
-                        );
-                      },
-                      hasSubMenu: true,
-                      isSubMenuExpanded: _isDashboardExpanded,
+                  _buildMenuItem(
+                    icon: Icons.dashboard_rounded,
+                    title: 'Dashboard',
+                    isExpanded: _isDashboardExpanded,
+                    onTap: () {
+                      _closeAllMenusExcept('dashboard');
+                      setState(
+                        () => _isDashboardExpanded = !_isDashboardExpanded,
+                      );
+                    },
+                  ),
+                  if (_isDashboardExpanded) ...[
+                    _buildSubMenuItem(
+                      icon: Icons.account_balance_wallet_rounded,
+                      title: 'Keuangan',
+                      route: '/dashboard/finance',
                     ),
-                    AnimatedSize(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      child: _isDashboardExpanded
-                          ? Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                _MenuItem(
-                                  icon: Icons.account_balance_wallet_rounded,
-                                  title: 'Keuangan',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/dashboard/finance',
-                                  ),
-                                ),
-                                _MenuItem(
-                                  icon: Icons.event_note_rounded,
-                                  title: 'Kegiatan',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/dashboard/activities',
-                                  ),
-                                ),
-                                _MenuItem(
-                                  icon: Icons.people_alt_rounded,
-                                  title: 'Kependudukan',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/dashboard/population',
-                                  ),
-                                ),
-                              ],
-                            )
-                          : const SizedBox.shrink(),
+                    _buildSubMenuItem(
+                      icon: Icons.event_note_rounded,
+                      title: 'Kegiatan',
+                      route: '/dashboard/activities',
                     ),
-                  ] else
-                    _MenuItem(
-                      icon: Icons.dashboard_rounded,
-                      title: 'Dashboard',
-                      isExpanded: widget.isExpanded,
-                      onTap: () =>
-                          Navigator.pushNamed(context, '/dashboard/finance'),
+                    _buildSubMenuItem(
+                      icon: Icons.people_alt_rounded,
+                      title: 'Kependudukan',
+                      route: '/dashboard/population',
                     ),
+                  ],
 
-                  // Data Warga
-                  if (widget.isExpanded) ...[
-                    _MenuItem(
-                      icon: Icons.people_rounded,
-                      title: 'Data Warga & Rumah',
-                      isExpanded: widget.isExpanded,
-                      onTap: () {
-                        _closeAllMenusExcept('residents');
-                        setState(
-                          () => _isResidentsExpanded = !_isResidentsExpanded,
-                        );
-                      },
-                      hasSubMenu: true,
-                      isSubMenuExpanded: _isResidentsExpanded,
+                  const Divider(height: 16),
+
+                  // Data Warga & Rumah
+                  _buildMenuItem(
+                    icon: Icons.people_rounded,
+                    title: 'Data Warga & Rumah',
+                    isExpanded: _isResidentsExpanded,
+                    onTap: () {
+                      _closeAllMenusExcept('residents');
+                      setState(
+                        () => _isResidentsExpanded = !_isResidentsExpanded,
+                      );
+                    },
+                  ),
+                  if (_isResidentsExpanded) ...[
+                    _buildSubMenuItem(
+                      icon: Icons.person_outline_rounded,
+                      title: 'Warga - Daftar',
+                      route: '/residents/list',
                     ),
-                    AnimatedSize(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      child: _isResidentsExpanded
-                          ? Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                _MenuItem(
-                                  icon: Icons.person_outline_rounded,
-                                  title: 'Warga - Daftar',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/residents/list',
-                                  ),
-                                ),
-                                _MenuItem(
-                                  icon: Icons.person_add_rounded,
-                                  title: 'Warga - Tambah',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/residents/add',
-                                  ),
-                                ),
-                                _MenuItem(
-                                  icon: Icons.family_restroom_rounded,
-                                  title: 'Keluarga',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () =>
-                                      Navigator.pushNamed(context, '/families'),
-                                ),
-                                _MenuItem(
-                                  icon: Icons.home_outlined,
-                                  title: 'Rumah - Daftar',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/houses/list',
-                                  ),
-                                ),
-                                _MenuItem(
-                                  icon: Icons.add_home_rounded,
-                                  title: 'Rumah - Tambah',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/houses/add',
-                                  ),
-                                ),
-                              ],
-                            )
-                          : const SizedBox.shrink(),
+                    _buildSubMenuItem(
+                      icon: Icons.person_add_rounded,
+                      title: 'Warga - Tambah',
+                      route: '/residents/add',
                     ),
-                  ] else
-                    _MenuItem(
-                      icon: Icons.people_rounded,
-                      title: 'Data Warga & Rumah',
-                      isExpanded: widget.isExpanded,
-                      onTap: () => Navigator.pushNamed(context, '/residents'),
+                    _buildSubMenuItem(
+                      icon: Icons.family_restroom_rounded,
+                      title: 'Keluarga',
+                      route: '/families',
                     ),
+                    _buildSubMenuItem(
+                      icon: Icons.home_outlined,
+                      title: 'Rumah - Daftar',
+                      route: '/houses/list',
+                    ),
+                    _buildSubMenuItem(
+                      icon: Icons.add_home_rounded,
+                      title: 'Rumah - Tambah',
+                      route: '/houses/add',
+                    ),
+                  ],
+
+                  const Divider(height: 16),
 
                   // Pemasukan
-                  if (widget.isExpanded) ...[
-                    _MenuItem(
-                      icon: Icons.arrow_downward_rounded,
-                      title: 'Pemasukan',
-                      isExpanded: widget.isExpanded,
-                      onTap: () {
-                        _closeAllMenusExcept('income');
-                        setState(() => _isIncomeExpanded = !_isIncomeExpanded);
-                      },
-                      hasSubMenu: true,
-                      isSubMenuExpanded: _isIncomeExpanded,
+                  _buildMenuItem(
+                    icon: Icons.attach_money_rounded,
+                    title: 'Pemasukan',
+                    isExpanded: _isIncomeExpanded,
+                    onTap: () {
+                      _closeAllMenusExcept('income');
+                      setState(() => _isIncomeExpanded = !_isIncomeExpanded);
+                    },
+                  ),
+                  if (_isIncomeExpanded) ...[
+                    _buildSubMenuItem(
+                      icon: Icons.list_alt_rounded,
+                      title: 'Iuran - Daftar',
+                      route: '/income/bills',
                     ),
-                    AnimatedSize(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      child: _isIncomeExpanded
-                          ? Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                _MenuItem(
-                                  icon: Icons.category_rounded,
-                                  title: 'Kategori Iuran',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/income/categories',
-                                  ),
-                                ),
-                                _MenuItem(
-                                  icon: Icons.request_quote_rounded,
-                                  title: 'Tagih Iuran',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/income/bill',
-                                  ),
-                                ),
-                                _MenuItem(
-                                  icon: Icons.receipt_long_rounded,
-                                  title: 'Tagihan',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/income/bills',
-                                  ),
-                                ),
-                                _MenuItem(
-                                  icon: Icons.payments_outlined,
-                                  title: 'Pemasukan Lain - Daftar',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/income/other/list',
-                                  ),
-                                ),
-                                _MenuItem(
-                                  icon: Icons.add_card_rounded,
-                                  title: 'Pemasukan Lain - Tambah',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/income/other/add',
-                                  ),
-                                ),
-                              ],
-                            )
-                          : const SizedBox.shrink(),
+                    _buildSubMenuItem(
+                      icon: Icons.receipt_long_rounded,
+                      title: 'Iuran - Detail',
+                      route: '/income/bill',
                     ),
-                  ] else
-                    _MenuItem(
-                      icon: Icons.arrow_downward_rounded,
-                      title: 'Pemasukan',
-                      isExpanded: widget.isExpanded,
-                      onTap: () => Navigator.pushNamed(context, '/income'),
+                    _buildSubMenuItem(
+                      icon: Icons.category_rounded,
+                      title: 'Kategori Iuran',
+                      route: '/income/categories',
                     ),
+                    _buildSubMenuItem(
+                      icon: Icons.payments_rounded,
+                      title: 'Pemasukan Lain',
+                      route: '/income/other/list',
+                    ),
+                    _buildSubMenuItem(
+                      icon: Icons.add_circle_outline_rounded,
+                      title: 'Tambah Pemasukan Lain',
+                      route: '/income/other/add',
+                    ),
+                  ],
+
+                  const Divider(height: 16),
 
                   // Pengeluaran
-                  if (widget.isExpanded) ...[
-                    _MenuItem(
-                      icon: Icons.arrow_upward_rounded,
-                      title: 'Pengeluaran',
-                      isExpanded: widget.isExpanded,
-                      onTap: () {
-                        _closeAllMenusExcept('spending');
-                        setState(
-                          () => _isSpendingExpanded = !_isSpendingExpanded,
-                        );
-                      },
-                      hasSubMenu: true,
-                      isSubMenuExpanded: _isSpendingExpanded,
+                  _buildMenuItem(
+                    icon: Icons.money_off_rounded,
+                    title: 'Pengeluaran',
+                    isExpanded: _isSpendingExpanded,
+                    onTap: () {
+                      _closeAllMenusExcept('spending');
+                      setState(
+                        () => _isSpendingExpanded = !_isSpendingExpanded,
+                      );
+                    },
+                  ),
+                  if (_isSpendingExpanded) ...[
+                    _buildSubMenuItem(
+                      icon: Icons.format_list_bulleted_rounded,
+                      title: 'Daftar Pengeluaran',
+                      route: '/spending/list',
                     ),
-                    AnimatedSize(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      child: _isSpendingExpanded
-                          ? Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                _MenuItem(
-                                  icon: Icons.list_alt_rounded,
-                                  title: 'Daftar',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/spending/list',
-                                  ),
-                                ),
-                                _MenuItem(
-                                  icon: Icons.add_circle_outline_rounded,
-                                  title: 'Tambah',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/spending/add',
-                                  ),
-                                ),
-                              ],
-                            )
-                          : const SizedBox.shrink(),
+                    _buildSubMenuItem(
+                      icon: Icons.add_shopping_cart_rounded,
+                      title: 'Tambah Pengeluaran',
+                      route: '/spending/add',
                     ),
-                  ] else
-                    _MenuItem(
-                      icon: Icons.arrow_upward_rounded,
-                      title: 'Pengeluaran',
-                      isExpanded: widget.isExpanded,
-                      onTap: () => Navigator.pushNamed(context, '/spending'),
-                    ),
+                  ],
+
+                  const Divider(height: 16),
 
                   // Laporan Keuangan
-                  if (widget.isExpanded) ...[
-                    _MenuItem(
-                      icon: Icons.description_rounded,
-                      title: 'Laporan Keuangan',
-                      isExpanded: widget.isExpanded,
-                      onTap: () {
-                        _closeAllMenusExcept('financialReport');
-                        setState(
-                          () => _isFinancialReportExpanded =
-                              !_isFinancialReportExpanded,
-                        );
-                      },
-                      hasSubMenu: true,
-                      isSubMenuExpanded: _isFinancialReportExpanded,
+                  _buildMenuItem(
+                    icon: Icons.assessment_rounded,
+                    title: 'Laporan Keuangan',
+                    isExpanded: _isFinancialReportExpanded,
+                    onTap: () {
+                      _closeAllMenusExcept('financialReport');
+                      setState(
+                        () => _isFinancialReportExpanded =
+                            !_isFinancialReportExpanded,
+                      );
+                    },
+                  ),
+                  if (_isFinancialReportExpanded) ...[
+                    _buildSubMenuItem(
+                      icon: Icons.trending_up_rounded,
+                      title: 'Laporan Pemasukan',
+                      route: '/reports/income',
                     ),
-                    AnimatedSize(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      child: _isFinancialReportExpanded
-                          ? Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                _MenuItem(
-                                  icon: Icons.trending_down_rounded,
-                                  title: 'Semua Pemasukan',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/reports/income',
-                                  ),
-                                ),
-                                _MenuItem(
-                                  icon: Icons.trending_up_rounded,
-                                  title: 'Semua Pengeluaran',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/reports/spending',
-                                  ),
-                                ),
-                                _MenuItem(
-                                  icon: Icons.print_rounded,
-                                  title: 'Cetak Laporan',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/reports/print',
-                                  ),
-                                ),
-                              ],
-                            )
-                          : const SizedBox.shrink(),
+                    _buildSubMenuItem(
+                      icon: Icons.trending_down_rounded,
+                      title: 'Laporan Pengeluaran',
+                      route: '/reports/spending',
                     ),
-                  ] else
-                    _MenuItem(
-                      icon: Icons.description_rounded,
-                      title: 'Laporan Keuangan',
-                      isExpanded: widget.isExpanded,
-                      onTap: () => Navigator.pushNamed(context, '/reports'),
+                    _buildSubMenuItem(
+                      icon: Icons.print_rounded,
+                      title: 'Cetak Laporan',
+                      route: '/reports/print',
                     ),
+                  ],
+
+                  const Divider(height: 16),
 
                   // Kegiatan & Broadcast
-                  if (widget.isExpanded) ...[
-                    _MenuItem(
+                  _buildMenuItem(
+                    icon: Icons.event_available_rounded,
+                    title: 'Kegiatan & Broadcast',
+                    isExpanded: _isActivitiesExpanded,
+                    onTap: () {
+                      _closeAllMenusExcept('activities');
+                      setState(
+                        () => _isActivitiesExpanded = !_isActivitiesExpanded,
+                      );
+                    },
+                  ),
+                  if (_isActivitiesExpanded) ...[
+                    _buildSubMenuItem(
                       icon: Icons.event_rounded,
-                      title: 'Kegiatan & Broadcast',
-                      isExpanded: widget.isExpanded,
-                      onTap: () {
-                        _closeAllMenusExcept('activities');
-                        setState(
-                          () => _isActivitiesExpanded = !_isActivitiesExpanded,
-                        );
-                      },
-                      hasSubMenu: true,
-                      isSubMenuExpanded: _isActivitiesExpanded,
+                      title: 'Daftar Kegiatan',
+                      route: '/activities/list',
                     ),
-                    AnimatedSize(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      child: _isActivitiesExpanded
-                          ? Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                _MenuItem(
-                                  icon: Icons.event_note_rounded,
-                                  title: 'Kegiatan - Daftar',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/activities/list',
-                                  ),
-                                ),
-                                _MenuItem(
-                                  icon: Icons.event_available_rounded,
-                                  title: 'Kegiatan - Tambah',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/activities/add',
-                                  ),
-                                ),
-                                _MenuItem(
-                                  icon: Icons.campaign_outlined,
-                                  title: 'Broadcast - Daftar',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/broadcast/list',
-                                  ),
-                                ),
-                                _MenuItem(
-                                  icon: Icons.add_alert_rounded,
-                                  title: 'Broadcast - Tambah',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/broadcast/add',
-                                  ),
-                                ),
-                              ],
-                            )
-                          : const SizedBox.shrink(),
+                    _buildSubMenuItem(
+                      icon: Icons.add_task_rounded,
+                      title: 'Tambah Kegiatan',
+                      route: '/activities/add',
                     ),
-                  ] else
-                    _MenuItem(
-                      icon: Icons.event_rounded,
-                      title: 'Kegiatan & Broadcast',
-                      isExpanded: widget.isExpanded,
-                      onTap: () => Navigator.pushNamed(context, '/activities'),
+                    _buildSubMenuItem(
+                      icon: Icons.campaign_rounded,
+                      title: 'Daftar Broadcast',
+                      route: '/broadcast/list',
                     ),
+                    _buildSubMenuItem(
+                      icon: Icons.send_rounded,
+                      title: 'Buat Broadcast',
+                      route: '/broadcast/add',
+                    ),
+                  ],
+
+                  const Divider(height: 16),
 
                   // Pesan Warga
-                  if (widget.isExpanded) ...[
-                    _MenuItem(
-                      icon: Icons.chat_rounded,
-                      title: 'Pesan Warga',
-                      isExpanded: widget.isExpanded,
-                      onTap: () {
-                        _closeAllMenusExcept('messages');
-                        setState(
-                          () => _isMessagesExpanded = !_isMessagesExpanded,
-                        );
-                      },
-                      hasSubMenu: true,
-                      isSubMenuExpanded: _isMessagesExpanded,
+                  _buildMenuItem(
+                    icon: Icons.message_rounded,
+                    title: 'Pesan Warga',
+                    isExpanded: _isMessagesExpanded,
+                    onTap: () {
+                      _closeAllMenusExcept('messages');
+                      setState(
+                        () => _isMessagesExpanded = !_isMessagesExpanded,
+                      );
+                    },
+                  ),
+                  if (_isMessagesExpanded) ...[
+                    _buildSubMenuItem(
+                      icon: Icons.chat_bubble_outline_rounded,
+                      title: 'Semua Pesan',
+                      route: '/messages',
                     ),
-                    AnimatedSize(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      child: _isMessagesExpanded
-                          ? Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                _MenuItem(
-                                  icon: Icons.info_outline_rounded,
-                                  title: 'Informasi Aspirasi',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/messages/aspirations',
-                                  ),
-                                ),
-                              ],
-                            )
-                          : const SizedBox.shrink(),
+                    _buildSubMenuItem(
+                      icon: Icons.lightbulb_outline_rounded,
+                      title: 'Aspirasi',
+                      route: '/messages/aspirations',
                     ),
-                  ] else
-                    _MenuItem(
-                      icon: Icons.chat_rounded,
-                      title: 'Pesan Warga',
-                      isExpanded: widget.isExpanded,
-                      onTap: () => Navigator.pushNamed(context, '/messages'),
-                    ),
+                  ],
+
+                  const Divider(height: 16),
 
                   // Penerimaan Warga
-                  if (widget.isExpanded) ...[
-                    _MenuItem(
-                      icon: Icons.person_add_rounded,
-                      title: 'Penerimaan Warga',
-                      isExpanded: widget.isExpanded,
-                      onTap: () {
-                        _closeAllMenusExcept('approval');
-                        setState(
-                          () => _isApprovalExpanded = !_isApprovalExpanded,
-                        );
-                      },
-                      hasSubMenu: true,
-                      isSubMenuExpanded: _isApprovalExpanded,
+                  _buildMenuItem(
+                    icon: Icons.how_to_reg_rounded,
+                    title: 'Penerimaan Warga',
+                    isExpanded: _isApprovalExpanded,
+                    onTap: () {
+                      _closeAllMenusExcept('approval');
+                      setState(
+                        () => _isApprovalExpanded = !_isApprovalExpanded,
+                      );
+                    },
+                  ),
+                  if (_isApprovalExpanded) ...[
+                    _buildSubMenuItem(
+                      icon: Icons.approval_rounded,
+                      title: 'Daftar Permohonan',
+                      route: '/resident-approvals',
                     ),
-                    AnimatedSize(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      child: _isApprovalExpanded
-                          ? Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                _MenuItem(
-                                  icon: Icons.how_to_reg_rounded,
-                                  title: 'Penerimaan Warga',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/resident-approvals',
-                                  ),
-                                ),
-                              ],
-                            )
-                          : const SizedBox.shrink(),
-                    ),
-                  ] else
-                    _MenuItem(
-                      icon: Icons.person_add_rounded,
-                      title: 'Penerimaan Warga',
-                      isExpanded: widget.isExpanded,
-                      onTap: () =>
-                          Navigator.pushNamed(context, '/resident-approvals'),
-                    ),
+                  ],
+
+                  const Divider(height: 16),
 
                   // Mutasi Keluarga
-                  if (widget.isExpanded) ...[
-                    _MenuItem(
-                      icon: Icons.swap_horiz_rounded,
-                      title: 'Mutasi Keluarga',
-                      isExpanded: widget.isExpanded,
-                      onTap: () {
-                        _closeAllMenusExcept('familyMutation');
-                        setState(
-                          () => _isFamilyMutationExpanded =
-                              !_isFamilyMutationExpanded,
-                        );
-                      },
-                      hasSubMenu: true,
-                      isSubMenuExpanded: _isFamilyMutationExpanded,
+                  _buildMenuItem(
+                    icon: Icons.swap_horiz_rounded,
+                    title: 'Mutasi Keluarga',
+                    isExpanded: _isFamilyMutationExpanded,
+                    onTap: () {
+                      _closeAllMenusExcept('familyMutation');
+                      setState(
+                        () => _isFamilyMutationExpanded =
+                            !_isFamilyMutationExpanded,
+                      );
+                    },
+                  ),
+                  if (_isFamilyMutationExpanded) ...[
+                    _buildSubMenuItem(
+                      icon: Icons.list_rounded,
+                      title: 'Daftar Mutasi',
+                      route: '/family-mutations/list',
                     ),
-                    AnimatedSize(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      child: _isFamilyMutationExpanded
-                          ? Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                _MenuItem(
-                                  icon: Icons.list_rounded,
-                                  title: 'Daftar',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/family-mutations/list',
-                                  ),
-                                ),
-                                _MenuItem(
-                                  icon: Icons.add_rounded,
-                                  title: 'Tambah',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/family-mutations/add',
-                                  ),
-                                ),
-                              ],
-                            )
-                          : const SizedBox.shrink(),
+                    _buildSubMenuItem(
+                      icon: Icons.add_rounded,
+                      title: 'Tambah Mutasi',
+                      route: '/family-mutations/add',
                     ),
-                  ] else
-                    _MenuItem(
-                      icon: Icons.swap_horiz_rounded,
-                      title: 'Mutasi Keluarga',
-                      isExpanded: widget.isExpanded,
-                      onTap: () =>
-                          Navigator.pushNamed(context, '/family-mutations'),
-                    ),
+                  ],
 
-                  // Log Aktifitas
-                  if (widget.isExpanded) ...[
-                    _MenuItem(
-                      icon: Icons.history_rounded,
-                      title: 'Log Aktifitas',
-                      isExpanded: widget.isExpanded,
-                      onTap: () {
-                        _closeAllMenusExcept('activityLog');
-                        setState(
-                          () =>
-                              _isActivityLogExpanded = !_isActivityLogExpanded,
-                        );
-                      },
-                      hasSubMenu: true,
-                      isSubMenuExpanded: _isActivityLogExpanded,
+                  const Divider(height: 16),
+
+                  // Log Aktivitas
+                  _buildMenuItem(
+                    icon: Icons.history_rounded,
+                    title: 'Log Aktivitas',
+                    isExpanded: _isActivityLogExpanded,
+                    onTap: () {
+                      _closeAllMenusExcept('activityLog');
+                      setState(
+                        () => _isActivityLogExpanded = !_isActivityLogExpanded,
+                      );
+                    },
+                  ),
+                  if (_isActivityLogExpanded) ...[
+                    _buildSubMenuItem(
+                      icon: Icons.view_list_rounded,
+                      title: 'Daftar Log',
+                      route: '/activity-logs',
                     ),
-                    AnimatedSize(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      child: _isActivityLogExpanded
-                          ? Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                _MenuItem(
-                                  icon: Icons.format_list_bulleted_rounded,
-                                  title: 'Semua Aktifitas',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/activity-logs',
-                                  ),
-                                ),
-                              ],
-                            )
-                          : const SizedBox.shrink(),
-                    ),
-                  ] else
-                    _MenuItem(
-                      icon: Icons.history_rounded,
-                      title: 'Log Aktifitas',
-                      isExpanded: widget.isExpanded,
-                      onTap: () =>
-                          Navigator.pushNamed(context, '/activity-logs'),
-                    ),
+                  ],
+
+                  const Divider(height: 16),
 
                   // Manajemen Pengguna
-                  if (widget.isExpanded) ...[
-                    _MenuItem(
-                      icon: Icons.settings_rounded,
-                      title: 'Manajemen Pengguna',
-                      isExpanded: widget.isExpanded,
-                      onTap: () {
-                        _closeAllMenusExcept('userManagement');
-                        setState(
-                          () => _isUserManagementExpanded =
-                              !_isUserManagementExpanded,
-                        );
-                      },
-                      hasSubMenu: true,
-                      isSubMenuExpanded: _isUserManagementExpanded,
+                  _buildMenuItem(
+                    icon: Icons.admin_panel_settings_rounded,
+                    title: 'Manajemen Pengguna',
+                    isExpanded: _isUserManagementExpanded,
+                    onTap: () {
+                      _closeAllMenusExcept('userManagement');
+                      setState(
+                        () => _isUserManagementExpanded =
+                            !_isUserManagementExpanded,
+                      );
+                    },
+                  ),
+                  if (_isUserManagementExpanded) ...[
+                    _buildSubMenuItem(
+                      icon: Icons.group_rounded,
+                      title: 'Daftar Pengguna',
+                      route: '/users',
                     ),
-                    AnimatedSize(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      child: _isUserManagementExpanded
-                          ? Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                _MenuItem(
-                                  icon: Icons.list_rounded,
-                                  title: 'Daftar Pengguna',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () =>
-                                      Navigator.pushNamed(context, '/users'),
-                                ),
-                                _MenuItem(
-                                  icon: Icons.person_add_alt_rounded,
-                                  title: 'Tambah Pengguna',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/users/add',
-                                  ),
-                                ),
-                              ],
-                            )
-                          : const SizedBox.shrink(),
+                    _buildSubMenuItem(
+                      icon: Icons.person_add_alt_rounded,
+                      title: 'Tambah Pengguna',
+                      route: '/users/add',
                     ),
-                  ] else
-                    _MenuItem(
-                      icon: Icons.settings_rounded,
-                      title: 'Manajemen Pengguna',
-                      isExpanded: widget.isExpanded,
-                      onTap: () => Navigator.pushNamed(context, '/users'),
-                    ),
+                  ],
+
+                  const Divider(height: 16),
 
                   // Channel Transfer
-                  if (widget.isExpanded) ...[
-                    _MenuItem(
-                      icon: Icons.sync_rounded,
-                      title: 'Channel Transfer',
-                      isExpanded: widget.isExpanded,
-                      onTap: () {
-                        _closeAllMenusExcept('channelTransfer');
-                        setState(
-                          () => _isChannelTransferExpanded =
-                              !_isChannelTransferExpanded,
-                        );
-                      },
-                      hasSubMenu: true,
-                      isSubMenuExpanded: _isChannelTransferExpanded,
-                    ),
-                    AnimatedSize(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      child: _isChannelTransferExpanded
-                          ? Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                _MenuItem(
-                                  icon: Icons.list_rounded,
-                                  title: 'Daftar Channel',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/channels/list',
-                                  ),
-                                ),
-                                _MenuItem(
-                                  icon: Icons.add_rounded,
-                                  title: 'Tambah Channel',
-                                  isExpanded: widget.isExpanded,
-                                  isSubMenuItem: true,
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    '/channels/add',
-                                  ),
-                                ),
-                              ],
-                            )
-                          : const SizedBox.shrink(),
-                    ),
-                  ] else
-                    _MenuItem(
-                      icon: Icons.sync_rounded,
-                      title: 'Channel Transfer',
-                      isExpanded: widget.isExpanded,
-                      onTap: () => Navigator.pushNamed(context, '/channels'),
-                    ),
-                ],
-              ),
-            ),
-            // Profile at bottom
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    color: Colors.white.withOpacity(0.15),
-                    width: 1,
+                  _buildMenuItem(
+                    icon: Icons.compare_arrows_rounded,
+                    title: 'Channel Transfer',
+                    isExpanded: _isChannelTransferExpanded,
+                    onTap: () {
+                      _closeAllMenusExcept('channelTransfer');
+                      setState(
+                        () => _isChannelTransferExpanded =
+                            !_isChannelTransferExpanded,
+                      );
+                    },
                   ),
-                ),
-              ),
-              child: _MenuItem(
-                icon: Icons.account_circle_rounded,
-                title: 'Admin',
-                subtitle: 'admin@jawara.id',
-                isExpanded: widget.isExpanded,
-                isProfile: true,
+                  if (_isChannelTransferExpanded) ...[
+                    _buildSubMenuItem(
+                      icon: Icons.list_alt_rounded,
+                      title: 'Daftar Channel',
+                      route: '/channels/list',
+                    ),
+                    _buildSubMenuItem(
+                      icon: Icons.add_box_rounded,
+                      title: 'Tambah Channel',
+                      route: '/channels/add',
+                    ),
+                  ],
+
+                  const SizedBox(height: 80),
+                ],
               ),
             ),
           ],
@@ -911,214 +493,72 @@ class _SidebarState extends State<Sidebar> {
       ),
     );
   }
-}
 
-// Widget MenuItem
-class _MenuItem extends StatefulWidget {
-  final IconData icon;
-  final String title;
-  final String? subtitle;
-  final bool isExpanded;
-  final VoidCallback? onTap;
-  final bool isProfile;
-  final bool hasSubMenu;
-  final bool isSubMenuExpanded;
-  final bool isSubMenuItem;
-
-  const _MenuItem({
-    required this.icon,
-    required this.title,
-    required this.isExpanded,
-    this.onTap,
-    this.subtitle,
-    this.isProfile = false,
-    this.hasSubMenu = false,
-    this.isSubMenuExpanded = false,
-    this.isSubMenuItem = false,
-  });
-
-  @override
-  State<_MenuItem> createState() => _MenuItemState();
-}
-
-class _MenuItemState extends State<_MenuItem> {
-  bool _isHovered = false;
-
-  @override
-  Widget build(BuildContext context) {
-    if (widget.isProfile) {
-      return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        decoration: BoxDecoration(
-          gradient: _isHovered
-              ? LinearGradient(
-                  colors: [
-                    const Color(0xFF0891B2).withOpacity(0.1),
-                    const Color(0xFF0284C7).withOpacity(0.1),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                )
-              : null,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: const Color(0xFF0891B2).withOpacity(_isHovered ? 0.3 : 0.1),
-            width: 1,
-          ),
+  Widget _buildMenuItem({
+    required IconData icon,
+    required String title,
+    required bool isExpanded,
+    required VoidCallback onTap,
+  }) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+      decoration: BoxDecoration(
+        color: isExpanded
+            ? const Color(0xFF0891B2).withOpacity(0.08)
+            : Colors.transparent,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: ListTile(
+        leading: Icon(
+          icon,
+          color: isExpanded ? const Color(0xFF0891B2) : const Color(0xFF6B7280),
+          size: 22,
         ),
-        child: PopupMenuButton<String>(
-          offset: const Offset(0, -60),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          itemBuilder: (context) => [
-            const PopupMenuItem(
-              value: 'profile',
-              child: Row(
-                children: [
-                  Icon(Icons.person, size: 18, color: Color(0xFF0891B2)),
-                  SizedBox(width: 12),
-                  Text('Profil', style: TextStyle(fontSize: 14)),
-                ],
-              ),
-            ),
-            const PopupMenuItem(
-              value: 'settings',
-              child: Row(
-                children: [
-                  Icon(Icons.settings, size: 18, color: Color(0xFF0891B2)),
-                  SizedBox(width: 12),
-                  Text('Pengaturan', style: TextStyle(fontSize: 14)),
-                ],
-              ),
-            ),
-            const PopupMenuDivider(),
-            const PopupMenuItem(
-              value: 'logout',
-              child: Row(
-                children: [
-                  Icon(Icons.logout, size: 18, color: Colors.red),
-                  SizedBox(width: 12),
-                  Text(
-                    'Keluar',
-                    style: TextStyle(color: Colors.red, fontSize: 14),
-                  ),
-                ],
-              ),
-            ),
-          ],
-          onSelected: (value) {
-            if (value == 'logout')
-              Navigator.pushReplacementNamed(context, '/login');
-          },
-          child: MouseRegion(
-            onEnter: (_) => setState(() => _isHovered = true),
-            onExit: (_) => setState(() => _isHovered = false),
-            child: ListTile(
-              leading: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF0891B2), Color(0xFF0284C7)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(widget.icon, color: Colors.white, size: 20),
-              ),
-              title: widget.isExpanded
-                  ? Text(
-                      widget.title,
-                      style: const TextStyle(
-                        color: Color(0xFF1F2937),
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                      ),
-                    )
-                  : null,
-              subtitle: widget.isExpanded && widget.subtitle != null
-                  ? Text(
-                      widget.subtitle!,
-                      style: const TextStyle(
-                        color: Color(0xFF6B7280),
-                        fontSize: 11,
-                      ),
-                    )
-                  : null,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 6,
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-
-    return MouseRegion(
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        margin: EdgeInsets.only(
-          left: widget.isSubMenuItem ? 20 : 12,
-          right: 12,
-          top: 3,
-          bottom: 3,
-        ),
-        decoration: BoxDecoration(
-          gradient: _isHovered
-              ? LinearGradient(
-                  colors: [
-                    const Color(0xFF0891B2).withOpacity(0.08),
-                    const Color(0xFF0284C7).withOpacity(0.08),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                )
-              : null,
-          borderRadius: BorderRadius.circular(14),
-        ),
-        child: ListTile(
-          leading: Icon(
-            widget.icon,
-            color: _isHovered
+        title: Text(
+          title,
+          style: TextStyle(
+            color: isExpanded
                 ? const Color(0xFF0891B2)
-                : const Color(0xFF6B7280),
-            size: widget.isSubMenuItem ? 18 : 22,
-          ),
-          title: widget.isExpanded
-              ? Text(
-                  widget.title,
-                  style: TextStyle(
-                    color: _isHovered
-                        ? const Color(0xFF0891B2)
-                        : const Color(0xFF1F2937),
-                    fontWeight: widget.isSubMenuItem
-                        ? FontWeight.w500
-                        : FontWeight.w600,
-                    fontSize: widget.isSubMenuItem ? 13 : 14,
-                  ),
-                )
-              : null,
-          trailing: widget.hasSubMenu && widget.isExpanded
-              ? Icon(
-                  widget.isSubMenuExpanded
-                      ? Icons.keyboard_arrow_down_rounded
-                      : Icons.chevron_right_rounded,
-                  color: _isHovered
-                      ? const Color(0xFF0891B2)
-                      : const Color(0xFF6B7280),
-                  size: 20,
-                )
-              : null,
-          onTap: widget.onTap,
-          contentPadding: EdgeInsets.symmetric(
-            horizontal: widget.isSubMenuItem ? 16 : 14,
-            vertical: 2,
+                : const Color(0xFF1F2937),
+            fontWeight: FontWeight.w600,
+            fontSize: 14,
           ),
         ),
+        trailing: Icon(
+          isExpanded ? Icons.expand_less : Icons.expand_more,
+          color: isExpanded ? const Color(0xFF0891B2) : const Color(0xFF6B7280),
+        ),
+        onTap: onTap,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+    );
+  }
+
+  Widget _buildSubMenuItem({
+    required IconData icon,
+    required String title,
+    required String route,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(left: 24, right: 12, top: 2, bottom: 2),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+      child: ListTile(
+        leading: Icon(icon, color: const Color(0xFF6B7280), size: 18),
+        title: Text(
+          title,
+          style: const TextStyle(
+            color: Color(0xFF1F2937),
+            fontWeight: FontWeight.w500,
+            fontSize: 13,
+          ),
+        ),
+        onTap: () {
+          Navigator.pop(context); // Close drawer
+          Navigator.pushNamed(context, route);
+        },
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
   }
