@@ -238,7 +238,7 @@ flutter build ios --release
 <b>5atriy0</b>
 </a>
 <br/>
-<sub>Full Stack Developer</sub>
+<sub>Stack Developer</sub>
 <br/>
 <sub>🏆 4 commits</sub>
 <br/><br/>
@@ -261,7 +261,7 @@ flutter build ios --release
 <b>Cindy Laili Larasati</b>
 </a>
 <br/>
-<sub>Frontend Developer</sub>
+<sub> Developer</sub>
 <br/>
 <sub>🏆 3 commits</sub>
 <br/><br/>
@@ -307,7 +307,7 @@ flutter build ios --release
 <b>Alvin Aditiya</b>
 </a>
 <br/>
-<sub>Backend Developer</sub>
+<sub>Developer</sub>
 <br/>
 <sub>🏆 1 commit</sub>
 <br/><br/>
