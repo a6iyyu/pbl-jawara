@@ -81,6 +81,10 @@ class _BaseLayoutState extends State<BaseLayout> {
                         '/login',
                         (route) => false,
                       );
+                    } else if (value == 'profile') {
+                      Navigator.pushNamed(context, '/profile');
+                    } else if (value == 'settings') {
+                      Navigator.pushNamed(context, '/settings');
                     }
                   },
                   itemBuilder: (BuildContext context) => [
