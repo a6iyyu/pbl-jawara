@@ -638,7 +638,7 @@ Temukan bug atau punya ide fitur baru?
 
 ## 📝 Versi & Update
 
-### 🎉 Version 1.0.0 (Januari 2025)
+### 🎉 Version 1.0.0 (Oktober 2025)
 
 **Fitur Utama:**
 - ✅ Dashboard interaktif (Keuangan, Kegiatan, Kependudukan)
