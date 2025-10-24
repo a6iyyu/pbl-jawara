@@ -170,16 +170,16 @@ flutter build ios --release
 <table>
 <tr>
 <td width="33%">
-<img src="https://via.placeholder.com/400x300/0891B2/FFFFFF?text=Dashboard+Keuangan" alt="Dashboard Keuangan" />
+<img src="docs/videos/Dashboard-Keuangan.gif" alt="Dashboard Keuangan" />
 <p align="center"><b>Dashboard Keuangan</b></p>
 </td>
 <td width="33%">
-<img src="https://via.placeholder.com/400x300/10B981/FFFFFF?text=Data+Warga" alt="Data Warga" />
+<img src="docs/videos/Daftar-Warga.gif" alt="Data Warga" />
 <p align="center"><b>Data Warga</b></p>
 </td>
 <td width="33%">
-<img src="https://via.placeholder.com/400x300/8B5CF6/FFFFFF?text=Laporan+Keuangan" alt="Laporan" />
-<p align="center"><b>Laporan Keuangan</b></p>
+<img src="docs/videos/Laporan-Pemasukan.gif" alt="Laporan" />
+<p align="center"><b>Laporan Keuangan (Pemasukan)</b></p>
 </td>
 </tr>
 </table>
